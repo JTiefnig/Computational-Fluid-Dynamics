@@ -21,21 +21,42 @@ using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using System.ComponentModel;
 
+using MahApps.Metro.Controls;
+
 
 namespace CFD_A1_WPF
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow, INotifyPropertyChanged
     {
         CfdBackgroundSolver backgroundWorker;
 
-        public SeriesCollection CfdCollection { get; private set; }
+
+        private SeriesCollection cfdcol;
+        
+
+        public SeriesCollection CfdCollection {
+            get
+            {
+                return cfdcol;
+            }
+
+            private set
+            {
+                cfdcol = value;
+                OnPropertyChanged("CfdCollection");
+            }
+        }
 
         int stepsToCalculate = 100;
-     
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         public MainWindow()
         {
@@ -59,21 +80,20 @@ namespace CFD_A1_WPF
 
         void GetRefreshedData()
         {
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                        (ThreadStart)delegate ()
-                        {
-                            this.UpdateChart();
-                        }
-                          );
+            this.Dispatcher.Invoke(() =>  this.UpdateChart() );
         }
+
+
+        double cfdConv;
 
 
         public double CfdSolvConv
         {
-            get { return 33.664d; }
+            get { return cfdConv; }
             set
             {
-                 
+                cfdConv = value;
+                this.OnPropertyChanged("CfdSolvConv");
             }
         }
 
@@ -87,51 +107,34 @@ namespace CFD_A1_WPF
             {
                 ls = new LineSeries
                 {
-                    Title = "Series 1",
+                    Title = "Pressure",
                     Values = new ChartValues<ObservablePoint>(),
                     PointGeometry = DefaultGeometries.None,
 
                 };
+                
+                for(int iA = 0; iA<100; iA++)
+                {
+                    ls.Values.Add(new ObservablePoint());
+                }
+                CfdCollection.Add(ls);
             }
-            else
-            {
-                ls = CfdCollection[0] as LineSeries;
-            }
 
 
-
-            List<double> list = backgroundWorker.GetData();
+            List<double> list = new List<double>(backgroundWorker.GetData());
 
             int i = 0;
 
-
-            lock (list)
+            foreach(ObservablePoint dp in CfdCollection[0].Values)
             {
-                foreach (double v in list)
-                {
-
-                    if (i < ls.Values.Count)
-                    {
-                        ObservablePoint point = ls.Values[i] as ObservablePoint;
-                        point.Y = v;
-                    }
-                    else
-                    {
-                        ls.Values.Add(new ObservablePoint(i, v));
-                    }
-
-
-                    i++;
-
-                }
+                dp.X = i;
+                dp.Y = list[i];
+                i++;
             }
 
+            //OnPropertyChanged("CfdCollection");
 
-            CfdCollection.Clear();
-
-            CfdCollection.Add(ls);
-
-            DataContext = this;
+            
 
         }
 

@@ -1,0 +1,138 @@
+﻿<Controls:MetroWindow x:Class="CFD_A2_WPF_Metro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CFD_A2_WPF_Metro"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+                      
+        mc:Ignorable="d"
+        Title="CFD Solver Tiefnig 2018" Height="600" Width="800">
+
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
+                <Setter Property="Height" Value="125" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="10" />
+                <Setter Property="Width" Value="147" />
+            </Style>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
+
+
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="1" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0.333,0">
+
+            <StackPanel>
+                
+                <!--<ComboBox Width="140" VerticalAlignment="Center" Margin="5,0" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex}">
+                    <ComboBoxItem>Central</ComboBoxItem>
+                    <ComboBoxItem>LaxWendroff</ComboBoxItem>
+                    <ComboBoxItem>Mac Cormack</ComboBoxItem>
+                </ComboBox>-->
+                
+                        <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock Margin="1, 3, 1, 0">Steps To Run</TextBlock>
+                <!--<TextBox Width="100" Margin="3" Text="{Binding SolverAdapter.Steps}"></TextBox>-->
+                <TextBlock Margin="1, 3, 1, 0">Update inteval</TextBlock>
+                <!--<TextBox Width="100" Margin="3" Text="{Binding SolverAdapter.UpdatdateInterval}"></TextBox>-->
+            </StackPanel>
+
+
+            <DockPanel LastChildFill="True">
+                <Button DockPanel.Dock="Bottom" Name="RunStepsButton" Click="RunStepsButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome Width="18"
+                                       Height="auto"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Kind="StepForwardSolid" />
+                        <TextBlock TextAlignment="Center" Margin="5" VerticalAlignment="Center"> RunSteps</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="RunButton" Click="RunButton_Click" >
+                    <StackPanel>
+                        <iconPacks:PackIconFontAwesome Width="30"
+                                       Height="auto"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Kind="PlaySolid" />
+                        <TextBlock TextAlignment="Center" Margin="5"> RUN</TextBlock>
+                    </StackPanel>
+                </Button>
+            </DockPanel>
+
+
+
+            <Button Name="ExportButton" >
+                <StackPanel>
+                    <iconPacks:PackIconFontAwesome Width="50"
+                                       Height="auto"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Kind="FileExportSolid" />
+                    <TextBlock TextAlignment="Center" Margin="5" FontSize="20"> Export</TextBlock>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
+        <!-- DATA Display-->
+
+        <!--<TabControl
+            Grid.Row="1"
+            Grid.Column="1"
+            Controls:TabControlHelper.Underlined="TabPanel"
+            TabStripPlacement="Bottom">
+            <Controls:MetroTabItem Header="Graph" MaxHeight="20">
+
+                <TextBox>palcehodler</TextBox>
+            </Controls:MetroTabItem>
+
+            <Controls:MetroTabItem Header="Dimensions" MaxHeight="25">
+
+                <TextBox>palcehodlser</TextBox>
+            </Controls:MetroTabItem>
+
+        </TabControl>-->
+
+
+
+        <!--<lvc:CartesianChart Grid.Column="2" Grid.Row="1" Series="{Binding SolverAdapter.SimulationData}"  LegendLocation="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0.333,-0.333">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Pressure"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Length" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>-->
+
+
+
+
+    </Grid>
+</Controls:MetroWindow>
