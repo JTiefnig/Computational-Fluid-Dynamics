@@ -142,6 +142,7 @@
     <ClInclude Include="Solver1D_Central.h" />
     <ClInclude Include="Solver1D_LaxWendroff.h" />
     <ClInclude Include="Solver1D_MacCormack.h" />
+    <ClInclude Include="Solver1D_ROE.h" />
     <ClInclude Include="State1D.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClCompile Include="Solver1D_Central.cpp" />
     <ClCompile Include="Solver1D_LaxWendroff.cpp" />
     <ClCompile Include="Solver1D_MacCormack.cpp" />
+    <ClCompile Include="Solver1D_ROE.cpp" />
     <ClCompile Include="State1D.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -37,7 +37,7 @@ namespace CFD_A1_OO {
 
 		double GetData(int i);
 
-
+		float Convergence();
 		// TODO: Die Methoden für diese Klasse hier hinzufügen.
 	};
 }

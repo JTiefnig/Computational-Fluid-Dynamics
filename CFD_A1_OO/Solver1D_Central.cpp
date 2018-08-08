@@ -44,16 +44,16 @@ void Solver1D_Central::DoStep()
 	State1D f_star;
 	State1D prv_fstar = CalcF_star_central(0);
 
-	State1D delta_u;
+	
 
 	for (int i = 1; i < imax -1 ; i++)
 	{
 
 		f_star = CalcF_star_central(i);
 
-		delta_u = (f_star - prv_fstar) *(-dt) / model->dx + source[i] * dt;
+		model->delta_u[i] = (f_star - prv_fstar) *(-dt) / model->dx + source[i] * dt;
  
-		u[i] = u[i] + delta_u;
+		u[i] = u[i] + model->delta_u[i];
 
 		prv_fstar = f_star;
 

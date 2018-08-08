@@ -6,14 +6,15 @@ Model1D::Model1D(int gridSize)
 {
 	this->gridsize = gridSize;
 	u = vector<GridPoint1D>(gridSize);
+	delta_u = vector<GridPoint1D>(gridSize);
 
-
+	
 	R = 287.0;
 	gamma = 1.4; // entspricht kappa
 
-	p_tot = 1;
+	p_tot = 1*100000;
 	T_tot = 273.15;
-	p_exit = 0.9;
+	p_exit = 0.9*100000;
 	sub_exit = 1;
 	rho_tot = 0;
 }
@@ -25,11 +26,14 @@ Model1D::~Model1D()
 
 void Model1D::Initialize()
 {
-	rho_tot = p_tot / (R*T_tot);
+	stepcount = 0;
 
+	rho_tot = p_tot / (R*T_tot);
+	
 	double rho_start = rho_tot;
 	double rhou_start = 0;
 	double e_start = p_tot / (gamma - 1);
+
 
 	// Initialisieren des Stroemungsfeldes (Zustandsvektor U) mit den Ruhezustandswerten
 	// Initialisation of the flow field (state vector U) with the stagnation values (=total values)
@@ -47,16 +51,18 @@ void Model1D::Initialize()
 
 void Model1D::Boundary()
 {
+	// Steps are counted here
+	stepcount++;
 
 	int imax = u.size();
 
-	double rho = u[1].rho;
+	double rho = 2*u[1].rho- u[2].rho;
 
 	double cp = (R* gamma / (gamma + 1));
 
 	double p = p_tot * pow(rho / rho_tot, gamma); //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
 
-	double vel = u[1].rho_u / u[1].rho;
+	double vel = sqrt(2 * R*gamma / (gamma - 1)*(T_tot - p / (rho*R)));//u[1].rho_u / u[1].rho;
 
 
 	if (rho > rho_tot)
@@ -67,10 +73,10 @@ void Model1D::Boundary()
 
 	u[0].rho = rho;
 	u[0].rho_u = vel * rho;
-	u[0].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
+	u[0].e = p_exit / (gamma - 1) + rho * pow(vel, 2)*0.5;
 
 
-	rho = u[imax - 2].rho;
+	rho = 2*u[imax - 2].rho -  u[imax - 3].rho;
 
 
 	p = p_exit; //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
@@ -103,4 +109,23 @@ double Model1D::GetPressure(int i)
 
 	return p; // Whatever
 	
+}
+
+float Model1D::CalculateConvergence()
+{
+	
+	GridPoint1D resid;
+
+
+	int imax = u.size();
+	for(int i=0; i<imax; i++)
+	{  
+		resid = resid + delta_u[i].absComponents();
+	}
+
+	if (this->stepcount == 2)
+		convCompValue = resid.e;
+
+
+	return resid.e/convCompValue;
 }

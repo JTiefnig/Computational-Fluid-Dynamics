@@ -14,12 +14,14 @@ class Model1D
 public:
 
 	vector<GridPoint1D> u;
+	vector<GridPoint1D> delta_u;
 
 	double dx;
 
 
 	// parameters 
 
+	int stepcount;
 
 	int gridsize;
 	double R;
@@ -29,6 +31,7 @@ public:
 	double p_exit;
 	double sub_exit ;
 	double rho_tot;
+	
 
 
 	Model1D(int gridSize);
@@ -43,7 +46,9 @@ public:
 
 	double GetPressure(int i);
 
+	float CalculateConvergence();
 
-
+private:
+	float convCompValue = 1;
 };
 

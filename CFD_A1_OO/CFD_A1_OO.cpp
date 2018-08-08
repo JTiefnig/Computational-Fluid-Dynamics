@@ -40,6 +40,11 @@ double CFD_A1_OO::CfdA1Adapter::GetData(int i)
 	return mod->GetPressure(i);
 }
 
+float CFD_A1_OO::CfdA1Adapter::Convergence()
+{
+	return mod->CalculateConvergence();
+}
+
 
 void CFD_A1_OO::CfdA1Adapter::Reset()
 {

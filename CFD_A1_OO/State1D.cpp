@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "State1D.h"
+#include <cmath>
 
 
 State1D::State1D(double Rho, double Rho_U, double E)
@@ -61,6 +62,17 @@ State1D State1D::operator/(double c)
 	ret.rho = this->rho / c;
 	ret.rho_u = this->rho_u / c;
 	ret.e = this->e / c;
+	return ret;
+}
+
+State1D State1D::absComponents()
+{
+	State1D ret = State1D();
+	
+	ret.rho = std::abs(this->rho);
+	ret.rho_u = std::abs(this->rho_u);
+	ret.e =  std::abs(this->e);
+
 	return ret;
 }
 

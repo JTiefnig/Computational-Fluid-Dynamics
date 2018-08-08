@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
 
+
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
@@ -21,16 +22,16 @@ namespace CFD_A2_WPF_Metro
     public class CfdSolver : INotifyPropertyChanged
     {
 
-
-
+              
 
         private SeriesCollection simData;
 
-        CfdA1Adapter cfd;
+        private CfdA1Adapter cfd;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
+            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
@@ -39,7 +40,7 @@ namespace CFD_A2_WPF_Metro
             get { lock (simData) { return simData; } }
             set
             {
-                lock(simData)
+                lock (simData)
                 {
                     simData = value;
                 }
@@ -47,7 +48,7 @@ namespace CFD_A2_WPF_Metro
             }
         }
 
-        private int steps =100;
+        private int steps = 100;
         public int Steps
         {
             get { return steps; }
@@ -91,12 +92,12 @@ namespace CFD_A2_WPF_Metro
 
             };
 
-            
+
             for (int iA = 0; iA < 100; iA++)
             {
                 ls.Values.Add(new ObservablePoint());
             }
-            
+
 
             SimulationData.Add(ls);
         }
@@ -105,7 +106,7 @@ namespace CFD_A2_WPF_Metro
 
 
         public int SelectedSolverIndex { set; get; } = 0;
-         
+
 
 
         public async void RunSteps()
@@ -115,7 +116,7 @@ namespace CFD_A2_WPF_Metro
 
         protected void SimulateSteps()
         {
-            for (int i = 0; i < steps; i+= updateInterval)
+            for (int i = 0; i < steps; i += updateInterval)
             {
                 cfd.DoSteps(updateInterval, SelectedSolverIndex);
 
@@ -124,24 +125,45 @@ namespace CFD_A2_WPF_Metro
         }
 
 
+        public void ResetModel()
+        {
+            cfd.Reset();
+            UpdateData();
+        }
+
+        private double convergence;
+        public double ModelConvergence
+        {
+            get { return (Sigmoid(convergence)-0.5)*2; }
+            set
+            {
+                convergence = value;
+                OnPropertyChanged("ModelConvergence");
+            }
+        }
+
+
+        static private double Sigmoid(double x)
+        {
+            return 1/(1 + Math.Exp(-x));
+        }
+
+
         protected void UpdateData()
         {
-            lock(simData)
+            lock (simData)
             {
-                int i=0;
+                int i = 0;
                 foreach (ObservablePoint dp in simData[0].Values)
                 {
                     dp.X = i;
                     dp.Y = cfd.GetData(i);
                     i++;
                 }
+                // Set convergence here
             }
-
-            // hier ein on property changed
-
-
+            ModelConvergence = cfd.Convergence();
         }
-
 
     }
 }

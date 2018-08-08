@@ -47,12 +47,27 @@ namespace CFD_A2_WPF_Metro
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-
+            solverAdapt.RunSteps();
         }
 
         private void RunStepsButton_Click(object sender, RoutedEventArgs e)
         {
-            //solverAdapt.RunSteps();
+            solverAdapt.RunSteps();
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            solverAdapt.ResetModel();
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

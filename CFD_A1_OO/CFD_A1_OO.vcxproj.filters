@@ -48,6 +48,9 @@
     <ClInclude Include="Solver1D_MacCormack.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Solver1D_ROE.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFD_A1_OO.cpp">
@@ -81,6 +84,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Solver1D_MacCormack.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver1D_ROE.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
