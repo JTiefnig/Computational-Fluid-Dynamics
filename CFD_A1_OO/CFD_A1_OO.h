@@ -8,7 +8,9 @@
 #include "Solver1D_LaxWendroff.h"
 #include "Solver1D_Central.h"
 #include "Solver1D_MacCormack.h"
+#include "Solver1D_ROE.h"
 #include "GridGenerator.h"
+
 
 
 using namespace System;
@@ -26,6 +28,7 @@ namespace CFD_A1_OO {
 		Solver1D_Central* solv_C;
 		Solver1D_LaxWendroff* solv_LW;
 		Solver1D_MacCormack* solv_MCC;
+		Solver1D_ROE* solv_ROE;
 
 	public:
 

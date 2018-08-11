@@ -105,7 +105,7 @@ namespace CFD_A2_WPF_Metro
 
 
 
-        public int SelectedSolverIndex { set; get; } = 0;
+        public int SelectedSolverIndex { set; get; } = 3;
 
 
 

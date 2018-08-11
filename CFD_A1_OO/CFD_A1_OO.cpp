@@ -16,6 +16,7 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter()
 	solv_C = new Solver1D_Central(mod);
 	solv_LW = new Solver1D_LaxWendroff(mod);
 	solv_MCC = new Solver1D_MacCormack(mod);
+	solv_ROE = new Solver1D_ROE(mod);
 
 }
 
@@ -31,6 +32,9 @@ void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
 		break;
 	case 2:
 		solv_MCC->DoSteps(i);
+		break;
+	case 3:
+		solv_ROE->DoSteps(i);
 		break;
 	}
 }

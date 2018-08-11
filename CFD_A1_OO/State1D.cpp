@@ -65,6 +65,25 @@ State1D State1D::operator/(double c)
 	return ret;
 }
 
+double & State1D::operator[](int i)
+{
+	switch (i)
+	{
+	case 1:
+		return rho;
+		break;
+	case 2:
+		return rho_u;
+		break;
+	case 3:
+		return e;
+		break;
+	default:
+		break;
+	}
+	// TODO: Exception 
+}
+
 State1D State1D::absComponents()
 {
 	State1D ret = State1D();

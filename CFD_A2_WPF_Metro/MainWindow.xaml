@@ -47,10 +47,11 @@
 
             <StackPanel>
                 
-                <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex}">
+                <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
                     <ComboBoxItem>Central</ComboBoxItem>
                     <ComboBoxItem>LaxWendroff</ComboBoxItem>
                     <ComboBoxItem>Mac Cormack</ComboBoxItem>
+                    <ComboBoxItem>ROE Solver</ComboBoxItem>
                 </ComboBox>
 
                 <Button Name="ResetButton" Click="ResetButton_Click" Margin="5,2">
@@ -122,10 +123,11 @@
                 
             </DockPanel>
 
-                
-            <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding SolverAdapter.ModelConvergence}" To="1">
+
+            <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding SolverAdapter.ModelConvergence}" To="1" >
             </lvc:Gauge>
 
+            
             <ListBox Width="80" Margin ="2" VerticalAlignment="Stretch">
                 
             </ListBox>

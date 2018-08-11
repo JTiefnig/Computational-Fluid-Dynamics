@@ -10,11 +10,11 @@ Model1D::Model1D(int gridSize)
 
 	
 	R = 287.0;
-	gamma = 1.4; // entspricht kappa
+	gamma = 1.4; // 
 
-	p_tot = 1*100000;
+	p_tot = 1 *100000;
 	T_tot = 273.15;
-	p_exit = 0.9*100000;
+	p_exit = 0.9 *100000;
 	sub_exit = 1;
 	rho_tot = 0;
 }
@@ -58,43 +58,46 @@ void Model1D::Boundary()
 
 	double rho = 2*u[1].rho- u[2].rho;
 
-	double cp = (R* gamma / (gamma + 1));
+	if (rho > rho_tot)
+	{
+		rho = rho_tot;
+	}
+	
+	u[0].rho = rho;
+
+	//double cp = (R* gamma / (gamma + 1));
 
 	double p = p_tot * pow(rho / rho_tot, gamma); //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
 
 	double vel = sqrt(2 * R*gamma / (gamma - 1)*(T_tot - p / (rho*R)));//u[1].rho_u / u[1].rho;
 
 
-	if (rho > rho_tot)
-	{
-		rho = rho_tot;
-	}
-
-
-	u[0].rho = rho;
+	
 	u[0].rho_u = vel * rho;
-	u[0].e = p_exit / (gamma - 1) + rho * pow(vel, 2)*0.5;
+	u[0].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
 
 
-	rho = 2*u[imax - 2].rho -  u[imax - 3].rho;
+	
 
 
 	p = p_exit; //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
 
-	vel = u[imax - 2].rho_u / u[imax - 2].rho;
+	rho = 2*u[imax - 2].rho -  u[imax - 3].rho;
 
 
-	if (rho > rho_tot)	rho = rho_tot;
+	//if (rho > rho_tot)	rho = rho_tot;
 
 	u[imax - 1].rho = rho;
 	u[imax - 1].rho_u = vel * rho;
+
+	vel = u[imax - 1].rho_u / u[imax - 1].rho;
 	u[imax - 1].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
 
 }
 
 GridPoint1D & Model1D::operator[](int i)
 {
-	return u[i];
+	return u[i]; 
 }
 
 double Model1D::GetPressure(int i)

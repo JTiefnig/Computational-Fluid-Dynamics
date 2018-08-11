@@ -36,7 +36,7 @@ void GridGenerator::Generate()
 	{
 		(*model)[i].x = (x_min + (i)* dx);
 
-		(*model)[i].area = (y_min + local_k * pow((*model)[i].x, 2));
+		(*model)[i].area = (y_min + (y_max - y_min)*pow(model->u[i].x / x_max, 2));//(y_min + local_k * pow((*model)[i].x, 2));
 
 		(*model)[i].da_dx = (local_k * (*model)[i].x * 2);
 	}

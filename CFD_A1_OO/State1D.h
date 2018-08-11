@@ -16,6 +16,8 @@ public:
 	State1D operator*(double c);
 	State1D operator/(double c);
 
+	double & operator[](int i);
+
 	State1D absComponents();
 
 	virtual void operator=(const State1D &b);
