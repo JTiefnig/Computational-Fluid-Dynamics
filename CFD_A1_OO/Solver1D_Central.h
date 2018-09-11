@@ -4,7 +4,7 @@
 #include "State1D.h"
 #include <vector>
 
-using namespace std;
+
 
 
 class Solver1D_Central :
@@ -18,7 +18,7 @@ public:
 	// Geerbt über Solver1D
 	virtual void DoStep() override;
 
-	virtual void DoSteps(int i) override;
+
 
 private:
 
@@ -37,9 +37,9 @@ private:
 
 
 	
-	vector<State1D> source;
-	vector<State1D> f;
-	vector<State1D> dissip;
+	std::vector<State1D> source;
+	std::vector<State1D> f;
+	std::vector<State1D> dissip;
 
 };
 

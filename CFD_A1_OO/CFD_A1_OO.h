@@ -12,15 +12,10 @@
 #include "GridGenerator.h"
 
 
-
 using namespace System;
 
 
-
-
-
 namespace CFD_A1_OO {
-
 	public ref class CfdA1Adapter
 	{
 	private:
@@ -30,6 +25,8 @@ namespace CFD_A1_OO {
 		Solver1D_MacCormack* solv_MCC;
 		Solver1D_ROE* solv_ROE;
 
+
+		array<int>^ jo; 
 	public:
 
 		CfdA1Adapter();
@@ -41,6 +38,11 @@ namespace CFD_A1_OO {
 		double GetData(int i);
 
 		float Convergence();
+
+		
+
+		property double Parameter {double get() { return 4; }}
+
 		// TODO: Die Methoden für diese Klasse hier hinzufügen.
 	};
 }

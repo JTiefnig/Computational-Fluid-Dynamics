@@ -1,4 +1,6 @@
 #pragma once
+#include "MatrixXd.h"
+
 class State1D
 {
 public:
@@ -17,6 +19,11 @@ public:
 	State1D operator/(double c);
 
 	double & operator[](int i);
+
+
+	// Werden für den ROE solver eingeführt
+	operator MatrixXd ();
+	void operator = (MatrixXd& mat);
 
 	State1D absComponents();
 

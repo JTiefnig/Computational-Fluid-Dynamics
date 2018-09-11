@@ -12,7 +12,7 @@ Solver1D_LaxWendroff::Solver1D_LaxWendroff(Model1D* mod)
 	source = vector<State1D>(imax);
 	f = vector<State1D>(imax);
 	
-	cfl = 0.1;
+	cfl = 0.05;
 
 	dt = 0;
 	time = 0;
@@ -51,11 +51,6 @@ void Solver1D_LaxWendroff::DoStep()
 
 }
 
-void Solver1D_LaxWendroff::DoSteps(int i)
-{
-	for (; i > 0; i--)
-		DoStep();
-}
 
 
 
@@ -76,9 +71,16 @@ void Solver1D_LaxWendroff::CalcF()
 
 		double local_k = -(model->u[i].da_dx) / (model->u[i].area);
 
-		source[i].rho = u[i].rho_u * local_k;
+		/*source[i].rho = u[i].rho_u * local_k;
 		source[i].rho_u = u[i].rho_u * local_u*local_k;
-		source[i].e = f[i].e * local_k;
+		source[i].e = f[i].e * local_k;*/
+
+		double p = (u[i].e - u[i].rho * pow(u[i].rho_u / u[i].rho, 2)*0.5)*(model->gamma - 1);
+		double rho = u[i].rho;
+		double vel = u[i].rho_u / u[i].rho;
+		source[i].rho = -u[i].da_dx / u[i].area * u[i].rho_u;
+		source[i].rho_u = -u[i].da_dx / u[i].area * rho*pow(vel, 2);
+		source[i].e = -u[i].da_dx / u[i].area * (u[i].e + p)*vel;
 	}
 }
 

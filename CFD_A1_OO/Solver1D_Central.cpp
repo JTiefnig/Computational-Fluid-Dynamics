@@ -64,13 +64,6 @@ void Solver1D_Central::DoStep()
 
 }
 
-void Solver1D_Central::DoSteps(int i)
-{
-	for (; i > 0; i--)
-	{
-		DoStep();
-	}
-}
 
 
 

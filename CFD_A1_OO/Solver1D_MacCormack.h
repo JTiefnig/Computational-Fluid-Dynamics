@@ -4,7 +4,7 @@
 #include "State1D.h"
 #include <vector>
 
-using namespace std;
+
 
 
 class Solver1D_MacCormack :
@@ -27,8 +27,8 @@ private:
 	State1D Calc_source(int i);
 	State1D Calc_source_q(int i);
 
-	vector<State1D> u_q;
-	vector<State1D> u_qq;
+	std::vector<State1D> u_q;
+	std::vector<State1D> u_qq;
 
 	double dt;
 
@@ -38,6 +38,6 @@ public:
 
 	// Geerbt über Solver1D
 	virtual void DoStep() override;
-	virtual void DoSteps(int i) override;
+
 };
 

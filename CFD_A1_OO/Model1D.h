@@ -3,9 +3,15 @@
 #include "State1D.h"
 #include "GridPoint1D.h"
 
+//#include <msclr\marshal_cppstd.h>
+//#include <msclr\marshal.h>
+
 #include <vector>
 
-using namespace std;
+
+
+
+
 
 
 
@@ -13,8 +19,8 @@ class Model1D
 {
 public:
 
-	vector<GridPoint1D> u;
-	vector<GridPoint1D> delta_u;
+	std::vector<GridPoint1D> u;
+	std::vector<GridPoint1D> delta_u;
 
 	double dx;
 
@@ -46,7 +52,13 @@ public:
 
 	double GetPressure(int i);
 
+
+
 	float CalculateConvergence();
+
+	
+
+	
 
 private:
 	float convCompValue = 1;

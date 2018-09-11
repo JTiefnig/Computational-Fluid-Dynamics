@@ -14,7 +14,7 @@ public:
 	virtual ~Solver1D();
 
 	virtual void DoStep()=0;
-	virtual void DoSteps(int i)=0;
+	virtual void DoSteps(int i);
 
 
 

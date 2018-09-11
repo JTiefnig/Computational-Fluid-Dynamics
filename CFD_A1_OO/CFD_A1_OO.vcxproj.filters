@@ -51,6 +51,15 @@
     <ClInclude Include="Solver1D_ROE.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="smartProperty.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="propertyContainer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixXd.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFD_A1_OO.cpp">
@@ -87,6 +96,15 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Solver1D_ROE.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="smartProperty.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="propertyContainer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixXd.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

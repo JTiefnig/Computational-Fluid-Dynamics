@@ -136,8 +136,11 @@
     <ClInclude Include="CFD_A1_OO.h" />
     <ClInclude Include="GridGenerator.h" />
     <ClInclude Include="GridPoint1D.h" />
+    <ClInclude Include="MatrixXd.h" />
     <ClInclude Include="Model1D.h" />
+    <ClInclude Include="propertyContainer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="smartProperty.h" />
     <ClInclude Include="Solver1D.h" />
     <ClInclude Include="Solver1D_Central.h" />
     <ClInclude Include="Solver1D_LaxWendroff.h" />
@@ -151,7 +154,10 @@
     <ClCompile Include="CFD_A1_OO.cpp" />
     <ClCompile Include="GridGenerator.cpp" />
     <ClCompile Include="GridPoint1D.cpp" />
+    <ClCompile Include="MatrixXd.cpp" />
     <ClCompile Include="Model1D.cpp" />
+    <ClCompile Include="propertyContainer.cpp" />
+    <ClCompile Include="smartProperty.cpp" />
     <ClCompile Include="Solver1D.cpp" />
     <ClCompile Include="Solver1D_Central.cpp" />
     <ClCompile Include="Solver1D_LaxWendroff.cpp" />

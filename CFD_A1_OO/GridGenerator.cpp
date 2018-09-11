@@ -4,7 +4,7 @@
 
 #include <vector>
 
-using namespace std;
+
 
 GridGenerator::GridGenerator(Model1D* mod)
 {

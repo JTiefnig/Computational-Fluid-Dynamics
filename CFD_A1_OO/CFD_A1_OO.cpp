@@ -6,6 +6,7 @@
 
 
 
+
 CFD_A1_OO::CfdA1Adapter::CfdA1Adapter()
 {
 	mod = new Model1D(100);
@@ -17,7 +18,6 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter()
 	solv_LW = new Solver1D_LaxWendroff(mod);
 	solv_MCC = new Solver1D_MacCormack(mod);
 	solv_ROE = new Solver1D_ROE(mod);
-
 }
 
 void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
@@ -54,3 +54,5 @@ void CFD_A1_OO::CfdA1Adapter::Reset()
 {
 	mod->Initialize();
 }
+
+

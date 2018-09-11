@@ -69,19 +69,39 @@ double & State1D::operator[](int i)
 {
 	switch (i)
 	{
-	case 1:
+	case 0:
 		return rho;
 		break;
-	case 2:
+	case 1:
 		return rho_u;
 		break;
-	case 3:
+	case 2:
 		return e;
 		break;
 	default:
 		break;
 	}
+	throw "Dim ERROR";
 	// TODO: Exception 
+}
+
+State1D::operator MatrixXd()
+{
+	MatrixXd ret(3, 1);
+	ret(0, 0) = rho;
+	ret(1, 0) = rho_u;
+	ret(2, 0) = e;
+	return ret;
+}
+
+void State1D::operator=(MatrixXd & mat)
+{
+	if (mat.m != 3 || mat.n != 1)
+		throw "Dim ERROR";
+
+	rho = mat(0, 0);
+	rho_u = mat(1, 0);
+	e = mat(2, 0);
 }
 
 State1D State1D::absComponents()

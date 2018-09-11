@@ -2,6 +2,8 @@
 #include "Model1D.h"
 
 
+using namespace std;
+
 Model1D::Model1D(int gridSize)
 {
 	this->gridsize = gridSize;
@@ -84,11 +86,8 @@ void Model1D::Boundary()
 
 	rho = 2*u[imax - 2].rho -  u[imax - 3].rho;
 
-
-	//if (rho > rho_tot)	rho = rho_tot;
-
 	u[imax - 1].rho = rho;
-	u[imax - 1].rho_u = vel * rho;
+	u[imax - 1].rho_u = 2 * u[imax - 2].rho_u - u[imax - 3].rho_u;// vel * rho;
 
 	vel = u[imax - 1].rho_u / u[imax - 1].rho;
 	u[imax - 1].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
@@ -105,14 +104,16 @@ double Model1D::GetPressure(int i)
 	double rho = u[i].rho;
 	double vel = u[i].rho_u / rho;
 	double p = (gamma - 1)*(u[i].e - rho * vel*vel / 2);
-	double mach = vel / pow((gamma*p / rho), 0.5);
-	double temp = 1 + (gamma - 1) / 2 * mach * mach;
+	//double mach = vel / pow((gamma*p / rho), 0.5);
+	//double temp = 1 + (gamma - 1) / 2 * mach * mach;
 
 
 
 	return p; // Whatever
 	
 }
+
+
 
 float Model1D::CalculateConvergence()
 {

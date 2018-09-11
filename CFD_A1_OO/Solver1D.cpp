@@ -9,11 +9,19 @@
 Solver1D::Solver1D(Model1D * model)
 {
 	this->model = model;
-	cfl = 0.09;
+	cfl = 0.9;
 }
 
 Solver1D::~Solver1D()
 {
+}
+
+void Solver1D::DoSteps(int i)
+{
+	for (; i > 0; i--)
+	{
+		this->DoStep();
+	}
 }
 
 
@@ -22,7 +30,7 @@ double Solver1D::TimeStep()
 
 	int imax = model->u.size();
 
-	double eigenmax = 0;
+	double eigenmax = 0.01;
 
 	for (int i = 0; i < imax; i++)
 	{
@@ -40,7 +48,7 @@ double Solver1D::TimeStep()
 		{
 			eigenmax = fabs(local_u - local_c);
 		}
-		// new
+		// new = pretty much the same 
 
 		/*double vel = model->u[i].rho_u / model->u[i].rho;
 		double p = (model->u[i][3] - model->u[i][1] * pow(vel, 2)*0.5)*(model->gamma - 1);

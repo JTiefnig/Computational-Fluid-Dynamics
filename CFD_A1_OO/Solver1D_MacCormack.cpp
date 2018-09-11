@@ -2,6 +2,8 @@
 #include "Solver1D_MacCormack.h"
 
 
+using namespace std;
+
 Solver1D_MacCormack::Solver1D_MacCormack(Model1D* mod)
 	: Solver1D(mod)
 {
@@ -13,7 +15,7 @@ Solver1D_MacCormack::Solver1D_MacCormack(Model1D* mod)
 	dt = 0;
 	time = 0;
 
-	cfl = 0.3;
+	cfl = 0.5;
 }
 
 
@@ -28,9 +30,9 @@ void Solver1D_MacCormack::DoStep()
 	dt = TimeStep();
 	time += dt;
 	
+	
 
 	Calc_uq();
-
 	Boundary_q();
 
 	Calc_uqq();
@@ -45,11 +47,7 @@ void Solver1D_MacCormack::DoStep()
 
 }
 
-void Solver1D_MacCormack::DoSteps(int i)
-{
-	for (; i > 0; i--)
-		DoStep();
-}
+
 
 
 void Solver1D_MacCormack::Calc_uq()
@@ -60,7 +58,7 @@ void Solver1D_MacCormack::Calc_uq()
 
 	for (int i = 1; i < imax; i++)
 	{
-		u_q[i] = u[i] - (Calc_f(i) - Calc_f(i-1)) *dt / model->dx + Calc_source(i)*dt;
+		u_q[i] = u[i] - (Calc_f(i) - Calc_f(i - 1)) *dt / model->dx + Calc_source(i)*dt;
 
 	}
 }
@@ -72,7 +70,9 @@ void Solver1D_MacCormack::Boundary_q()
 
 	u_q[0] = u_q[1]*2 - u_q[2];
 
-	//u_q[imax-1] = u_q[imax-2];
+	u_q[imax-1] = u_q[imax-2]*2 - u_q[imax - 3];
+
+
 
 }
 
@@ -84,7 +84,7 @@ void Solver1D_MacCormack::Calc_uqq()
 
 	for (int i = 0; i < imax-1; i++)
 	{
-		u_qq[i] = u[i] - (Calc_f_q(i+1) - Calc_f_q(i)) *dt / model->dx + Calc_source_q(i)*dt;
+		u_qq[i] = u[i] - (Calc_f_q(i + 1) - Calc_f_q(i)) *dt / model->dx + Calc_source_q(i)*dt;
 	}
 
 

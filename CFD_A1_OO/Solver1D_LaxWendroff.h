@@ -7,7 +7,6 @@
 
 
 
-using namespace std;
 
 
 class Solver1D_LaxWendroff :
@@ -23,8 +22,8 @@ private:
 
 	State1D CalcF_star_LW(int i);
 
-	vector<State1D> source;
-	vector<State1D> f;
+	std::vector<State1D> source;
+	std::vector<State1D> f;
 
 	double dt;
 
@@ -34,6 +33,6 @@ public:
 
 	// Geerbt über Solver1D
 	virtual void DoStep() override;
-	virtual void DoSteps(int i) override;
+
 };
 

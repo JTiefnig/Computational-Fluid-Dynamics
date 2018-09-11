@@ -4,7 +4,7 @@
 #include "Model1D.h"
 
 
-using namespace std;
+
 
 
 

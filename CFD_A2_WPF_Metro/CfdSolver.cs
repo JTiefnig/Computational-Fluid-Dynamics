@@ -22,7 +22,16 @@ namespace CFD_A2_WPF_Metro
     public class CfdSolver : INotifyPropertyChanged
     {
 
-              
+
+        ObservableCollection<CfdSeries> series;
+
+        public ObservableCollection<CfdSeries> Series
+        {
+            get { return series; }
+            set { series = value;  }
+        }
+
+
 
         private SeriesCollection simData;
 
@@ -48,7 +57,7 @@ namespace CFD_A2_WPF_Metro
             }
         }
 
-        private int steps = 100;
+        private int steps = 500;
         public int Steps
         {
             get { return steps; }
@@ -59,7 +68,7 @@ namespace CFD_A2_WPF_Metro
             }
         }
 
-        private int updateInterval = 2;
+        private int updateInterval = 20;
         public int UpdatdateInterval
         {
             get { return updateInterval; }
@@ -74,6 +83,9 @@ namespace CFD_A2_WPF_Metro
 
         public CfdSolver()
         {
+
+            
+
 
             simData = new SeriesCollection();
             cfd = new CfdA1Adapter();
