@@ -15,6 +15,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+
+
+
 namespace CFD_A2_WPF_Metro
 {
     /// <summary>
@@ -25,7 +31,7 @@ namespace CFD_A2_WPF_Metro
         public CustomVisual()
         {
             InitializeComponent();
-            
+
         }
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -40,20 +46,59 @@ namespace CFD_A2_WPF_Metro
 
         private void MyRender()
         {
+            if (AreaSeries == null || PressureSeries == null)
+                            return;
             var drawingContext = backingStore.Open();
 
-            const int linewidth = 5;
 
-            for(int i=0; i<this.ActualWidth-20; i+= linewidth)
+            double visualWidth = this.ActualWidth-100;
+            double visualHeight = this.ActualHeight - 100;
+
+            double linewidth = visualWidth/PressureSeries.Length;
+
+
+            double center = this.ActualHeight / 2;
+
+
+            double maxp, minp;
+            minp = PressureSeries[0];
+            maxp = minp;
+            foreach (double p in PressureSeries)
             {
-                Pen mypen = new Pen(new SolidColorBrush(Color.FromArgb(255, 255, (byte)(255 - i), (byte)i)), linewidth);
-                mypen.Freeze();
-                drawingContext.DrawLine(mypen, new Point(i + 20, 20), new Point(i+20, 200));
+                if (p > maxp)
+                    maxp = p;
+
+                if (p < minp)
+                    minp = p;
             }
-            
-            
+            double specp = maxp - minp;
 
 
+            double maxa;
+            maxa = AreaSeries[0];
+        
+            foreach (double a in AreaSeries)
+            {
+                if (a > maxa)
+                    maxa = a;
+            }
+           
+
+            for (int i = 0; i < PressureSeries.Length; i++)
+            {
+
+                double lineH = AreaSeries[i]/maxa * visualHeight/2;
+
+                
+                Pen mypen = new Pen(new SolidColorBrush(GetHeatColor(specp, PressureSeries[i]-minp)), linewidth);
+                mypen.Freeze();
+                drawingContext.DrawLine(mypen, new Point(i * linewidth + 20, center - lineH), new Point(i * linewidth + 20, center + lineH));
+            }
+
+
+            
+
+            // just a test . nothing special
             FormattedText formattedText = new FormattedText(
                 CustomText,
                 CultureInfo.GetCultureInfo("en-us"),
@@ -65,6 +110,21 @@ namespace CFD_A2_WPF_Metro
             drawingContext.Close();
 
         }
+
+
+        private Color GetHeatColor(double maxval, double val)
+        {
+
+            byte valr = (byte)((val/maxval)*255);
+            byte valg = (byte)Math.Abs(valr*2-255);
+            byte valb = (byte)(255 - valr);
+
+            return Color.FromArgb(100, valr, valg, valb);
+        }
+
+
+
+
 
 
 
@@ -80,7 +140,6 @@ namespace CFD_A2_WPF_Metro
             CustomVisual ob = d as CustomVisual;
             ob.MyRender();//InvalidateVisual();
         }
-      
 
 
         public string CustomText
@@ -92,6 +151,138 @@ namespace CFD_A2_WPF_Metro
                 
             }
         }
+
+
+
+
+        public static readonly DependencyProperty PressureSeriesProperty =
+        DependencyProperty.Register(nameof(PressureSeries),
+        typeof(double[]),
+        typeof(CustomVisual),
+        new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnModelChanged)));
+
+        public double[] PressureSeries
+        {
+            get => (double[])GetValue(PressureSeriesProperty);
+            set
+            {
+                SetValue(PressureSeriesProperty, value);
+
+            }
+        }
+
+
+        public static readonly DependencyProperty AreaSeriesProperty =
+        DependencyProperty.Register(nameof(AreaSeries),
+        typeof(double[]),
+        typeof(CustomVisual),
+        new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnModelChanged)));
+
+        public double[] AreaSeries
+        {
+            get => (double[])GetValue(AreaSeriesProperty);
+            set
+            {
+                SetValue(AreaSeriesProperty, value);
+            }
+        }
+
+
+
+        public static void OnModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {  // Break point is hit
+            CustomVisual ob = d as CustomVisual;
+            ob.MyRender();//InvalidateVisual();
+        }
+
+
+
+        
+
+
+
+
+        /// <summary>
+        /// The series property
+        /// </summary>
+        //public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register(
+        //    "Series", typeof(SeriesCollection), typeof(CustomVisual),
+        //    new PropertyMetadata(default(SeriesCollection), OnSeriesChanged));
+
+        ///// <summary>
+        ///// Gets or sets chart series collection to plot.
+        ///// </summary>
+        //public SeriesCollection Series
+        //{
+        //    get { return (SeriesCollection)GetValue(SeriesProperty); }
+        //    set { SetValue(SeriesProperty, value); }
+        //}
+
+        //private static void OnSeriesChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        //{
+        //    CustomVisual ob = o as CustomVisual;
+        //    ob.MyRender();//InvalidateVisual();
+        //}
+
+
+
+
+
+        ///// <summary>
+
+        ///// The series property
+
+        ///// </summary>
+
+        //public static readonly DependencyProperty SeriesProperty = DependencyProperty.Register(
+
+        //    "mySeries", typeof(Series), typeof(CustomVisual),
+
+        //    new FrameworkPropertyMetadata(default(Series), OnSeriesChanged));
+
+
+        //public static void OnSeriesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{  // Break point is hit
+        //    CustomVisual ob = d as CustomVisual;
+        //    ob.MyRender();//InvalidateVisual();
+        //}
+
+
+        ///// <summary>
+        ///// The values property
+        ///// </summary>
+        //public static readonly DependencyProperty ValuesProperty = DependencyProperty.Register(
+        //    "Values", typeof(IChartValues), typeof(Series),
+        //    new PropertyMetadata(default(IChartValues), OnSeriesChanged));
+        ///// <summary>
+        ///// Gets or sets chart values.
+        ///// </summary>
+        //public IChartValues Values
+        //{
+        //    get { return (IChartValues)GetValue(ValuesProperty); }
+        //    set { SetValue(ValuesProperty, value); }
+        //}
+
+
+        ///// <summary>
+
+        ///// Gets or sets chart series collection to plot.
+
+        ///// </summary>
+
+        //public Series mySeries
+
+        //{
+
+        //    get {
+        //        return (Series)GetValue(SeriesProperty);
+        //    }
+
+        //    set {
+        //        SetValue(SeriesProperty, value);
+        //    }
+
+        //}
 
         // todo my own dependency property :)
 

@@ -39,9 +39,44 @@ void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
 	}
 }
 
-double CFD_A1_OO::CfdA1Adapter::GetData(int i)
+
+double CFD_A1_OO::CfdA1Adapter::GetData(int i, DATASET set)
 {
-	return mod->GetPressure(i);
+	if (i >= mod->gridsize)
+		throw gcnew Exception("Out of Index");
+
+	switch (set)
+	{
+	case CFD_A1_OO::DATASET::X:
+		return mod->u[i].x;
+		break;
+	case CFD_A1_OO::DATASET::AREA:
+		return mod->u[i].area;
+		break;
+	case CFD_A1_OO::DATASET::RHO:
+		return mod->u[i].rho;
+		break;
+	case CFD_A1_OO::DATASET::RHO_U:
+		return mod->u[i].rho_u;
+		break;
+	case CFD_A1_OO::DATASET::E:
+		return mod->u[i].e;
+		break;
+	case CFD_A1_OO::DATASET::PRESSURE:
+		return mod->GetPressure(i);
+		break;
+	case CFD_A1_OO::DATASET::U:
+		return mod->GetVelocity(i);
+		break;
+	case CFD_A1_OO::DATASET::MACH:
+		return mod->GetMach(i);
+		break;
+	case CFD_A1_OO::DATASET::T:
+		return mod->GetTemperatur(i);
+		break;
+	default:
+		break;
+	}
 }
 
 float CFD_A1_OO::CfdA1Adapter::Convergence()
@@ -56,3 +91,34 @@ void CFD_A1_OO::CfdA1Adapter::Reset()
 }
 
 
+array<double>^ CFD_A1_OO::CfdA1Adapter::GetPressureArray()
+{
+	array<double>^ ret = gcnew array<double>(mod->gridsize);
+
+	for (int i = 0; i < mod->gridsize; i++)
+	{
+		ret[i] = mod->GetPressure(i);
+	}
+
+	return ret;
+}
+
+array<double>^ CFD_A1_OO::CfdA1Adapter::GetDataArray(DATASET set)
+{
+	array<double>^ ret = gcnew array<double>(mod->gridsize);
+
+	for (int i = 0; i < mod->gridsize; i++)
+	{
+		ret[i] = this->GetData(i, set);
+	}
+
+	return ret;
+
+}
+
+
+
+int CFD_A1_OO::CfdA1Adapter::GetGridSize()
+{
+	return mod->gridsize;
+}

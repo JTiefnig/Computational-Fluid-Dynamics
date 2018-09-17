@@ -12,167 +12,166 @@
         mc:Ignorable="d"
         Title="CFD Solver Tiefnig 2018" Height="600" Width="800">
 
-    <Controls:MetroWindow.Resources>
-        <ResourceDictionary>
-            <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
-                <Setter Property="Height" Value="125" />
-                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
-                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-                <Setter Property="TitleFontSize" Value="10" />
-                <Setter Property="Width" Value="147" />
-            </Style>
-        </ResourceDictionary>
-    </Controls:MetroWindow.Resources>
+  <Controls:MetroWindow.Resources>
+    <ResourceDictionary>
+      <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
+        <Setter Property="Height" Value="125" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+        <Setter Property="TitleFontSize" Value="10" />
+        <Setter Property="Width" Value="147" />
+      </Style>
+    </ResourceDictionary>
+  </Controls:MetroWindow.Resources>
 
 
-    <Grid>
-        <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="1" />
-            </Style>
-        </Grid.Resources>
+  <Grid>
+    <Grid.Resources>
+      <Style TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="1" />
+      </Style>
+    </Grid.Resources>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="100" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+
+      <ColumnDefinition Width="150"/>
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
 
 
-        <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0.333,0">
+    <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,0,0.333,0">
 
-            <StackPanel>
-                
-                <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
-                    <ComboBoxItem>Central</ComboBoxItem>
-                    <ComboBoxItem>LaxWendroff</ComboBoxItem>
-                    <ComboBoxItem>Mac Cormack</ComboBoxItem>
-                    <ComboBoxItem>ROE Solver</ComboBoxItem>
-                </ComboBox>
+      <StackPanel>
 
-                <Button Name="ResetButton" Click="ResetButton_Click" Margin="5,2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Width="18"
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
+          <ComboBoxItem>Central</ComboBoxItem>
+          <ComboBoxItem>LaxWendroff</ComboBoxItem>
+          <ComboBoxItem>Mac Cormack</ComboBoxItem>
+          <ComboBoxItem>ROE Solver</ComboBoxItem>
+        </ComboBox>
+
+        <Button Name="ResetButton" Click="ResetButton_Click" Margin="5,2">
+          <StackPanel Orientation="Horizontal">
+            <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="SyncSolid" />
-                        <TextBlock TextAlignment="Center" Margin="5"> RESET Model</TextBlock>
-                    </StackPanel>
-                </Button>
+            <TextBlock TextAlignment="Center" Margin="5"> RESET Model</TextBlock>
+          </StackPanel>
+        </Button>
 
-                <Button Name="SettingsButton" Click="SettingsButton_Click" Margin="5,2">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Width="18"
+        <Button Name="SettingsButton" Click="SettingsButton_Click" Margin="5,2">
+          <StackPanel Orientation="Horizontal">
+            <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="WrenchSolid" />
-                        <TextBlock TextAlignment="Center" Margin="5"> Settings </TextBlock>
-                    </StackPanel>
-                </Button>
+            <TextBlock TextAlignment="Center" Margin="5"> Settings</TextBlock>
+          </StackPanel>
+        </Button>
 
-                <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
-            </StackPanel>
+        <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+      </StackPanel>
 
-            <StackPanel>
-                <TextBlock Margin="1, 3, 1, 0">Steps To Run</TextBlock>
-                <TextBox Width="100" Margin="3" Name="StepsToRunInputBox" Text="{Binding SolverAdapter.Steps}"></TextBox>
-                <TextBlock Margin="1, 3, 1, 0">Update inteval</TextBlock>
-                <TextBox Width="100" Margin="3" Text="{Binding SolverAdapter.UpdatdateInterval}"></TextBox>
-            </StackPanel>
+      <StackPanel>
+        <TextBlock Margin="1, 3, 1, 0">Steps To Run</TextBlock>
+        <TextBox Width="100" Margin="3" Name="StepsToRunInputBox" Text="{Binding SolverAdapter.Steps}"></TextBox>
+        <TextBlock Margin="1, 3, 1, 0">Update inteval</TextBlock>
+        <TextBox Width="100" Margin="3" Text="{Binding SolverAdapter.UpdatdateInterval}"></TextBox>
+      </StackPanel>
 
 
-            <DockPanel LastChildFill="True">
-                <Button DockPanel.Dock="Bottom" Name="RunStepsButton" Click="RunStepsButton_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Width="18"
+      <DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Bottom" Name="RunStepsButton" Click="RunStepsButton_Click">
+          <StackPanel Orientation="Horizontal">
+            <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="FastForwardSolid" />
-                        <TextBlock TextAlignment="Center" Margin="5" VerticalAlignment="Center"> RunSteps</TextBlock>
-                    </StackPanel>
-                </Button>
-                <StackPanel Orientation="Horizontal">
-                    <Button Name="RunButton" Click="RunButton_Click" >
-                    <StackPanel>
-                        <iconPacks:PackIconFontAwesome Width="30"
+            <TextBlock TextAlignment="Center" Margin="5" VerticalAlignment="Center"> RunSteps</TextBlock>
+          </StackPanel>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+          <Button Name="RunButton" Click="RunButton_Click" >
+            <StackPanel>
+              <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="PlaySolid" />
-                        <TextBlock TextAlignment="Center" Margin="5"> RUN</TextBlock>
-                    </StackPanel>
-                </Button>
-                    <Button Name="StopButton" Click="StopButton_Click" >
-                        <StackPanel>
-                            <iconPacks:PackIconFontAwesome Width="30"
+              <TextBlock TextAlignment="Center" Margin="5"> RUN</TextBlock>
+            </StackPanel>
+          </Button>
+          <Button Name="StopButton" Click="StopButton_Click" >
+            <StackPanel>
+              <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="StopSolid" />
-                            <TextBlock TextAlignment="Center" Margin="5"> STOP</TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                
-            </DockPanel>
+              <TextBlock TextAlignment="Center" Margin="5"> STOP</TextBlock>
+            </StackPanel>
+          </Button>
+        </StackPanel>
+
+      </DockPanel>
 
 
-            <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding SolverAdapter.ModelConvergence}" To="1" >
-            </lvc:Gauge>
+      <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding SolverAdapter.ModelConvergence}" To="1" >
+      </lvc:Gauge>
 
-            
-            <ListBox Width="80" Margin ="2" VerticalAlignment="Stretch">
-                
-            </ListBox>
-            
-            <StackPanel>
-                <Button Name="AddSeriesButton" >
-                    <StackPanel>
-                        <iconPacks:PackIconFontAwesome Width="18"
+
+      <!--<ListBox Width="80" Margin ="2" VerticalAlignment="Stretch" DataContext="{Binding SolverAdapter.Models}" DisplayMemberPath="Name" />-->
+
+
+      <StackPanel>
+        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowPressure,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="2"> Show Pressure </ToggleButton>
+        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowPressure, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="2">Show Mach</ToggleButton>
+        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowPressure}" Margin="2">Show Velocity</ToggleButton>
+        <!--<Button Name="AddSeriesButton" Click="AddSeriesButton_Click">
+          <StackPanel>
+            <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="PlusSolid" />
-                        <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Add</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Name="RemoveSeries" >
-                    <StackPanel>
-                        <iconPacks:PackIconFontAwesome Width="18"
+            <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Add</TextBlock>
+          </StackPanel>
+        </Button>
+        <Button Name="RemoveSeries" Click="RemoveSeries_Click">
+          <StackPanel>
+            <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="TrashSolid" />
-                        <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Delete</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+            <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Delete</TextBlock>
+          </StackPanel>
+        </Button>-->
+      </StackPanel>
 
-            <Button Name="ExportButton" Height="60">
-                <StackPanel>
-                    <iconPacks:PackIconFontAwesome Width="30"
+      <Button Name="ExportButton" Height="60" Click="ExportButton_Click">
+        <StackPanel>
+          <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="FileExportSolid" />
-                    <TextBlock TextAlignment="Center" Margin="5" FontSize="12"> Export</TextBlock>
-                </StackPanel>
-            </Button>
-
-            
-            
+          <TextBlock TextAlignment="Center" Margin="5" FontSize="12"> Export</TextBlock>
         </StackPanel>
+      </Button>
+    </StackPanel>
 
-        <!-- DATA Display-->
+    <!-- DATA Display-->
 
-        <!--<TabControl
+    <!--<TabControl
             Grid.Row="1"
             Grid.Column="1"
             Controls:TabControlHelper.Underlined="TabPanel"
@@ -192,53 +191,52 @@
 
 
     <TabControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabStripPlacement="Bottom">
-      <TabItem Header="graph">
-        <lvc:CartesianChart Grid.Column="2" Grid.Row="1" Series="{Binding SolverAdapter.SimulationData}"  LegendLocation="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DisableAnimations="True" Margin="0,0,0.333,-0.333">
-          <lvc:CartesianChart.AxisY>
+      <TabItem Header="Graph" >
+
+        <lvc:CartesianChart Grid.Column="2" Grid.Row="1" Series="{Binding SolverAdapter.SimulationData}" LegendLocation="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DisableAnimations="True" Margin="0,0,0.333,-0.333">
+          <lvc:CartesianChart.AxisY >
             <lvc:Axis Title="Pressure"></lvc:Axis>
           </lvc:CartesianChart.AxisY>
           <lvc:CartesianChart.AxisX>
             <lvc:Axis Title="Length" Labels="{Binding Labels}"></lvc:Axis>
           </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
+
+
       </TabItem>
 
       <TabItem Header="visual">
-        <local:CustomVisual CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>
+        <local:CustomVisual PressureSeries="{Binding SolverAdapter.PressureSeries}" AreaSeries="{Binding SolverAdapter.AreaSeries}" CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>
       </TabItem>
-      
-      
+
+
     </TabControl>
 
 
-       
-
-
-
-        <DataGrid
+    <DataGrid
             Name="SimDatatGrid"
             Grid.Column="0"
             Grid.Row="1"
             AutoGenerateColumns="False"
             FrozenColumnCount="1"
             ItemsSource="{Binding Path=SolverAdapter.SimulationData[0].Values, UpdateSourceTrigger=PropertyChanged}">
-            <DataGrid.Columns>
-                <DataGridTextColumn
+      <DataGrid.Columns>
+        <DataGridTextColumn
                                 Width="1*"
                                 Binding="{Binding X}"
                                 Header="Pos"
                                 IsReadOnly="True" />
-                
-                <DataGridTextColumn
+
+        <DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding Y}"
                                 Header="Unit"
                                 IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
-   
+      </DataGrid.Columns>
+    </DataGrid>
 
 
 
-    </Grid>
+
+  </Grid>
 </Controls:MetroWindow>

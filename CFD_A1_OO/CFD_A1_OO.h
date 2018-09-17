@@ -13,21 +13,42 @@
 
 
 using namespace System;
+using namespace System::Collections::Generic;
 
+///
+/// CFD Final Project
+/// Autor Johannes Tiefnig
+///
 
 namespace CFD_A1_OO {
+
+	public enum class DATASET {
+		X,
+		AREA,
+		RHO,
+		RHO_U,
+		E,
+		PRESSURE, 
+		U,
+		MACH,
+		T
+	};
+
 	public ref class CfdA1Adapter
 	{
 	private:
-		Model1D* mod;
+		Model1D * mod;
+
 		Solver1D_Central* solv_C;
 		Solver1D_LaxWendroff* solv_LW;
 		Solver1D_MacCormack* solv_MCC;
 		Solver1D_ROE* solv_ROE;
 
 
-		array<int>^ jo; 
+		
 	public:
+
+		
 
 		CfdA1Adapter();
 
@@ -35,7 +56,14 @@ namespace CFD_A1_OO {
 
 		void DoSteps(int i, int solverID);
 
-		double GetData(int i);
+
+		int GetGridSize();
+
+		double GetData(int i, DATASET set);
+
+		array<double>^ GetPressureArray();
+
+		array<double>^ GetDataArray(DATASET set);
 
 		float Convergence();
 

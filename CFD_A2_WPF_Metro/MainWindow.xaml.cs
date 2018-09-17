@@ -32,22 +32,15 @@ namespace CFD_A2_WPF_Metro
 
         public MainWindow()
         {
-
             InitializeComponent();
-
-
             SolverAdapter = new CfdSolver();
 
-
-
             DataContext = this;
-
-
         }
 
         private void RunButton_Click(object sender, RoutedEventArgs e)
         {
-            solverAdapt.RunSteps();
+            solverAdapt.Run();
         }
 
         private void RunStepsButton_Click(object sender, RoutedEventArgs e)
@@ -62,10 +55,25 @@ namespace CFD_A2_WPF_Metro
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-
+            solverAdapt.stopSimulation();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void AddSeriesButton_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void RemoveSeries_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

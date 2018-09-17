@@ -80,7 +80,7 @@ namespace CFD_A1_WPF
                 values.Clear();
                 for (int i = 0; i < 100; i++)
                 {
-                    values.Add(cfd.GetData(i));
+                    //values.Add(cfd.GetData(i));
                 }
 
             }

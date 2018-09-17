@@ -13,25 +13,35 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 
+
 namespace CFD_A2_WPF_Metro
 {
 
-
-
-
     public class CfdSolver : INotifyPropertyChanged
     {
+        bool pressure = true;
+
+        public bool ShowPressure { set { pressure = value; OnPropertyChanged(nameof(ShowPressure)); } get { return pressure; } }
+        public bool ShowMach { set; get; } = false;
+        public bool ShowVelocity { set; get; } = false;
 
 
-        ObservableCollection<CfdSeries> series;
 
-        public ObservableCollection<CfdSeries> Series
+
+        public CfdSolver()
         {
-            get { return series; }
-            set { series = value;  }
+            simData = new SeriesCollection();
+
+            cfd = new CfdA1Adapter();
+
+            var ax = new AxesCollection();
+       
+            // Just for testning now
+            AddSeriesCollection("Pressure");
+
+            worker = new Thread(() => this.SimulateSteps());
+
         }
-
-
 
         private SeriesCollection simData;
 
@@ -40,7 +50,6 @@ namespace CFD_A2_WPF_Metro
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
-            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
@@ -80,18 +89,17 @@ namespace CFD_A2_WPF_Metro
         }
 
 
-
-        public CfdSolver()
+        public double[] PressureSeries
         {
-
-            
-
-
-            simData = new SeriesCollection();
-            cfd = new CfdA1Adapter();
-
-            AddSeriesCollection("Pressure");
+            get {return cfd.GetPressureArray(); }
         }
+
+
+        public double[] AreaSeries
+        {
+            get {  return cfd.GetDataArray(DATASET.AREA);  }
+        }
+
 
         public void AddSeriesCollection(string name)
         {
@@ -104,35 +112,73 @@ namespace CFD_A2_WPF_Metro
 
             };
 
+            for (int i = 0; i < cfd.GetGridSize(); i++)
+                ls.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), 0));
 
-            for (int iA = 0; iA < 100; iA++)
-            {
-                ls.Values.Add(new ObservablePoint());
-            }
 
 
             SimulationData.Add(ls);
+            
         }
 
-
-
+    
+        
 
         public int SelectedSolverIndex { set; get; } = 3;
 
+        Thread worker;
 
-
-        public async void RunSteps()
+        public void RunSteps()
         {
-            await Task.Run(() => this.SimulateSteps());
+            if(!worker.IsAlive)
+            {
+                worker = new Thread(() => this.SimulateSteps());
+                run4ever = false;
+                worker.Start();
+            }
+            //await Task.Run(() => this.SimulateSteps());
         }
+
+        public void Run()
+        {
+            if (!worker.IsAlive)
+            {
+                worker = new Thread(() => this.SimulateSteps());
+                run4ever = true;
+                worker.Start();
+            }
+        }
+
+        bool run4ever;
+
+        bool endWorkerFlag;
+
+        public async void stopSimulation()
+        {
+            endWorkerFlag = true;
+
+            await Task.Run(() => { Thread.Sleep(1000); });
+
+            if (worker.IsAlive)
+            {
+                worker.Abort();
+            }
+
+        }
+
 
         protected void SimulateSteps()
         {
-            for (int i = 0; i < steps; i += updateInterval)
+            endWorkerFlag = false;
+            for (int i = 0; i < steps ||  run4ever ; i += updateInterval)
             {
+                
                 cfd.DoSteps(updateInterval, SelectedSolverIndex);
-
+                
                 this.UpdateData();
+
+                if (endWorkerFlag)
+                    break;
             }
         }
 
@@ -146,7 +192,7 @@ namespace CFD_A2_WPF_Metro
         private double convergence;
         public double ModelConvergence
         {
-            get { return (Sigmoid(convergence)-0.5)*2; }
+            get { return convergence; /*(Sigmoid(convergence)-0.5)*2;*/ }
             set
             {
                 convergence = value;
@@ -157,24 +203,28 @@ namespace CFD_A2_WPF_Metro
 
         static private double Sigmoid(double x)
         {
-            return 1/(1 + Math.Exp(-x));
+            return 1/(1 + Math.Exp(-x)); // sigmoid "vereinfacht" ^^
         }
+
+
 
 
         protected void UpdateData()
         {
+
             lock (simData)
             {
-                int i = 0;
-                foreach (ObservablePoint dp in simData[0].Values)
+                int i = 0;                
+                double[] pr = cfd.GetPressureArray();
+                foreach (ObservablePoint p in simData[0].Values)
                 {
-                    dp.X = i;
-                    dp.Y = cfd.GetData(i);
+                    p.Y = pr[i];
                     i++;
                 }
-                // Set convergence here
+                OnPropertyChanged(nameof(PressureSeries));
+                ModelConvergence = cfd.Convergence();
             }
-            ModelConvergence = cfd.Convergence();
+            
         }
 
     }

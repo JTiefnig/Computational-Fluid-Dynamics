@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Model1D.h"
 
+#include "GridGenerator.h"
 
 using namespace std;
 
@@ -28,6 +29,10 @@ Model1D::~Model1D()
 
 void Model1D::Initialize()
 {
+
+
+	auto var = new GridGenerator(this);
+
 	stepcount = 0;
 
 	rho_tot = p_tot / (R*T_tot);
@@ -79,9 +84,6 @@ void Model1D::Boundary()
 	u[0].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
 
 
-	
-
-
 	p = p_exit; //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
 
 	rho = 2*u[imax - 2].rho -  u[imax - 3].rho;
@@ -104,14 +106,33 @@ double Model1D::GetPressure(int i)
 	double rho = u[i].rho;
 	double vel = u[i].rho_u / rho;
 	double p = (gamma - 1)*(u[i].e - rho * vel*vel / 2);
-	//double mach = vel / pow((gamma*p / rho), 0.5);
-	//double temp = 1 + (gamma - 1) / 2 * mach * mach;
-
-
-
-	return p; // Whatever
-	
+	return p; 
 }
+
+double Model1D::GetMach(int i)
+{
+	double rho = u[i].rho;
+	double vel = u[i].rho_u / rho;
+	double p = (gamma - 1)*(u[i].e - rho * vel*vel / 2);
+	double mach = vel / pow((gamma*p / rho), 0.5);
+	return mach;
+}
+double Model1D::GetTemperatur(int i)
+{
+	double rho = u[i].rho;
+	double vel = u[i].rho_u / rho;
+	double p = (gamma - 1)*(u[i].e - rho * vel*vel / 2);
+	double mach = vel / pow((gamma*p / rho), 0.5);
+	double temp = 1 + (gamma - 1) / 2 * mach * mach;
+	return temp;
+}
+double Model1D::GetVelocity(int i)
+{
+	double rho = u[i].rho;
+	double vel = u[i].rho_u / rho;
+	return vel;
+}
+
 
 
 

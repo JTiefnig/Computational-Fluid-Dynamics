@@ -8,7 +8,7 @@
 
 #include <vector>
 
-
+class GridGenerator;
 
 
 
@@ -51,8 +51,9 @@ public:
 
 
 	double GetPressure(int i);
-
-
+	double GetMach(int i);
+	double GetTemperatur(int i);
+	double GetVelocity(int i);
 
 	float CalculateConvergence();
 
