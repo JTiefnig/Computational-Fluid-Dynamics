@@ -61,12 +61,12 @@ void Solver1D_ROE::calc_f_star_roe()
 
 	for (int i = 0; i < imax - 1; i++)
 	{
-		// (A1) calculation of averages
+		
 		R_av = sqrt(u[i + 1].rho / u[i].rho); // Eq 13-75
 		rho_av = R_av * u[i].rho; // Eq 13-76
 		u_av = (R_av * u[i + 1].rho_u / u[i + 1].rho + u[i].rho_u / u[i].rho) / (R_av + 1); // Eq 13-77
 
-		//Enthalpy
+		// ...enthalpy
 		H_i = pow(u[i].rho_u / u[i].rho, 2) * (1 - gamma) + gamma * u[i].e / u[i].rho;
 		H_ip1 = pow(u[i + 1].rho_u / u[i + 1].rho, 2) * (1 - gamma) + gamma * u[i + 1].e / u[i + 1].rho;
 

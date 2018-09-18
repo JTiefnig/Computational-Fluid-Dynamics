@@ -51,8 +51,10 @@ namespace CFD_A2_WPF_Metro
             var drawingContext = backingStore.Open();
 
 
-            double visualWidth = this.ActualWidth-100;
-            double visualHeight = this.ActualHeight - 100;
+            double leftDrawingoffset = 80;
+
+            double visualWidth = this.ActualWidth- leftDrawingoffset*1.5;
+            double visualHeight = this.ActualHeight - leftDrawingoffset*1.5;
 
             double linewidth = visualWidth/PressureSeries.Length;
 
@@ -92,21 +94,46 @@ namespace CFD_A2_WPF_Metro
                 
                 Pen mypen = new Pen(new SolidColorBrush(GetHeatColor(specp, PressureSeries[i]-minp)), linewidth);
                 mypen.Freeze();
-                drawingContext.DrawLine(mypen, new Point(i * linewidth + 20, center - lineH), new Point(i * linewidth + 20, center + lineH));
+                drawingContext.DrawLine(mypen, new Point(i * linewidth + leftDrawingoffset, center - lineH), new Point(i * linewidth + leftDrawingoffset, center + lineH));
             }
 
-
             
+            // Draw legned // could be a seperate control element
 
-            // just a test . nothing special
-            FormattedText formattedText = new FormattedText(
-                CustomText,
+
+            double legendLineWidth = visualHeight / 255;
+
+
+            for(int i =0; i<256; i++)
+            {
+                Pen mypen = new Pen(new SolidColorBrush(GetHeatColor(255, i)), legendLineWidth);
+                mypen.Freeze();
+                double ypos = (center + visualHeight / 2) - i * legendLineWidth;
+                drawingContext.DrawLine(mypen, new Point(10, ypos), new Point(40, ypos));
+
+            }
+
+            FormattedText upperlimText = new FormattedText(
+                string.Format("{0} Pa", maxp.ToString("N1")),
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Verdana"),
-                32,
+                14,
                 Brushes.Black);
-            drawingContext.DrawText(formattedText, new Point(200, 50));
+
+            drawingContext.DrawText(upperlimText, new Point(45, center-visualHeight/2-10));
+
+
+            FormattedText lowerlimText = new FormattedText(
+                string.Format("{0} Pa", minp.ToString("N1")),
+                CultureInfo.GetCultureInfo("en-us"),
+                FlowDirection.LeftToRight,
+                new Typeface("Verdana"),
+                14,
+                Brushes.Black);
+
+            drawingContext.DrawText(lowerlimText, new Point(45, center + visualHeight / 2-10));
+
             drawingContext.Close();
 
         }
@@ -121,11 +148,6 @@ namespace CFD_A2_WPF_Metro
 
             return Color.FromArgb(100, valr, valg, valb);
         }
-
-
-
-
-
 
 
         public static readonly DependencyProperty CustomTextProperty =

@@ -1,6 +1,9 @@
 #pragma once
 #include "MatrixXd.h"
 
+
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
 class State1D
 {
 public:

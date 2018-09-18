@@ -19,25 +19,66 @@ namespace CFD_A2_WPF_Metro
 
     public class CfdSolver : INotifyPropertyChanged
     {
-        bool pressure = true;
+        bool showPa = true;
+        public bool ShowPressure
+        {
+            set
+            {
+                showPa = value;
+                UpdateSeriesConfig();
+            }
+            get { return showPa; }
+        }
+        bool showMa = true;
+        public bool ShowMach
+        {
+            set
+            {
+                showMa = value;
+                UpdateSeriesConfig();
+            }
+            get { return showMa; }
+        }
+        bool showVel = true;
+        public bool ShowVelocity
+        {
+            set
+            {
+                showVel = value;
+                UpdateSeriesConfig();
+            }
+            get { return showVel; }
+        }
 
-        public bool ShowPressure { set { pressure = value; OnPropertyChanged(nameof(ShowPressure)); } get { return pressure; } }
-        public bool ShowMach { set; get; } = false;
-        public bool ShowVelocity { set; get; } = false;
 
 
+
+        public AxesCollection YAxesCollection
+        {
+            get; set;
+        }
+
+
+        LineSeries pressurels;
+        LineSeries machls;
+        LineSeries vells;
+
+        Axis paAxis;
+        Axis maAxis;
+        Axis velAxis;
 
 
         public CfdSolver()
         {
             simData = new SeriesCollection();
 
-            cfd = new CfdA1Adapter();
+            YAxesCollection = new AxesCollection();
 
-            var ax = new AxesCollection();
-       
-            // Just for testning now
-            AddSeriesCollection("Pressure");
+            cfd = new CfdA1Adapter(MODEL.A1);
+
+            
+
+            InitSeries();
 
             worker = new Thread(() => this.SimulateSteps());
 
@@ -55,13 +96,12 @@ namespace CFD_A2_WPF_Metro
 
         public SeriesCollection SimulationData
         {
-            get { lock (simData) { return simData; } }
+            get { return simData; }
             set
             {
-                lock (simData)
-                {
+                
                     simData = value;
-                }
+                
                 OnPropertyChanged("SimulationData");
             }
         }
@@ -91,38 +131,131 @@ namespace CFD_A2_WPF_Metro
 
         public double[] PressureSeries
         {
-            get {return cfd.GetPressureArray(); }
+            get { return cfd.GetPressureArray(); }
         }
 
 
         public double[] AreaSeries
         {
-            get {  return cfd.GetDataArray(DATASET.AREA);  }
+            get { return cfd.GetDataArray(DATASET.AREA); }
         }
 
 
-        public void AddSeriesCollection(string name)
+        void InitSeries()
         {
 
-            var ls = new LineSeries
+
+
+            // Init graph Axis
+
+            YAxesCollection = new AxesCollection();
+            paAxis = new Axis();
+            paAxis.Title = "Pa";
+            paAxis.Visibility = System.Windows.Visibility.Visible;
+            //YAxesCollection.Add(paAxis);
+
+            maAxis = new Axis();
+            maAxis.Title = "Ma";
+            maAxis.Visibility = System.Windows.Visibility.Visible;
+            //YAxesCollection.Add(maAxis);
+
+            velAxis = new Axis();
+            velAxis.Title = "m/s";
+            velAxis.Visibility = System.Windows.Visibility.Visible;
+            //YAxesCollection.Add(velAxis);
+
+
+
+
+            pressurels = new LineSeries
             {
-                Title = name,
+                Title = "Pressure",
                 Values = new ChartValues<ObservablePoint>(),
                 PointGeometry = DefaultGeometries.None,
 
             };
-
             for (int i = 0; i < cfd.GetGridSize(); i++)
-                ls.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), 0));
+                pressurels.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.PRESSURE)));
+
+            machls = new LineSeries
+            {
+                Title = "Mach",
+                Values = new ChartValues<ObservablePoint>(),
+                PointGeometry = DefaultGeometries.None,
+
+            };
+            for (int i = 0; i < cfd.GetGridSize(); i++)
+                machls.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.MACH)));
+
+            vells = new LineSeries
+            {
+                Title = "Velocity",
+                Values = new ChartValues<ObservablePoint>(),
+                PointGeometry = DefaultGeometries.None
+
+            };
+            for (int i = 0; i < cfd.GetGridSize(); i++)
+                vells.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.U)));
 
 
 
-            SimulationData.Add(ls);
+
+
+
+            UpdateSeriesConfig();
             
+
         }
 
-    
-        
+        void UpdateSeriesConfig()
+        {
+
+            simData = new SeriesCollection();
+            YAxesCollection = new AxesCollection();
+
+            //if (SimulationData.Count != 0)
+            //    SimulationData.Clear();
+            //if (YAxesCollection.Count != 0)
+            //    YAxesCollection.Clear();
+
+
+            
+
+            if (ShowPressure)
+            {
+                YAxesCollection.Add(paAxis);
+                pressurels.ScalesYAt = YAxesCollection.IndexOf(paAxis);
+                SimulationData.Add(pressurels);
+            }
+
+            if(ShowMach)
+            {
+                YAxesCollection.Add(maAxis);
+                machls.ScalesYAt = YAxesCollection.IndexOf(maAxis);
+                SimulationData.Add(machls);
+
+            }
+
+            if(ShowVelocity)
+            {
+                YAxesCollection.Add(velAxis);
+                vells.ScalesYAt = YAxesCollection.IndexOf(velAxis);
+                SimulationData.Add(vells);
+            }
+
+
+
+            OnPropertyChanged(nameof(YAxesCollection));
+            OnPropertyChanged(nameof(SimulationData));
+
+
+        }
+
+
+
+
+
+
 
         public int SelectedSolverIndex { set; get; } = 3;
 
@@ -130,7 +263,7 @@ namespace CFD_A2_WPF_Metro
 
         public void RunSteps()
         {
-            if(!worker.IsAlive)
+            if (!worker.IsAlive)
             {
                 worker = new Thread(() => this.SimulateSteps());
                 run4ever = false;
@@ -170,11 +303,11 @@ namespace CFD_A2_WPF_Metro
         protected void SimulateSteps()
         {
             endWorkerFlag = false;
-            for (int i = 0; i < steps ||  run4ever ; i += updateInterval)
+            for (int i = 0; i < steps || run4ever; i += updateInterval)
             {
-                
+
                 cfd.DoSteps(updateInterval, SelectedSolverIndex);
-                
+
                 this.UpdateData();
 
                 if (endWorkerFlag)
@@ -203,26 +336,57 @@ namespace CFD_A2_WPF_Metro
 
         static private double Sigmoid(double x)
         {
-            return 1/(1 + Math.Exp(-x)); // sigmoid "vereinfacht" ^^
+            return 1 / (1 + Math.Exp(-x)); // sigmoid "vereinfacht" ^^
         }
 
 
-
+        public int StepCount
+        {
+            get { return cfd.StepCount(); }
+        }
 
         protected void UpdateData()
         {
 
             lock (simData)
             {
-                int i = 0;                
-                double[] pr = cfd.GetPressureArray();
-                foreach (ObservablePoint p in simData[0].Values)
+
+
+                if(showPa)
                 {
-                    p.Y = pr[i];
-                    i++;
+                    int i = 0;
+                    foreach (ObservablePoint p in pressurels.Values)
+                    {
+                        p.Y = cfd.GetData(i, DATASET.PRESSURE);
+                        i++;
+                    }
                 }
+
+                if (showMa)
+                {
+                    int i = 0;
+                    foreach (ObservablePoint p in machls.Values)
+                    {
+                        p.Y = cfd.GetData(i, DATASET.MACH);
+                        i++;
+                    }
+                }
+
+                if (showVel)
+                {
+                    int i = 0;
+                    foreach (ObservablePoint p in vells.Values)
+                    {
+                        p.Y = cfd.GetData(i, DATASET.U);
+                        i++;
+                    }
+                }
+
+
                 OnPropertyChanged(nameof(PressureSeries));
                 ModelConvergence = cfd.Convergence();
+                OnPropertyChanged(nameof(StepCount));
+                
             }
             
         }

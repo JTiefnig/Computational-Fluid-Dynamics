@@ -3,6 +3,9 @@
 #include "State1D.h"
 #include "GridPoint1D.h"
 
+#include "propertyContainer.h"
+#include "smartProperty.h"
+
 //#include <msclr\marshal_cppstd.h>
 //#include <msclr\marshal.h>
 
@@ -14,10 +17,13 @@ class GridGenerator;
 
 
 
-
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
 class Model1D
 {
 public:
+
+	
 
 	std::vector<GridPoint1D> u;
 	std::vector<GridPoint1D> delta_u;
@@ -44,7 +50,7 @@ public:
 	~Model1D();
 
 
-	void Initialize();
+
 	void Boundary();
 
 	GridPoint1D& operator[](int i);

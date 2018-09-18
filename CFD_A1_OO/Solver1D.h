@@ -1,6 +1,11 @@
 #pragma once
 #include "Model1D.h"
 
+
+
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
+
 class Solver1D
 {
 protected:

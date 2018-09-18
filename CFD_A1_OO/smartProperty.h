@@ -4,6 +4,9 @@
 
 
 
+
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
 template <class T>
 class smartProperty 
 {

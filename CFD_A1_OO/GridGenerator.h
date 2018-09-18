@@ -6,25 +6,26 @@
 
 
 
-
+//
+// Autor Johannes Tienfig
+// CFD Tu Graz Final Project
+//
+// This Class enables the generic generation of an inital model condition
+// For now there are just two different Startconditions implemented
+// 
+//
 
 class GridGenerator
 {
-private: 
-
+protected:
 	Model1D * model;
 
-
-
-	// some Parameters
-	double x_min;
-	double x_max;
-	double y_min;
-	double y_max;
+private: 
+	// some Parameters // SmartPropteries later
 
 public:
 	GridGenerator(Model1D* mod);
 	~GridGenerator();
-	void Generate();
+	virtual void Generate()=0;
 };
 

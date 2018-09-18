@@ -6,7 +6,8 @@
 
 
 
-
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
 class Solver1D_MacCormack :
 	public Solver1D
 {

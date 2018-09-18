@@ -133,6 +133,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="A1Grid.h" />
+    <ClInclude Include="A2Grid.h" />
     <ClInclude Include="CFD_A1_OO.h" />
     <ClInclude Include="GridGenerator.h" />
     <ClInclude Include="GridPoint1D.h" />
@@ -150,6 +152,8 @@
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="A1Grid.cpp" />
+    <ClCompile Include="A2Grid.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="CFD_A1_OO.cpp" />
     <ClCompile Include="GridGenerator.cpp" />

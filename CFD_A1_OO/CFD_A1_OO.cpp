@@ -7,17 +7,27 @@
 
 
 
-CFD_A1_OO::CfdA1Adapter::CfdA1Adapter()
+CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 {
+	selectedModel = m;
+
 	mod = new Model1D(100);
-	GridGenerator* gridGen = new GridGenerator(mod);
-	gridGen->Generate();
-	gridGen->~GridGenerator();
-	mod->Initialize();
+
+	grid1 = new A1Grid(mod);
+	grid2 = new A2Grid(mod);
+	
+	Reset();
+
+	
+	
 	solv_C = new Solver1D_Central(mod);
 	solv_LW = new Solver1D_LaxWendroff(mod);
 	solv_MCC = new Solver1D_MacCormack(mod);
 	solv_ROE = new Solver1D_ROE(mod);
+
+	
+
+
 }
 
 void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
@@ -43,7 +53,7 @@ void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
 double CFD_A1_OO::CfdA1Adapter::GetData(int i, DATASET set)
 {
 	if (i >= mod->gridsize)
-		throw gcnew Exception("Out of Index");
+		throw gcnew Exception("Index out of range");
 
 	switch (set)
 	{
@@ -84,10 +94,23 @@ float CFD_A1_OO::CfdA1Adapter::Convergence()
 	return mod->CalculateConvergence();
 }
 
+int CFD_A1_OO::CfdA1Adapter::StepCount()
+{
+	return mod->stepcount;
+}
+
 
 void CFD_A1_OO::CfdA1Adapter::Reset()
 {
-	mod->Initialize();
+	switch (selectedModel) 
+	{
+	case MODEL::A1:
+		grid1->Generate();
+		break;
+	case MODEL::A2:
+		grid2->Generate();
+		break;
+	}
 }
 
 
@@ -121,4 +144,20 @@ array<double>^ CFD_A1_OO::CfdA1Adapter::GetDataArray(DATASET set)
 int CFD_A1_OO::CfdA1Adapter::GetGridSize()
 {
 	return mod->gridsize;
+}
+
+
+List<String^>^ CFD_A1_OO::CfdA1Adapter::GetParameterList()
+{
+
+}
+
+double CFD_A1_OO::CfdA1Adapter::GetParameter(String^ name)
+{
+	
+}
+
+void CFD_A1_OO::CfdA1Adapter::SetParameter(String^ name, double value)
+{
+
 }

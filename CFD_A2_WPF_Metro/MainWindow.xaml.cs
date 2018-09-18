@@ -19,7 +19,10 @@ namespace CFD_A2_WPF_Metro
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
+    /// <autor> Johannes Tiefnig</autor>
+    /// CFD TU Graz 2018
     /// </summary>
+    /// 
     public partial class MainWindow : MetroWindow
     {
         private CfdSolver solverAdapt;

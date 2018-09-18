@@ -1,4 +1,7 @@
 // CFD_A1_OO.h
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
+
 
 #pragma once
 
@@ -10,15 +13,14 @@
 #include "Solver1D_MacCormack.h"
 #include "Solver1D_ROE.h"
 #include "GridGenerator.h"
+#include "A1Grid.h"
+#include "A2Grid.h"
 
 
 using namespace System;
 using namespace System::Collections::Generic;
 
-///
-/// CFD Final Project
-/// Autor Johannes Tiefnig
-///
+
 
 namespace CFD_A1_OO {
 
@@ -34,6 +36,13 @@ namespace CFD_A1_OO {
 		T
 	};
 
+
+	public enum class MODEL
+	{
+		A1, 
+		A2
+	};
+
 	public ref class CfdA1Adapter
 	{
 	private:
@@ -45,12 +54,19 @@ namespace CFD_A1_OO {
 		Solver1D_ROE* solv_ROE;
 
 
-		
+		A1Grid* grid1;
+		A2Grid* grid2;
+
 	public:
 
+
+
 		
 
-		CfdA1Adapter();
+		MODEL selectedModel;
+		
+
+		CfdA1Adapter(MODEL m);
 
 		void Reset();
 
@@ -65,12 +81,25 @@ namespace CFD_A1_OO {
 
 		array<double>^ GetDataArray(DATASET set);
 
+		List<String^>^ GetParameterList();
+
+		double GetParameter(String^ name);
+		void SetParameter(String^ name, double value);
+
+
+
 		float Convergence();
+
+		int StepCount();
+		
 
 		
 
-		property double Parameter {double get() { return 4; }}
 
-		// TODO: Die Methoden für diese Klasse hier hinzufügen.
+		
+
+
+		// Just a test:
+		//property double Parameter {double get() { return 4; }}
 	};
 }

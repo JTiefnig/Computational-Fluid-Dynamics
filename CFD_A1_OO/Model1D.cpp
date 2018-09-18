@@ -19,7 +19,7 @@ Model1D::Model1D(int gridSize)
 	T_tot = 273.15;
 	p_exit = 0.9 *100000;
 	sub_exit = 1;
-	rho_tot = 0;
+	rho_tot = p_tot / (R*T_tot);
 }
 
 
@@ -27,33 +27,7 @@ Model1D::~Model1D()
 {
 }
 
-void Model1D::Initialize()
-{
 
-
-	auto var = new GridGenerator(this);
-
-	stepcount = 0;
-
-	rho_tot = p_tot / (R*T_tot);
-	
-	double rho_start = rho_tot;
-	double rhou_start = 0;
-	double e_start = p_tot / (gamma - 1);
-
-
-	// Initialisieren des Stroemungsfeldes (Zustandsvektor U) mit den Ruhezustandswerten
-	// Initialisation of the flow field (state vector U) with the stagnation values (=total values)
-
-	int imax = u.size();
-	for (int i = 0; i < imax; i++)
-	{
-		u[i].rho = rho_start;
-		u[i].rho_u = rhou_start;
-		u[i].e = e_start;
-	}
-	return;
-}
 
 
 void Model1D::Boundary()
@@ -77,8 +51,6 @@ void Model1D::Boundary()
 	double p = p_tot * pow(rho / rho_tot, gamma); //p_tot* pow(((gamma - 1) / gamma*cp*T_tot*rho / (p_tot)), gamma);
 
 	double vel = sqrt(2 * R*gamma / (gamma - 1)*(T_tot - p / (rho*R)));//u[1].rho_u / u[1].rho;
-
-
 	
 	u[0].rho_u = vel * rho;
 	u[0].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
@@ -93,6 +65,9 @@ void Model1D::Boundary()
 
 	vel = u[imax - 1].rho_u / u[imax - 1].rho;
 	u[imax - 1].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
+
+
+
 
 }
 

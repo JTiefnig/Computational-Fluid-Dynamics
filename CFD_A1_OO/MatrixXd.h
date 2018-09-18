@@ -1,4 +1,11 @@
 #pragma once
+
+
+
+
+
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
 class MatrixXd
 {
 	double* v;

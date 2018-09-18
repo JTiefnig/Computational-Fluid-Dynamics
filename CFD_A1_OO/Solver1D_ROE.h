@@ -3,8 +3,13 @@
 #include "Model1D.h"
 
 
-// very bad. but simple / will be improved
-#define N 4
+
+
+
+// Autor Johannes Tiefnig
+// CFD TU Graz final project 2018
+// Homework
+
 
 class Solver1D_ROE :
 	public Solver1D
