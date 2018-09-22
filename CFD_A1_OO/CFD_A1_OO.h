@@ -58,20 +58,18 @@ namespace CFD_A1_OO {
 		A2Grid* grid2;
 
 	public:
-
-
-
 		
 
 		MODEL selectedModel;
 		
 
 		CfdA1Adapter(MODEL m);
+		~CfdA1Adapter();
+
 
 		void Reset();
 
 		void DoSteps(int i, int solverID);
-
 
 		int GetGridSize();
 
@@ -86,17 +84,11 @@ namespace CFD_A1_OO {
 		double GetParameter(String^ name);
 		void SetParameter(String^ name, double value);
 
-
+		void SavePropertiesToXml();
 
 		float Convergence();
 
 		int StepCount();
-		
-
-		
-
-
-		
 
 
 		// Just a test:

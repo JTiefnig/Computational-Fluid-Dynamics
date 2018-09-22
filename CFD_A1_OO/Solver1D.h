@@ -1,6 +1,6 @@
 #pragma once
 #include "Model1D.h"
-
+#include "propertyContainer.h"
 
 
 // Autor Johannes Tiefnig
@@ -11,7 +11,8 @@ class Solver1D
 protected:
 	Model1D* model;
 
-	double cfl;
+	smartProperty<double> cfl;
+
 	double TimeStep();
 
 public:
@@ -20,6 +21,8 @@ public:
 
 	virtual void DoStep()=0;
 	virtual void DoSteps(int i);
+
+
 
 
 

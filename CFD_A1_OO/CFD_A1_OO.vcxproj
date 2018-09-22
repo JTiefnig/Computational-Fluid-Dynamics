@@ -150,6 +150,7 @@
     <ClInclude Include="Solver1D_ROE.h" />
     <ClInclude Include="State1D.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="A1Grid.cpp" />
@@ -160,8 +161,6 @@
     <ClCompile Include="GridPoint1D.cpp" />
     <ClCompile Include="MatrixXd.cpp" />
     <ClCompile Include="Model1D.cpp" />
-    <ClCompile Include="propertyContainer.cpp" />
-    <ClCompile Include="smartProperty.cpp" />
     <ClCompile Include="Solver1D.cpp" />
     <ClCompile Include="Solver1D_Central.cpp" />
     <ClCompile Include="Solver1D_LaxWendroff.cpp" />
@@ -174,6 +173,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

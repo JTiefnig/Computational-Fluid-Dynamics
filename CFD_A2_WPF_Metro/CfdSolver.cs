@@ -76,11 +76,26 @@ namespace CFD_A2_WPF_Metro
 
             cfd = new CfdA1Adapter(MODEL.A1);
 
-            
+            Properties = new ObservableCollection<ModelProperty>();
+            GenerateParameterlist();
 
             InitSeries();
 
             worker = new Thread(() => this.SimulateSteps());
+
+        }
+
+        public ObservableCollection<ModelProperty> Properties { get; set; }
+
+        private void GenerateParameterlist()
+        {
+            List<String> props = cfd.GetParameterList();
+
+            foreach(var n in props)
+            {
+                Properties.Add(new ModelProperty(cfd, n));
+            }
+      
 
         }
 
@@ -187,15 +202,15 @@ namespace CFD_A2_WPF_Metro
             for (int i = 0; i < cfd.GetGridSize(); i++)
                 machls.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.MACH)));
 
-            vells = new LineSeries
-            {
-                Title = "Velocity",
-                Values = new ChartValues<ObservablePoint>(),
-                PointGeometry = DefaultGeometries.None
+            //vells = new LineSeries
+            //{
+            //    Title = "Velocity",
+            //    Values = new ChartValues<ObservablePoint>(),
+            //    PointGeometry = DefaultGeometries.None
 
-            };
-            for (int i = 0; i < cfd.GetGridSize(); i++)
-                vells.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.U)));
+            //};
+            //for (int i = 0; i < cfd.GetGridSize(); i++)
+            //    vells.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.U)));
 
 
 
@@ -236,12 +251,12 @@ namespace CFD_A2_WPF_Metro
 
             }
 
-            if(ShowVelocity)
-            {
-                YAxesCollection.Add(velAxis);
-                vells.ScalesYAt = YAxesCollection.IndexOf(velAxis);
-                SimulationData.Add(vells);
-            }
+            //if(ShowVelocity)
+            //{
+            //    YAxesCollection.Add(velAxis);
+            //    vells.ScalesYAt = YAxesCollection.IndexOf(velAxis);
+            //    SimulationData.Add(vells);
+            //}
 
 
 
@@ -372,15 +387,15 @@ namespace CFD_A2_WPF_Metro
                     }
                 }
 
-                if (showVel)
-                {
-                    int i = 0;
-                    foreach (ObservablePoint p in vells.Values)
-                    {
-                        p.Y = cfd.GetData(i, DATASET.U);
-                        i++;
-                    }
-                }
+                //if (showVel)
+                //{
+                //    int i = 0;
+                //    foreach (ObservablePoint p in vells.Values)
+                //    {
+                //        p.Y = cfd.GetData(i, DATASET.U);
+                //        i++;
+                //    }
+                //}
 
 
                 OnPropertyChanged(nameof(PressureSeries));

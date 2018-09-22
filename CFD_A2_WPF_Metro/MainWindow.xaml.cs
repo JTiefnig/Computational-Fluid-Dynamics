@@ -63,7 +63,12 @@ namespace CFD_A2_WPF_Metro
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var diag = new ParameterSettingsWindow(solverAdapt.Properties);
+
+            diag.Show();
+
+
+
         }
 
         private void AddSeriesButton_Click(object sender, RoutedEventArgs e)

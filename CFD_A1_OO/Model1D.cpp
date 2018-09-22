@@ -8,23 +8,38 @@ using namespace std;
 Model1D::Model1D(int gridSize)
 {
 	this->gridsize = gridSize;
+
 	u = vector<GridPoint1D>(gridSize);
 	delta_u = vector<GridPoint1D>(gridSize);
 
+	this->properties.LoadFromFile("PARAMERTER.xml");
+	this->properties.createProperty("cfl", 0.9);
+	// jetzt noch nicht da
+	//properties.loadPropertiesFromFile("PARAMERTER.xml");
 	
-	R = 287.0;
-	gamma = 1.4; // 
+	R = properties["R"];
+	//properties.createProperty("R", R);
+	gamma = properties["gamma"]; // 
+	//properties.createProperty("gamma", gamma);
+	p_tot = properties["p_tot"];
+	//properties.createProperty("p_tot", p_tot);
+	T_tot = properties["T_tot"];
+	//properties.createProperty("T_tot", T_tot);
+	p_exit = properties["p_exit"];
+	//properties.createProperty("p_exit", p_exit);
+	sub_exit = properties["sub_exit"];
+	//properties.createProperty("sub_exit", sub_exit);
 
-	p_tot = 1 *100000;
-	T_tot = 273.15;
-	p_exit = 0.9 *100000;
-	sub_exit = 1;
+	// Rho tot wird errechnet...
 	rho_tot = p_tot / (R*T_tot);
+
+
 }
 
 
 Model1D::~Model1D()
 {
+	// wird derzeit nicht erreicht ?
 }
 
 
@@ -67,6 +82,8 @@ void Model1D::Boundary()
 	u[imax - 1].e = p / (gamma - 1) + rho * pow(vel, 2)*0.5;
 
 
+	if (stepcount == nPrint)
+		CalculateConvergence();
 
 
 }
@@ -123,7 +140,7 @@ float Model1D::CalculateConvergence()
 		resid = resid + delta_u[i].absComponents();
 	}
 
-	if (this->stepcount == 2)
+	if (this->stepcount == nPrint)
 		convCompValue = resid.e;
 
 

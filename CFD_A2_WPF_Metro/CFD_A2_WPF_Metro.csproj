@@ -120,6 +120,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CfdSolver.cs" />
+    <Compile Include="CsvExporter.cs" />
     <Compile Include="CustomVisual.xaml.cs">
       <DependentUpon>CustomVisual.xaml</DependentUpon>
     </Compile>

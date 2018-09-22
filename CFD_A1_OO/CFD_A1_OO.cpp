@@ -3,9 +3,14 @@
 #include "stdafx.h"
 
 #include "CFD_A1_OO.h"
+#include <string>
 
 
+//#include <msclr\marshal_cppstd.h>
+//#include <msclr\marshal.h>
 
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 {
@@ -29,6 +34,13 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 
 
 }
+
+CFD_A1_OO::CfdA1Adapter::~CfdA1Adapter()
+{
+	delete mod;
+}
+
+
 
 void CFD_A1_OO::CfdA1Adapter::DoSteps(int i, int solverID)
 {
@@ -87,6 +99,12 @@ double CFD_A1_OO::CfdA1Adapter::GetData(int i, DATASET set)
 	default:
 		break;
 	}
+}
+
+
+void CFD_A1_OO::CfdA1Adapter::SavePropertiesToXml()
+{
+	mod->properties.SaveToFile("PARAMETER.xml");
 }
 
 float CFD_A1_OO::CfdA1Adapter::Convergence()
@@ -149,15 +167,46 @@ int CFD_A1_OO::CfdA1Adapter::GetGridSize()
 
 List<String^>^ CFD_A1_OO::CfdA1Adapter::GetParameterList()
 {
+	List<String^>^ ret = gcnew List<String^>();
+
+	for (int i = 0; i < mod->properties.size(); i++)
+	{
+		ret->Add(gcnew String(mod->properties[i].getName().c_str()));
+	}
+
+	return ret;
 
 }
 
 double CFD_A1_OO::CfdA1Adapter::GetParameter(String^ name)
 {
+
+	double ret =0;
+	IntPtr pString = Marshal::StringToHGlobalAnsi(name);
+	try
+	{
+		char* pchString = static_cast<char *>(pString.ToPointer());
+		ret= mod->properties[pchString].getValue();
+	}
+	finally
+	{
+		Marshal::FreeHGlobal(pString);
+	}
+	return ret;
 	
 }
 
 void CFD_A1_OO::CfdA1Adapter::SetParameter(String^ name, double value)
 {
 
+	IntPtr pString = Marshal::StringToHGlobalAnsi(name);
+	try
+	{
+		char* pchString = static_cast<char *>(pString.ToPointer());
+		mod->properties[pchString] = value;
+	}
+	finally
+	{
+		Marshal::FreeHGlobal(pString);
+	}
 }

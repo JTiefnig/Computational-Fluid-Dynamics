@@ -9,7 +9,8 @@
 Solver1D::Solver1D(Model1D * model)
 {
 	this->model = model;
-	cfl = 0.9;
+	cfl = model->properties["cfl"];
+	//model->properties.createProperty("cfl", cfl);
 }
 
 Solver1D::~Solver1D()

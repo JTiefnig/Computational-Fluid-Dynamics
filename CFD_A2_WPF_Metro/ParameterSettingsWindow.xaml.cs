@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace CFD_A2_WPF_Metro
 {
@@ -19,9 +20,20 @@ namespace CFD_A2_WPF_Metro
     /// </summary>
     public partial class ParameterSettingsWindow : Window
     {
-        public ParameterSettingsWindow()
+
+        public ObservableCollection<ModelProperty> Properties { get; set; }
+
+        public ParameterSettingsWindow(ObservableCollection<ModelProperty> modProps)
         {
+           
             InitializeComponent();
+            Properties = modProps;
+            DataContext = this; 
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

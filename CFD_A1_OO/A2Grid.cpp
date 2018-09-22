@@ -8,9 +8,9 @@ A2Grid::A2Grid(Model1D* m)
 	: GridGenerator(m)
 {
 	// set default values
-	y = 0.2;
-	x_min = -0.5;
-	x_max = 0.5;
+	y_gridA2 = 0.2;
+	x_min_gridA2 = -0.5;
+	x_max_gridA2 = 0.5;
 }
 
 

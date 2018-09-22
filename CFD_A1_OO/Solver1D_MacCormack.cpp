@@ -14,8 +14,6 @@ Solver1D_MacCormack::Solver1D_MacCormack(Model1D* mod)
 
 	dt = 0;
 	time = 0;
-
-	cfl = 0.5;
 }
 
 

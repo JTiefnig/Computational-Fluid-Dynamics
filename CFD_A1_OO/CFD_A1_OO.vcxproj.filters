@@ -66,6 +66,9 @@
     <ClInclude Include="A2Grid.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CFD_A1_OO.cpp">
@@ -104,12 +107,6 @@
     <ClCompile Include="Solver1D_ROE.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="smartProperty.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="propertyContainer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="MatrixXd.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="A2Grid.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

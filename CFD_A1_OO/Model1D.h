@@ -6,8 +6,9 @@
 #include "propertyContainer.h"
 #include "smartProperty.h"
 
-//#include <msclr\marshal_cppstd.h>
-//#include <msclr\marshal.h>
+#include "propertyContainer.h"
+
+
 
 #include <vector>
 
@@ -23,28 +24,31 @@ class Model1D
 {
 public:
 
-	
-
 	std::vector<GridPoint1D> u;
 	std::vector<GridPoint1D> delta_u;
 
-	double dx;
 
+	PropertyContainer<double> properties;
+
+
+	double dx;
 
 	// parameters 
 
 	int stepcount;
 
 	int gridsize;
-	double R;
-	double gamma; // kappa
-	double p_tot;
-	double T_tot;
-	double p_exit;
-	double sub_exit ;
-	double rho_tot;
-	
 
+	smartProperty<double> R;
+	smartProperty<double> gamma; // kappa
+	smartProperty<double> p_tot;
+	smartProperty<double> T_tot;
+	smartProperty<double> p_exit;
+	smartProperty<double> sub_exit;
+
+	double rho_tot;
+
+	int nPrint=5;
 
 	Model1D(int gridSize);
 	~Model1D();

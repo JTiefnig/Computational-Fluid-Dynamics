@@ -11,8 +11,7 @@ Solver1D_LaxWendroff::Solver1D_LaxWendroff(Model1D* mod)
 
 	source = vector<State1D>(imax);
 	f = vector<State1D>(imax);
-	
-	cfl = 0.05;
+
 
 	dt = 0;
 	time = 0;

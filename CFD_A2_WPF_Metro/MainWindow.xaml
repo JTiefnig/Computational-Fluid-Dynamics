@@ -218,7 +218,9 @@
     </TabControl>
 
 
-    <DataGrid
+    <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=SolverAdapter.Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
+
+    <!--<DataGrid
             Name="SimDatatGrid"
             Grid.Column="0"
             Grid.Row="1"
@@ -238,7 +240,7 @@
                                 Header="Unit"
                                 IsReadOnly="True" />
       </DataGrid.Columns>
-    </DataGrid>
+    </DataGrid>-->
 
 
 

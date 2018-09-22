@@ -20,8 +20,9 @@ namespace CFD_A2_WPF_Metro
 
         CfdA1Adapter cfdModel;
 
-        public ModelProperty(CfdA1Adapter mod)
+        public ModelProperty(CfdA1Adapter mod, string name)
         {
+            Name = name;
             cfdModel = mod;
         }
         
@@ -30,12 +31,12 @@ namespace CFD_A2_WPF_Metro
 
             get
             {
-                return 0; // wird später das property aus dem model holen
+                return cfdModel.GetParameter(Name); 
             }
 
             set
             {
-
+                cfdModel.SetParameter(Name, value);
             }
 
         }

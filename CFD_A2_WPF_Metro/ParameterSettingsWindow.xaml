@@ -12,34 +12,33 @@
       <RowDefinition Height="2*" />
     </Grid.RowDefinitions>
 
-    <DataGrid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-
-      <DataGridTextColumn
-                Width="60"
-                Binding="{Binding Unit}"
+    <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true">
+      <!--<DataGrid.Columns>
+        <DataGridTextColumn
+                Width="100"
+                Binding="{Binding Name}"
                 Header="Name"
                 IsReadOnly="True" />
-      
-      <DataGridTemplateColumn Width="120" Header="Value">
-        <DataGridTemplateColumn.CellTemplate>
-          <DataTemplate>
-            <TextBox Width="200" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-          </DataTemplate>
-        </DataGridTemplateColumn.CellTemplate>
-      </DataGridTemplateColumn>
-      
+
+        <DataGridTemplateColumn Width="120" Header="Value">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBox HorizontalAlignment="Stretch" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>-->
     </DataGrid>
       
 
 
     <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" LastChildFill="False" >
-      <Button DockPanel.Dock="Right" Width="100" Margin="3">
+      <Button DockPanel.Dock="Right" Width="100" Margin="3" Name="ExitButton" Click="ExitButton_Click">
         Exit
       </Button>
-      <Button DockPanel.Dock="Right" Width="100" Margin="3">
+      <!--<Button DockPanel.Dock="Right" Width="100" Margin="3">
         Save and exit
-      </Button>
+      </Button>-->
       
     </DockPanel>
 

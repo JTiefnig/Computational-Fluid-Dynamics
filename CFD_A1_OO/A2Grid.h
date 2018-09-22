@@ -13,6 +13,10 @@ private:
 	double x_min;
 	double x_max;
 
+	smartProperty<double> y_gridA2;
+	smartProperty<double> x_min_gridA2;
+	smartProperty<double> x_max_gridA2;
+
 
 public:
 	A2Grid(Model1D* m);

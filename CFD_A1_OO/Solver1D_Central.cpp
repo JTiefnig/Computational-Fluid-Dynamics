@@ -16,7 +16,6 @@ Solver1D_Central::Solver1D_Central(Model1D* mod)
 	dissip = vector<State1D>(imax);
 
 	time = 0;
-	cfl = 0.35;
 
 	eps_s = 10000.0;
 
