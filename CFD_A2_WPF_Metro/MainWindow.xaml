@@ -47,11 +47,10 @@
 
       <StackPanel>
 
-        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
-          <ComboBoxItem>Central</ComboBoxItem>
-          <ComboBoxItem>LaxWendroff</ComboBoxItem>
-          <ComboBoxItem>Mac Cormack</ComboBoxItem>
-          <ComboBoxItem>ROE Solver</ComboBoxItem>
+        
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="ModelSelector" SelectedIndex="{Binding SolverAdapter.SelectedModel}">
+          <ComboBoxItem>Exercise 1</ComboBoxItem>
+          <ComboBoxItem>Exercise 2</ComboBoxItem>
         </ComboBox>
 
         <Button Name="ResetButton" Click="ResetButton_Click" Margin="5,2">
@@ -65,8 +64,14 @@
           </StackPanel>
         </Button>
 
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
+          <ComboBoxItem>Central</ComboBoxItem>
+          <ComboBoxItem>LaxWendroff</ComboBoxItem>
+          <ComboBoxItem>Mac Cormack</ComboBoxItem>
+          <ComboBoxItem>ROE Solver</ComboBoxItem>
+        </ComboBox>
         
-        <TextBlock Text="{Binding SolverAdapter.StepCount}" HorizontalAlignment="Stretch" FontSize="20" Margin="1"></TextBlock>
+        
         <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
       </StackPanel>
 
@@ -149,6 +154,14 @@
         
       </StackPanel>-->
 
+      <StackPanel>
+        <Label>Stepcount: </Label>
+        <TextBlock Text="{Binding SolverAdapter.StepCount}" Width="100" Height="30" FontSize="20" Margin="1"></TextBlock>
+        
+      </StackPanel>
+      
+      
+      
       <Button Name="ExportButton" Height="60" Click="ExportButton_Click">
         <StackPanel>
           <iconPacks:PackIconFontAwesome Width="30"
@@ -162,7 +175,7 @@
 
 
 
-      <Button Name="SettingsButton" Click="SettingsButton_Click" Height="60" Margin="5,2">
+      <!--<Button Name="SettingsButton" Click="SettingsButton_Click" Height="60" Margin="5,2">
         <StackPanel Orientation="Vertical">
           <iconPacks:PackIconFontAwesome Width="25"
                                        Height="auto"
@@ -172,7 +185,7 @@
           <TextBlock TextAlignment="Center" Margin="5"> Settings</TextBlock>
 
         </StackPanel>
-      </Button>
+      </Button>-->
       
       
     </StackPanel>

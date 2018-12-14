@@ -9,10 +9,15 @@ using namespace std;
 A1Grid::A1Grid(Model1D* mod)
 	: GridGenerator(mod)
 {
-	x_min = -0.33333;
-	x_max = 1;
-	y_min = 0.1;
-	y_max = 0.2;
+
+	x_min_A1 = mod->properties["x_min_A1"];
+	
+	x_max_A1 = mod->properties["x_max_A1"];
+	
+	y_min_A1 = mod->properties["y_min_A1"];
+	
+	y_max_A1 = mod->properties["y_max_A1"];
+
 }
 
 
@@ -31,15 +36,15 @@ void A1Grid::Generate()
 
 	int imax = u.size();
 
-	double dx = (x_max - x_min) / imax;
+	double dx = (x_max_A1 - x_min_A1) / imax;
 	model->dx = dx;
-	double 	local_k = (y_max - y_min) / (pow(x_max, 2));
+	double 	local_k = (y_max_A1 - y_min_A1) / (pow(x_max_A1, 2));
 
 	for (int i = 0; i < imax; i++)
 	{
-		u[i].x = (x_min + (i)* dx);
+		u[i].x = (x_min_A1 + (i)* dx);
 
-		u[i].area = (y_min + (y_max - y_min)*pow(model->u[i].x / x_max, 2));//(y_min + local_k * pow((*model)[i].x, 2));
+		u[i].area = (y_min_A1 + (y_max_A1 - y_min_A1)*pow(model->u[i].x / x_max_A1, 2));//(y_min + local_k * pow((*model)[i].x, 2));
 
 		u[i].da_dx = (local_k * (*model)[i].x * 2);
 	}

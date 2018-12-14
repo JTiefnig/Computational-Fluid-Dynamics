@@ -25,8 +25,11 @@ private:
 
 	std::vector<State1D> source;
 	std::vector<State1D> f;
+	std::vector<State1D> dissip;
 
 	double dt;
+
+	void CalcDissipSimple();
 
 public:
 	Solver1D_LaxWendroff(Model1D* mod);

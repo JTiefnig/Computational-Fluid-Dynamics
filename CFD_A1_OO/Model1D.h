@@ -25,7 +25,7 @@ class Model1D
 public:
 
 	std::vector<GridPoint1D> u;
-	std::vector<GridPoint1D> delta_u;
+	std::vector<State1D> delta_u;
 
 
 	PropertyContainer<double> properties;
@@ -48,7 +48,7 @@ public:
 
 	double rho_tot;
 
-	int nPrint=5;
+	int nPrint=1;
 
 	Model1D(int gridSize);
 	~Model1D();

@@ -9,9 +9,7 @@ class A2Grid :
 	public GridGenerator
 {
 private:
-	double y;
-	double x_min;
-	double x_max;
+	
 
 	smartProperty<double> y_gridA2;
 	smartProperty<double> x_min_gridA2;
@@ -19,7 +17,7 @@ private:
 
 
 public:
-	A2Grid(Model1D* m);
+	A2Grid(Model1D* mod);
 	~A2Grid();
 
 	// Geerbt über GridGenerator

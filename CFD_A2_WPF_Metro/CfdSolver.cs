@@ -51,6 +51,25 @@ namespace CFD_A2_WPF_Metro
         }
 
 
+        public int SelectedModel
+        {
+            set
+            {
+                switch(value)
+                {
+                    case 0:
+                        cfd.selectedModel = MODEL.A1;
+                        break;
+                    case 1:
+                        cfd.selectedModel = MODEL.A2;
+                        break;
+                }
+                ResetModel();
+
+            }
+
+        }
+
 
 
         public AxesCollection YAxesCollection
@@ -76,6 +95,10 @@ namespace CFD_A2_WPF_Metro
 
             cfd = new CfdA1Adapter(MODEL.A1);
 
+            
+
+            //cfd.SavePropertiesToXml();
+
             Properties = new ObservableCollection<ModelProperty>();
             GenerateParameterlist();
 
@@ -83,6 +106,12 @@ namespace CFD_A2_WPF_Metro
 
             worker = new Thread(() => this.SimulateSteps());
 
+        }
+
+
+        public CfdA1Adapter GetModel()
+        {
+            return cfd;
         }
 
         public ObservableCollection<ModelProperty> Properties { get; set; }
@@ -212,15 +241,10 @@ namespace CFD_A2_WPF_Metro
             //for (int i = 0; i < cfd.GetGridSize(); i++)
             //    vells.Values.Add(new ObservablePoint(cfd.GetData(i, CFD_A1_OO.DATASET.X), cfd.GetData(i, DATASET.U)));
 
-
-
-
-
-
             UpdateSeriesConfig();
-            
 
         }
+
 
         void UpdateSeriesConfig()
         {
@@ -265,12 +289,6 @@ namespace CFD_A2_WPF_Metro
 
 
         }
-
-
-
-
-
-
 
         public int SelectedSolverIndex { set; get; } = 3;
 
@@ -335,6 +353,7 @@ namespace CFD_A2_WPF_Metro
         {
             cfd.Reset();
             UpdateData();
+            OnPropertyChanged(nameof(AreaSeries));
         }
 
         private double convergence;

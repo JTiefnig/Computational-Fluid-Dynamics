@@ -4,13 +4,16 @@
 using namespace std;
 
 
-A2Grid::A2Grid(Model1D* m)
-	: GridGenerator(m)
+A2Grid::A2Grid(Model1D* mod)
+	: GridGenerator(mod)
 {
 	// set default values
-	y_gridA2 = 0.2;
-	x_min_gridA2 = -0.5;
-	x_max_gridA2 = 0.5;
+	y_gridA2 = mod->properties["y_gridA2"];
+	
+	x_min_gridA2 = mod->properties["x_min_gridA2"];
+	
+	x_max_gridA2 = mod->properties["x_max_gridA2"];
+	
 }
 
 
@@ -25,22 +28,19 @@ void A2Grid::Generate()
 
 	int imax = u.size();
 
-	double dx = (x_max - x_min) / (imax);
+	double dx = (x_max_gridA2 - x_min_gridA2) / (imax);
 
 	for (int i = 0; i < imax; i++)
 	{
-		u[i].x = x_min + dx * (i);
-		u[i].area = y;
+		u[i].x = x_min_gridA2 + dx * (i);
+		u[i].area = y_gridA2;
 		u[i].da_dx = 0;
 	}
-
-
 
 	model->stepcount = 0;
 
 	model->rho_tot = model->p_tot / (model->R*model->T_tot);
 
-	
 
 	for (int i = 0; i < imax; i++)
 	{

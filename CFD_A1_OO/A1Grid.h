@@ -11,11 +11,10 @@ class A1Grid :
 {
 private:
 
-
-	double x_min;
-	double x_max;
-	double y_min;
-	double y_max;
+	smartProperty<double> x_min_A1;
+	smartProperty<double> x_max_A1;
+	smartProperty<double> y_min_A1;
+	smartProperty<double> y_max_A1;
 
 public:
 	A1Grid(Model1D* mod);

@@ -10,10 +10,9 @@ Model1D::Model1D(int gridSize)
 	this->gridsize = gridSize;
 
 	u = vector<GridPoint1D>(gridSize);
-	delta_u = vector<GridPoint1D>(gridSize);
+	delta_u = vector<State1D>(gridSize);
 
-	this->properties.LoadFromFile("PARAMERTER.xml");
-	this->properties.createProperty("cfl", 0.9);
+	this->properties.LoadFromFile("PARAMETER.xml");
 	// jetzt noch nicht da
 	//properties.loadPropertiesFromFile("PARAMERTER.xml");
 	
@@ -47,8 +46,7 @@ Model1D::~Model1D()
 
 void Model1D::Boundary()
 {
-	// Steps are counted here
-	stepcount++;
+	
 
 	int imax = u.size();
 
@@ -85,7 +83,8 @@ void Model1D::Boundary()
 	if (stepcount == nPrint)
 		CalculateConvergence();
 
-
+	// Steps are counted here
+	stepcount++;
 }
 
 GridPoint1D & Model1D::operator[](int i)
@@ -131,13 +130,13 @@ double Model1D::GetVelocity(int i)
 float Model1D::CalculateConvergence()
 {
 	
-	GridPoint1D resid;
+	State1D resid;
 
 
-	int imax = u.size();
-	for(int i=0; i<imax; i++)
+	
+	for(auto dp : delta_u)
 	{  
-		resid = resid + delta_u[i].absComponents();
+		resid = resid + dp.absComponents();
 	}
 
 	if (this->stepcount == nPrint)

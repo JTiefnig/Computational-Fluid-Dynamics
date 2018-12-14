@@ -2,6 +2,8 @@
 #include "Solver1D_ROE.h"
 #include "Model1D.h"
 #include "MatrixXd.h"
+#include <algorithm>
+#include <functional>
 
 
 
@@ -73,7 +75,7 @@ void Solver1D_ROE::calc_f_star_roe()
 
 		H_av = (R_av * H_ip1 + H_i) / (R_av + 1); // Eq 17-78
 
-		//speed of sound
+		//c... speed of sound
 		c_av = sqrt((gamma - 1) * (H_av - 0.5 * pow(u_av, 2))); //Eq 13-80
 		
 		lambdaMat(0, 0) = u_av;
@@ -120,40 +122,64 @@ void Solver1D_ROE::calc_f_star_roe()
 		c_ip1 = sqrt((u[i + 1].e / u[i + 1].rho - pow(u[i + 1].rho_u / u[i + 1].rho, 2.) / 2.) *
 			gamma * (gamma - 1.));
 
-		for (int k = 0; k < 3; k++) //cycle through all three eigenvalues
-		{
 
-			switch (k)
-			{
-			case 0:
-				lambda_i = u[i].rho_u / u[i].rho;
-				lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho;
-				break;
-			case 1:
-			{
-				lambda_i = u[i].rho_u / u[i].rho + c_i;
-				lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho + c_ip1;
-				break;
-			}
-			case 2:
-			{
-				lambda_i = u[i].rho_u / u[i].rho - c_i;
-				lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho - c_ip1;
-				break;
-			}
-			}
-			//----------------------------------------------------------------------
-			//
-			epsilon = fmax(0.,
+		// Using a c++ lambda here .. Just for fun
+		auto local_func = [&](int k)
+			{ 
+			double epsilon = fmax(0.,
 				fmax(lambdaMat(k, k) - lambda_i,
-					lambda_ip1 - lambdaMat(k,k))); //Eq. 13-92
-			if (fabs(lambdaMat(k, k)) < epsilon) //Eq. 13-91
-			{
-				lambdaMat(k, k) = epsilon;
-			}
-		}
+					lambda_ip1 - lambdaMat(k, k))); //Eq. 13-92
+			
+			return fabs(lambdaMat(k, k)) < epsilon ? epsilon : lambdaMat(k, k);
+		};
 
-		
+		lambda_i = u[i].rho_u / u[i].rho;
+		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho;
+
+		lambdaMat(0, 0) = local_func(0);
+
+		lambda_i = u[i].rho_u / u[i].rho + c_i;
+		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho + c_ip1;
+
+		lambdaMat(1, 1) = local_func(1);
+
+		lambda_i = u[i].rho_u / u[i].rho - c_i;
+		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho - c_ip1;
+
+		lambdaMat(2, 2) = local_func(2);
+
+		//for (int k = 0; k < 3; k++) //cycle through all three eigenvalues
+		//{
+
+		//	switch (k)
+		//	{
+		//	case 0:
+		//		lambda_i = u[i].rho_u / u[i].rho;
+		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho;
+		//		break;
+		//	case 1:
+		//	{
+		//		lambda_i = u[i].rho_u / u[i].rho + c_i;
+		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho + c_ip1;
+		//		break;
+		//	}
+		//	case 2:
+		//	{
+		//		lambda_i = u[i].rho_u / u[i].rho - c_i;
+		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho - c_ip1;
+		//		break;
+		//	}
+		//	}
+		//	
+		//	epsilon = fmax(0.,
+		//		fmax(lambdaMat(k, k) - lambda_i,
+		//			lambda_ip1 - lambdaMat(k,k)));//Eq. 13-92
+		//	if (fabs(lambdaMat(k, k)) < epsilon) //Eq. 13-91
+		//	{
+		//		lambdaMat(k, k) = epsilon;
+		//	}
+		//}
+
 
 		MatrixXd lambdaAbs = lambdaMat.Abs();
 
