@@ -109,6 +109,13 @@ namespace CFD_A2_WPF_Metro
         }
 
 
+        public void SaveParametersToFile()
+        {
+            cfd.SavePropertiesToXml();
+        }
+
+
+
         public CfdA1Adapter GetModel()
         {
             return cfd;

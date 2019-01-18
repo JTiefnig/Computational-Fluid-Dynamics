@@ -16,8 +16,11 @@ using namespace tinyxml2;
 
 
 
-// Autor Johannes Tiefnig
+// Author Johannes Tiefnig
 // CFD TU Graz final project 2018
+// Gives basic import and export functionality to XML file format
+// Properties can be linked
+
 template <typename T>
 class PropertyContainer
 {
@@ -103,15 +106,12 @@ public:
 		while (NULL != par)
 		{
 
-			std::stringstream valss;
-
-			if (par->GetText() != NULL)
-				valss << par->GetText();
-			T val;
-			valss >> val;
+			// Should check for right format here.
+			
+			T val = par->DoubleAttribute("Value");
 
 			if (par->Name() != NULL)
-				this->addProperty(new smartProperty<T>(par->Name(), val));
+				this->addProperty(new smartProperty<T>(par->Attribute("Name"), val));
 
 			par = par->NextSiblingElement();
 		}
@@ -119,26 +119,33 @@ public:
 	}
 
 
+
 	void SaveToFile(std::string path)
 	{
+		
+		 
+
+
+		// dox in stack..
 		XMLDocument doc;
 
 		XMLElement* mainElm = doc.NewElement("Parameter");
 		doc.InsertFirstChild(mainElm);
 
 
+		// Schreiben der 
 		for (int i = 0; i < props.size(); i++)
 		{
-			std::stringstream valss;
-			valss << (T)props[i]->getValue();
-			XMLElement* valelm = doc.NewElement(props[i]->getName().c_str());
+			XMLElement* valelm = doc.NewElement("Param");
+			
+			valelm->SetAttribute("Name", props[i]->getName().c_str());
+			valelm->SetAttribute("Value", (props[i]->getValue()));
 
-
-			valelm->SetText(valss.str().c_str());
 			mainElm->InsertEndChild(valelm);
 		}
 
 
+		// Write file
 		doc.SaveFile(path.c_str());
 
 	}

@@ -230,8 +230,24 @@
 
     </TabControl>
 
-
-    <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=SolverAdapter.Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
+    <Grid Grid.Row="1" Grid.Column="0" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="30"/>
+      </Grid.RowDefinitions>
+      <DataGrid ItemsSource="{Binding Path=SolverAdapter.Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
+      <Button Name="SaveParams" Grid.Row="1" Click="SaveParams_Click">
+        <StackPanel Orientation="Horizontal">
+          <iconPacks:PackIconFontAwesome Width="30"
+                                       Height="auto"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Kind="SaveSolid" />
+          <TextBlock TextAlignment="Center" Margin="5"> Save Parameter</TextBlock>
+        </StackPanel>
+      </Button>
+    </Grid>
+    
 
     <!--<DataGrid
             Name="SimDatatGrid"

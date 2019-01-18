@@ -50,6 +50,8 @@ void Solver1D_Central::DoStep()
 
 		f_star = CalcF_star_central(i);
 
+		
+
 		model->delta_u[i] = (f_star - prv_fstar) *(-dt) / model->dx + source[i] * dt;
  
 		u[i] = u[i] + model->delta_u[i];

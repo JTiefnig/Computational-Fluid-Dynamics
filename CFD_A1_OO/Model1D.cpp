@@ -131,8 +131,6 @@ float Model1D::CalculateConvergence()
 {
 	
 	State1D resid;
-
-
 	
 	for(auto dp : delta_u)
 	{  

@@ -82,6 +82,7 @@ namespace CFD_A2_WPF_Metro
 
         }
 
+
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog
@@ -102,5 +103,14 @@ namespace CFD_A2_WPF_Metro
                 }
             }
         }
+
+        private void SaveParams_Click(object sender, RoutedEventArgs e)
+        {
+            solverAdapt.SaveParametersToFile();
+        }
+
+
+
+
     }
 }

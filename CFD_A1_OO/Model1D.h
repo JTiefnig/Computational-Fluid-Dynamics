@@ -48,7 +48,7 @@ public:
 
 	double rho_tot;
 
-	int nPrint=1;
+	int nPrint=0; // wir beginnen bei 0
 
 	Model1D(int gridSize);
 	~Model1D();
