@@ -1,0 +1,16 @@
+<Parameter>
+    <Param Name="R" Value="287"/>
+    <Param Name="gamma" Value="1.3999999999999999"/>
+    <Param Name="p_tot" Value="100000"/>
+    <Param Name="T_tot" Value="273.14999999999998"/>
+    <Param Name="p_exit" Value="90000"/>
+    <Param Name="sub_exit" Value="1"/>
+    <Param Name="cfl" Value="0.90000000000000002"/>
+    <Param Name="x_min_A1" Value="-0.33333000000000002"/>
+    <Param Name="x_max_A1" Value="1"/>
+    <Param Name="y_min_A1" Value="0.10000000000000001"/>
+    <Param Name="y_max_A1" Value="0.20000000000000001"/>
+    <Param Name="y_gridA2" Value="0.20000000000000001"/>
+    <Param Name="x_min_gridA2" Value="-5"/>
+    <Param Name="x_max_gridA2" Value="5"/>
+</Parameter>
