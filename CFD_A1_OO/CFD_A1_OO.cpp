@@ -16,7 +16,15 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 {
 	selectedModel = m;
 
-	mod = new Model1D(100);
+	try
+	{
+		mod = new Model1D(100);
+	}
+	catch (const char* c)
+	{
+		throw gcnew Exception(gcnew String(c));
+	}
+	
 
 	grid1 = new A1Grid(mod);
 	grid2 = new A2Grid(mod);
@@ -29,10 +37,6 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 	solv_LW = new Solver1D_LaxWendroff(mod);
 	solv_MCC = new Solver1D_MacCormack(mod);
 	solv_ROE = new Solver1D_ROE(mod);
-
-	
-
-
 }
 
 CFD_A1_OO::CfdA1Adapter::~CfdA1Adapter()

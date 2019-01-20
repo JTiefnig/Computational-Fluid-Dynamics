@@ -9,6 +9,8 @@
 // ....could be a template class later... but than i rather would use Eigen lib
 class MatrixXd
 {
+
+	// dont know if i should put mutable here? 
 	double* v;
 	
 
@@ -21,19 +23,19 @@ public:
 
 	MatrixXd(const MatrixXd& temp);
 
-	MatrixXd operator * (MatrixXd& b);
+	MatrixXd operator * (const MatrixXd& b);
 
-	double& operator() (int i, int j);
+	double& operator() (int i, int j) const;
 
 	double& operator [] (int i) const;
 
 	MatrixXd operator * (double s);
 
-	MatrixXd operator + (MatrixXd& b);
-	MatrixXd operator - (MatrixXd& b);
+	MatrixXd operator + (const MatrixXd& b);
+	MatrixXd operator - (const MatrixXd& b);
 
 
-	void operator = (MatrixXd& temp);
+	void operator = (const MatrixXd& temp);
 
 	MatrixXd transpose();
 

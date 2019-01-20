@@ -29,7 +29,7 @@ MatrixXd::MatrixXd(const MatrixXd & temp)
 
 
 
-double& MatrixXd::operator() (int i, int j)
+double& MatrixXd::operator() (int i, int j) const
 {
 	return v[i*n+j];
 }
@@ -54,7 +54,7 @@ MatrixXd MatrixXd::operator*(double s)
 	return ret;
 }
 
-MatrixXd MatrixXd::operator+(MatrixXd & b)
+MatrixXd MatrixXd::operator+(const MatrixXd & b)
 {
 	if (n != b.n|| m != b.m)
 		throw "Dim ERROR";
@@ -66,14 +66,14 @@ MatrixXd MatrixXd::operator+(MatrixXd & b)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			ret(i, j) = v[i*n + j] + b(i, j);
+			ret(i, j) = v[i*n + j] + b.v[i*n + j];
 		}
 	}
 
 	return ret;
 }
 
-MatrixXd MatrixXd::operator-(MatrixXd & b)
+MatrixXd MatrixXd::operator-(const MatrixXd & b)
 {
 	if (n != b.n || m != b.m)
 		throw "Dim ERROR";
@@ -85,21 +85,21 @@ MatrixXd MatrixXd::operator-(MatrixXd & b)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			ret(i, j) = v[i*n + j] - b(i, j);
+			ret(i, j) = v[i*n + j] - b.v[i*n + j];
 		}
 	}
 
 	return ret;
 }
 
-void MatrixXd::operator=(MatrixXd & temp)
+void MatrixXd::operator=(const MatrixXd & temp)
 {
 
 	for (int i = 0; i < m; i++)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			 v[i*n + j] = temp(i, j);
+			 v[i*n + j] = temp.v[i*n + j];
 		}
 	}
 }
@@ -134,7 +134,7 @@ MatrixXd MatrixXd::Abs()
 	return ret;
 }
 
-MatrixXd MatrixXd::operator * (MatrixXd& b)
+MatrixXd MatrixXd::operator * (const MatrixXd& b)
 {
 	if (this->n != b.m)
 		throw "Dim ERROR";
@@ -149,7 +149,7 @@ MatrixXd MatrixXd::operator * (MatrixXd& b)
 		{
 			for (int c = 0; c < b.m; c++)
 			{
-				ret(i, j) += v[i*n + c]*b(c,j);
+				ret(i, j) += v[i*n + c] *b.v[c*n + j];
 			}
 		}
 	}

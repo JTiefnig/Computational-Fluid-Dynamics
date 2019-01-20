@@ -94,7 +94,7 @@ State1D::operator MatrixXd()
 	return ret;
 }
 
-void State1D::operator=(MatrixXd & mat)
+void State1D::operator=(const MatrixXd & mat)
 {
 	if (mat.m != 3 || mat.n != 1)
 		throw "Dim ERROR";

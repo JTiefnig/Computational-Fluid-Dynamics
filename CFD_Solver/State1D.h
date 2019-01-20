@@ -26,7 +26,7 @@ public:
 
 	// Werden für den ROE solver eingeführt
 	operator MatrixXd ();
-	void operator = (MatrixXd& mat);
+	void operator = (const MatrixXd& mat);
 
 	State1D absComponents();
 

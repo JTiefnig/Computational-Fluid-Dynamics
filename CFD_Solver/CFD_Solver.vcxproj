@@ -147,16 +147,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="A1Grid.h" />
+    <ClInclude Include="A2Grid.h" />
+    <ClInclude Include="GridGenerator.h" />
+    <ClInclude Include="GridPoint1D.h" />
+    <ClInclude Include="MatrixXd.h" />
+    <ClInclude Include="Model1D.h" />
+    <ClInclude Include="propertyContainer.h" />
+    <ClInclude Include="smartProperty.h" />
+    <ClInclude Include="Solver1D.h" />
+    <ClInclude Include="Solver1D_Central.h" />
+    <ClInclude Include="Solver1D_LaxWendroff.h" />
+    <ClInclude Include="Solver1D_MacCormack.h" />
+    <ClInclude Include="Solver1D_ROE.h" />
+    <ClInclude Include="State1D.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="A1Grid.cpp" />
+    <ClCompile Include="A2Grid.cpp" />
+    <ClCompile Include="GridGenerator.cpp" />
+    <ClCompile Include="GridPoint1D.cpp" />
+    <ClCompile Include="MatrixXd.cpp" />
+    <ClCompile Include="Model1D.cpp" />
+    <ClCompile Include="Solver1D.cpp" />
+    <ClCompile Include="Solver1D_Central.cpp" />
+    <ClCompile Include="Solver1D_LaxWendroff.cpp" />
+    <ClCompile Include="Solver1D_MacCormack.cpp" />
+    <ClCompile Include="Solver1D_ROE.cpp" />
+    <ClCompile Include="State1D.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

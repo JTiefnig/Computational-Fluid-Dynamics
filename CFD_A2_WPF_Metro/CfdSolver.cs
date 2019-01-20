@@ -7,6 +7,7 @@ using CFD_A1_OO;
 using System.ComponentModel;
 using System.Threading;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 
 using LiveCharts;
@@ -93,7 +94,16 @@ namespace CFD_A2_WPF_Metro
 
             YAxesCollection = new AxesCollection();
 
-            cfd = new CfdA1Adapter(MODEL.A1);
+            try
+            {
+                cfd = new CfdA1Adapter(MODEL.A1);
+            }catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                // this is actually very bad... need something different
+                // but passing an exception realy works
+            }
+            
 
             
 

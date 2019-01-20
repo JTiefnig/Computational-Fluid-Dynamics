@@ -91,6 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\CFD_Solver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -102,6 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\CFD_Solver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -112,6 +114,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\CFD_Solver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -122,6 +125,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>..\CFD_Solver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -133,47 +137,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="A1Grid.h" />
-    <ClInclude Include="A2Grid.h" />
     <ClInclude Include="CFD_A1_OO.h" />
-    <ClInclude Include="GridGenerator.h" />
-    <ClInclude Include="GridPoint1D.h" />
-    <ClInclude Include="MatrixXd.h" />
-    <ClInclude Include="Model1D.h" />
-    <ClInclude Include="propertyContainer.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="smartProperty.h" />
-    <ClInclude Include="Solver1D.h" />
-    <ClInclude Include="Solver1D_Central.h" />
-    <ClInclude Include="Solver1D_LaxWendroff.h" />
-    <ClInclude Include="Solver1D_MacCormack.h" />
-    <ClInclude Include="Solver1D_ROE.h" />
-    <ClInclude Include="State1D.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="A1Grid.cpp" />
-    <ClCompile Include="A2Grid.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="CFD_A1_OO.cpp" />
-    <ClCompile Include="GridGenerator.cpp" />
-    <ClCompile Include="GridPoint1D.cpp" />
-    <ClCompile Include="MatrixXd.cpp" />
-    <ClCompile Include="Model1D.cpp" />
-    <ClCompile Include="Solver1D.cpp" />
-    <ClCompile Include="Solver1D_Central.cpp" />
-    <ClCompile Include="Solver1D_LaxWendroff.cpp" />
-    <ClCompile Include="Solver1D_MacCormack.cpp" />
-    <ClCompile Include="Solver1D_ROE.cpp" />
-    <ClCompile Include="State1D.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -183,6 +158,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CFD_Solver\CFD_Solver.vcxproj">
+      <Project>{ca9d18ee-c79f-4d33-9d28-f7a3f557e81c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
