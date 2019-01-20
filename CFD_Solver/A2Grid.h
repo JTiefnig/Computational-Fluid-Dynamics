@@ -11,9 +11,9 @@ class A2Grid :
 private:
 	
 
-	smartProperty<double> y_gridA2;
-	smartProperty<double> x_min_gridA2;
-	smartProperty<double> x_max_gridA2;
+	smartProperty y_gridA2;
+	smartProperty x_min_gridA2;
+	smartProperty x_max_gridA2;
 
 
 public:

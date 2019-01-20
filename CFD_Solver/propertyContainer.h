@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <iostream>
 
 
 
@@ -21,11 +22,11 @@ using namespace tinyxml2;
 // Gives basic import and export functionality to XML file format
 // Properties can be linked
 
-template <typename T>
+
 class PropertyContainer
 {
 private:
-	std::vector<smartProperty<T>*> props;
+	std::vector<smartProperty*> props;
 public:
 
 	PropertyContainer()
@@ -33,30 +34,30 @@ public:
 		//props = vector<Property<T>*>();
 	}
 
-	void addProperty(smartProperty<T>* np)
+	void addProperty(smartProperty* np)
 	{
 		props.push_back(np);
 	}
 
 	void createProperty(std::string n)
 	{
-		props.push_back(new smartProperty<T>(n));
+		props.push_back(new smartProperty(n));
 	}
 
-	void createProperty(std::string n, T val)
+	void createProperty(std::string n, double val)
 	{
-		auto np = new smartProperty<T>(n);
+		auto np = new smartProperty(n);
 		(*np) = val;
 		props.push_back(np);
 	}
 
 
-	smartProperty<T>& operator[](int i)
+	smartProperty& operator[](int i)
 	{
 		return *(props[i]);
 	}
 
-	smartProperty<T>& operator[](std::string n)
+	smartProperty& operator[](std::string n)
 	{
 		for (int i = 0; i < props.size(); i++)
 		{
@@ -108,10 +109,10 @@ public:
 
 			// Should check for right format here.
 			
-			T val = par->DoubleAttribute("Value");
+			double val = par->DoubleAttribute("Value");
 
 			if (par->Name() != NULL)
-				this->addProperty(new smartProperty<T>(par->Attribute("Name"), val));
+				this->addProperty(new smartProperty(par->Attribute("Name"), val));
 
 			par = par->NextSiblingElement();
 		}

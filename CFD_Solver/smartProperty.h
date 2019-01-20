@@ -7,8 +7,7 @@
 
 // Autor Johannes Tiefnig
 // CFD TU Graz final project 2018
-// "linkedProperty" would be a more appropriate name
-template <typename T>
+
 class smartProperty 
 {
 public:
@@ -24,7 +23,7 @@ public:
 
 	}
 
-	smartProperty(std::string n, T v)
+	smartProperty(std::string n, double v)
 	{
 		value = v;
 		name = n;
@@ -37,28 +36,28 @@ public:
 		this->unlink();
 	}
 
-	virtual T & operator = (const T &f) noexcept
+	virtual double & operator = (const double&f) noexcept
 	{
 		value = f;
 		this->PropagateChange();
 		return value;
 	}
 
-	void operator = (smartProperty<T>& chain) noexcept
+	void operator = (smartProperty& chain) noexcept
 	{
 		this->link(chain);
 	}
 
 
 
-	virtual operator T const & () const
+	virtual operator double const & () const
 	{
 		return this->getValue();
 	}
 
 
 
-	virtual T getValue() const
+	virtual double getValue() const
 	{
 		return this->value;
 	}
@@ -74,7 +73,7 @@ public:
 	}
 
 
-	void link(smartProperty<T>& chain)
+	void link(smartProperty& chain)
 	{
 		if (lowerLink != nullptr || upperLink != nullptr)
 			this->unlink();
@@ -89,8 +88,6 @@ public:
 			chain.lowerLink->upperLink = this;
 
 		chain.lowerLink = this;
-
-
 	}
 
 
@@ -142,14 +139,14 @@ public:
 
 protected:
 
-	T value;
+	double value;
 	std::string name;
 
-	mutable smartProperty<T>* upperLink = nullptr;
-	mutable smartProperty<T>* lowerLink = nullptr;
+	mutable smartProperty* upperLink = nullptr;
+	mutable smartProperty* lowerLink = nullptr;
 private:
 
-	smartProperty(const smartProperty<T> & temp) {}
+	smartProperty(const smartProperty & temp) {}
 };
 
 

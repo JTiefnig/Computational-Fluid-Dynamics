@@ -28,7 +28,7 @@ public:
 	std::vector<State1D> delta_u;
 
 
-	PropertyContainer<double> properties;
+	PropertyContainer properties;
 
 
 	double dx;

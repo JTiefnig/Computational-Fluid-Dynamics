@@ -39,7 +39,8 @@ void A1Grid::Generate()
 
 	double dx = (x_max_A1 - x_min_A1) / imax;
 	model->dx = dx;
-	double 	local_k = (y_max_A1 - y_min_A1) / (pow(x_max_A1,2));
+	double 	local_k = ((double)y_max_A1 - (double)y_min_A1) / (pow(x_max_A1,2));
+
 	
 
 	for (int i = 0; i < imax; i++)
