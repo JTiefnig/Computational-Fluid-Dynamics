@@ -135,6 +135,7 @@ float Model1D::CalculateConvergence()
 	State1D resid;
 	
 	
+	// Extrapolierte Randbereiche nicht in die Berechnung nehmen.
 	for(std::size_t i =1; i<delta_u.size()-1; i++)
 	{  
 		resid = resid + delta_u[i].absComponents();
