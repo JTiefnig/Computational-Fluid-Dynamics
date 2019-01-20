@@ -45,10 +45,11 @@ public:
 	smartProperty<double> T_tot;
 	smartProperty<double> p_exit;
 	smartProperty<double> sub_exit;
+	int nPrint = 9; // wir beginnen bei 0
 
 	double rho_tot;
 
-	int nPrint=0; // wir beginnen bei 0
+	
 
 	Model1D(int gridSize);
 	~Model1D();

@@ -29,6 +29,8 @@ Model1D::Model1D(int gridSize)
 	sub_exit = properties["sub_exit"];
 	//properties.createProperty("sub_exit", sub_exit);
 
+
+	//nPrint = properties["nPrint"];
 	// Rho tot wird errechnet...
 	rho_tot = p_tot / (R*T_tot);
 
@@ -132,9 +134,10 @@ float Model1D::CalculateConvergence()
 	
 	State1D resid;
 	
-	for(auto dp : delta_u)
+	
+	for(std::size_t i =1; i<delta_u.size()-1; i++)
 	{  
-		resid = resid + dp.absComponents();
+		resid = resid + delta_u[i].absComponents();
 	}
 
 	if (this->stepcount == nPrint)

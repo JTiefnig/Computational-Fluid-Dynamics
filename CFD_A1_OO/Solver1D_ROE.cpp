@@ -221,17 +221,13 @@ void Solver1D_ROE::DoStep()
 	calc_f();
 	calc_f_star_roe();
 
-
 	int imax = u.size();
 	
-	for (int i = 1; i < imax; i++)
+	for (int i = 1; i < imax; i++)	
 	{
-
 		model->delta_u[i] =  (f_star[i] - f_star[i - 1])* (-dt) / model->dx + source[i] * dt;
 		u[i] = u[i] + model->delta_u[i];
 	}
-
-	
 
 	model->Boundary();
 }
