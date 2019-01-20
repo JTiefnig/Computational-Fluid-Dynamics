@@ -39,12 +39,12 @@ public:
 
 	int gridsize;
 
-	/*smartProperty<double>*/ double R;
-	/*smartProperty<double>*/ double gamma; // kappa
-	/*smartProperty<double>*/ double p_tot;
-	/*smartProperty<double>*/ double T_tot;
-	/*smartProperty<double>*/ double p_exit;
-	/*smartProperty<double>*/ double sub_exit;
+	smartProperty R;
+	smartProperty gamma; // kappa
+	smartProperty p_tot;
+	double T_tot;
+	double p_exit;
+	double sub_exit;
 
 	int nPrint = 9; // wir beginnen bei 0
 

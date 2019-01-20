@@ -188,7 +188,7 @@ void Solver1D_ROE::calc_f_star_roe()
 		State1D udiff = u[i + 1] - u[i];
 
 
-		f_star[i] = (MatrixXd)(f[i] + f[i + 1])*0.5 - A_Abs * ((MatrixXd)(udiff*0.5));
+		f_star[i] = (MatrixXd)(f[i] + f[i + 1])*0.5 - A_Abs * ((MatrixXd)(udiff)*0.5);
 
 	}
 

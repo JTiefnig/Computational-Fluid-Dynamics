@@ -57,6 +57,8 @@ public:
 
 
 
+
+
 	virtual double getValue() const
 	{
 		return this->value;

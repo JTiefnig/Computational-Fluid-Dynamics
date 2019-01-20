@@ -66,7 +66,7 @@ MatrixXd MatrixXd::operator+(const MatrixXd & b)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			ret(i, j) = v[i*n + j] + b.v[i*n + j];
+			ret(i, j) = v[i*n + j] + b.v[i*b.n + j];
 		}
 	}
 
@@ -85,7 +85,7 @@ MatrixXd MatrixXd::operator-(const MatrixXd & b)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			ret(i, j) = v[i*n + j] - b.v[i*n + j];
+			ret(i, j) = v[i*n + j] - b.v[i*b.n + j];
 		}
 	}
 
@@ -149,7 +149,7 @@ MatrixXd MatrixXd::operator * (const MatrixXd& b)
 		{
 			for (int c = 0; c < b.m; c++)
 			{
-				ret(i, j) += v[i*n + c] *b.v[c*n + j];
+				ret(i, j) += v[i*n + c] *b.v[c*b.n + j];
 			}
 		}
 	}
