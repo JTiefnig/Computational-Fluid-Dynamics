@@ -1,6 +1,8 @@
 #pragma once
 #include "GridGenerator.h"
 #include "Model1D.h"
+#include "smartProperty.h"
+#include "propertyContainer.h"
 
 
 
@@ -11,10 +13,10 @@ class A1Grid :
 {
 private:
 
-	smartProperty<double> x_min_A1;
-	smartProperty<double> x_max_A1;
-	smartProperty<double> y_min_A1;
-	smartProperty<double> y_max_A1;
+	/*smartProperty<double>*/ double x_min_A1;
+	/*smartProperty<double>*/ double x_max_A1;
+	/*smartProperty<double>*/ double y_min_A1;
+	/*smartProperty<double>*/ double y_max_A1;
 
 public:
 	A1Grid(Model1D* mod);

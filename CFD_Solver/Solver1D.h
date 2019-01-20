@@ -11,7 +11,7 @@ class Solver1D
 protected:
 	Model1D* model;
 
-	smartProperty<double> cfl;
+	/*smartProperty<double>*/ double cfl;
 
 	double TimeStep();
 

@@ -1,4 +1,4 @@
-#include <iostream>
+                                                                                                                                 #include <iostream>
 #include <fstream>
 #include <vector>
 
@@ -47,8 +47,8 @@ int main()
 		{
 			double conv = mod->CalculateConvergence();
 
-			std::cout << "iter: " << mod->stepcount << " - conv" << conv << std::endl;
-
+			std::cout << "iter: " << mod->stepcount << " - conv: " << conv << std::endl;
+			
 			// end loop if convergence is reached
 			if (conv < convLimit)
 				break;

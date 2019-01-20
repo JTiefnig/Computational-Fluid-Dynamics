@@ -10,6 +10,7 @@ Solver1D::Solver1D(Model1D * model)
 {
 	this->model = model;
 	cfl = model->properties["cfl"];
+	
 	//model->properties.createProperty("cfl", cfl);
 }
 
@@ -49,17 +50,7 @@ double Solver1D::TimeStep()
 		{
 			eigenmax = fabs(local_u - local_c);
 		}
-		// new = pretty much the same 
 
-		/*double vel = model->u[i].rho_u / model->u[i].rho;
-		double p = (model->u[i][3] - model->u[i][1] * pow(vel, 2)*0.5)*(model->gamma - 1);
-		double c = sqrt(p / model->u[i][1] * model->gamma);
-		double eigen = max(fabs(vel + c), fabs(vel - c));
-
-		if (eigen > eigenmax)
-		{
-			eigenmax = eigen;
-		}*/
 
 	}
 

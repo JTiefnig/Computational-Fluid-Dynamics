@@ -39,12 +39,13 @@ public:
 
 	int gridsize;
 
-	smartProperty<double> R;
-	smartProperty<double> gamma; // kappa
-	smartProperty<double> p_tot;
-	smartProperty<double> T_tot;
-	smartProperty<double> p_exit;
-	smartProperty<double> sub_exit;
+	/*smartProperty<double>*/ double R;
+	/*smartProperty<double>*/ double gamma; // kappa
+	/*smartProperty<double>*/ double p_tot;
+	/*smartProperty<double>*/ double T_tot;
+	/*smartProperty<double>*/ double p_exit;
+	/*smartProperty<double>*/ double sub_exit;
+
 	int nPrint = 9; // wir beginnen bei 0
 
 	double rho_tot;
@@ -73,6 +74,6 @@ public:
 	
 
 private:
-	float convCompValue = 1;
+	double convCompValue = 1;
 };
 

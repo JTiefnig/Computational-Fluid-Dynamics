@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "A1Grid.h"
 #include <vector>
+#include <math.h>
 
 
 using namespace std;
@@ -34,11 +35,12 @@ void A1Grid::Generate()
 
 	
 
-	int imax = u.size();
+	std::size_t imax = u.size();
 
 	double dx = (x_max_A1 - x_min_A1) / imax;
 	model->dx = dx;
-	double 	local_k = (y_max_A1 - y_min_A1) / (pow(x_max_A1, 2));
+	double 	local_k = (y_max_A1 - y_min_A1) / (pow(x_max_A1,2));
+	
 
 	for (int i = 0; i < imax; i++)
 	{
@@ -67,7 +69,7 @@ void A1Grid::Generate()
 
 
 
-	for (int i = 0; i < imax; i++)
+	for (std::size_t i = 0; i < imax; i++)
 	{
 		u[i].rho = rho_start;
 		u[i].rho_u = rhou_start;

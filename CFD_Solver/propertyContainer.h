@@ -63,7 +63,7 @@ public:
 			if (props[i]->getName().compare(n) == 0)
 				return *(props[i]);
 		}
-
+		throw "property not found";
 	}
 
 	int size()
