@@ -59,7 +59,7 @@ public:
 
 	smartProperty& operator[](std::string n)
 	{
-		for (int i = 0; i < props.size(); i++)
+		for (std::size_t i = 0; i < props.size(); i++)
 		{
 			if (props[i]->getName().compare(n) == 0)
 				return *(props[i]);
@@ -74,7 +74,7 @@ public:
 
 	void print()
 	{
-		for (int i = 0; i < props.size(); i++)
+		for (std::size_t i = 0; i < props.size(); i++)
 		{
 			std::cout << props[i]->getName() << " - " << (double)(*props[i]) << std::endl;
 		}
@@ -82,7 +82,7 @@ public:
 
 	~PropertyContainer()
 	{
-		for (int i = 0; i < props.size(); i++)
+		for (std::size_t i = 0; i < props.size(); i++)
 		{
 			delete props[i];
 		}
@@ -132,7 +132,7 @@ public:
 
 
 		// Schreiben der 
-		for (int i = 0; i < props.size(); i++)
+		for (std::size_t i = 0; i < props.size(); i++)
 		{
 			XMLElement* valelm = doc.NewElement("Param");
 			

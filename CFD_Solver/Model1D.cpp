@@ -129,7 +129,7 @@ double Model1D::GetVelocity(int i)
 
 
 
-float Model1D::CalculateConvergence()
+double Model1D::CalculateConvergence()
 {
 	
 	State1D resid;

@@ -39,9 +39,9 @@ public:
 
 	int gridsize;
 
-	smartProperty R;
-	smartProperty gamma; // kappa
-	smartProperty p_tot;
+	double R;
+	double gamma; // kappa
+	double p_tot;
 	double T_tot;
 	double p_exit;
 	double sub_exit;
@@ -67,11 +67,8 @@ public:
 	double GetTemperatur(int i);
 	double GetVelocity(int i);
 
-	float CalculateConvergence();
+	double CalculateConvergence();
 
-	
-
-	
 
 private:
 	double convCompValue = 1;
