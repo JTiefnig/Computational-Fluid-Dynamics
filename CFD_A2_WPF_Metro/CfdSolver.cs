@@ -385,6 +385,8 @@ namespace CFD_A2_WPF_Metro
         }
 
 
+
+        // was only a test
         static private double Sigmoid(double x)
         {
             return 1 / (1 + Math.Exp(-x)); // sigmoid "vereinfacht" ^^

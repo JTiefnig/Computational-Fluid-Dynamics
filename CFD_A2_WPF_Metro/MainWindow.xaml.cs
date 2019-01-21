@@ -19,70 +19,16 @@ using Microsoft.Win32;
 namespace CFD_A2_WPF_Metro
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// UI logic 
     /// <autor> Johannes Tiefnig</autor>
-    /// CFD TU Graz 2018
+    /// CFD TU Graz 2018/19
     /// </summary>
     /// 
     public partial class MainWindow : MetroWindow
     {
-        private CfdSolver solverAdapt;
-
-        public CfdSolver SolverAdapter
-        {
-            get { return solverAdapt; }
-            set { solverAdapt = value; }
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            SolverAdapter = new CfdSolver();
-
-            DataContext = this;
-        }
-
-        private void RunButton_Click(object sender, RoutedEventArgs e)
-        {
-            solverAdapt.Run();
-        }
-
-        private void RunStepsButton_Click(object sender, RoutedEventArgs e)
-        {
-            solverAdapt.RunSteps();
-        }
-
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
-        {
-            solverAdapt.ResetModel();
-        }
-
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
-            solverAdapt.stopSimulation();
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            var diag = new ParameterSettingsWindow(solverAdapt.Properties);
-
-            diag.Show();
 
 
-
-        }
-
-        private void AddSeriesButton_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void RemoveSeries_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
+        // need this later
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog
@@ -103,14 +49,6 @@ namespace CFD_A2_WPF_Metro
                 }
             }
         }
-
-        private void SaveParams_Click(object sender, RoutedEventArgs e)
-        {
-            solverAdapt.SaveParametersToFile();
-        }
-
-
-
 
     }
 }
