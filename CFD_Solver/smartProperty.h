@@ -56,7 +56,23 @@ public:
 	}
 
 
+	friend double operator +(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() + b.getValue();
+	}
 
+	friend double operator *(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() * b.getValue();
+	}
+
+	friend double operator /(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() / b.getValue();
+	}
+
+
+	
 
 
 	virtual double getValue() const
@@ -138,6 +154,11 @@ public:
 	}
 
 
+
+	friend double operator -(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() - b.getValue();
+	}
 
 protected:
 

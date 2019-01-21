@@ -123,9 +123,6 @@ public:
 
 	void SaveToFile(std::string path)
 	{
-		
-		 
-
 
 		// dox in stack..
 		XMLDocument doc;

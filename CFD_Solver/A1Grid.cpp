@@ -57,11 +57,11 @@ void A1Grid::Generate()
 
 	model->stepcount = 0;
 
-	model->rho_tot = model->p_tot.getValue() / (model->R*model->T_tot);
+	model->rho_tot = model->p_tot / (model->R*model->T_tot);
 
 	double rho_start = model->rho_tot;
 	double rhou_start = 0;
-	double e_start = model->p_tot.getValue() / (model->gamma - 1);
+	double e_start = model->p_tot / (model->gamma - 1);
 
 
 	// Initialisieren des Stroemungsfeldes (Zustandsvektor U) mit den Ruhezustandswerten
