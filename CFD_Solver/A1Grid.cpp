@@ -39,11 +39,11 @@ void A1Grid::Generate()
 
 	double dx = (x_max_A1 - x_min_A1) / imax;
 	model->dx = dx;
-	double 	local_k = ((double)y_max_A1 - (double)y_min_A1) / (pow(x_max_A1,2));
+	double 	local_k = (y_max_A1 - y_min_A1) / (pow(x_max_A1,2));
 
 	
 
-	for (int i = 0; i < imax; i++)
+	for (std::size_t i = 0; i < imax; i++)
 	{
 		u[i].x = (x_min_A1 + (i)* dx);
 
@@ -57,11 +57,11 @@ void A1Grid::Generate()
 
 	model->stepcount = 0;
 
-	model->rho_tot = model->p_tot.getValue() / (model->R*model->T_tot);
+	model->rho_tot = model->p_tot / (model->R*model->T_tot);
 
 	double rho_start = model->rho_tot;
 	double rhou_start = 0;
-	double e_start = model->p_tot.getValue() / (model->gamma - 1);
+	double e_start = model->p_tot / (model->gamma - 1);
 
 
 	// Initialisieren des Stroemungsfeldes (Zustandsvektor U) mit den Ruhezustandswerten

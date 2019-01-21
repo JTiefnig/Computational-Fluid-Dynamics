@@ -13,9 +13,9 @@ class A1Grid :
 {
 private:
 
-	double x_min_A1;
-	double x_max_A1;
-	double y_min_A1;
+	smartProperty x_min_A1;
+	smartProperty x_max_A1;
+	smartProperty y_min_A1;
 	smartProperty y_max_A1;
 
 public:

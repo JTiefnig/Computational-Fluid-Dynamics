@@ -50,13 +50,31 @@ public:
 
 
 
-	virtual operator double const & () const
+	virtual operator double & ()
 	{
-		return this->getValue();
+		return this->value;
 	}
 
 
+	static friend double operator +(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() + b.getValue();
+	}
 
+	static friend double operator -(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() - b.getValue();
+	}
+
+	static friend double operator /(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() / b.getValue();
+	}
+
+	static friend double operator *(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() * b.getValue();
+	}
 
 
 	virtual double getValue() const
