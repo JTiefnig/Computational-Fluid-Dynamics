@@ -62,8 +62,6 @@ int main()
 
 	// first line in file is the legend
 	fileStream << "velocity; pressure; mach; temperatur" << std::endl;
-
-	
 	
 
 	// loop trough all gridpoints and write data to file 
@@ -81,6 +79,8 @@ int main()
 
 	std::cout << "System converged; Data exported \n\n";
 
+
+	// Free memory in heap
 	delete girdLaval;
 	delete mod;
 

@@ -48,7 +48,9 @@
       <StackPanel>
 
         
-        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="ModelSelector" SelectedIndex="{Binding SelectedModel, Mode=TwoWay}">
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" 
+                  Name="ModelSelector" SelectedIndex="{Binding SelectedModel, Mode=TwoWay}"
+                   IsSynchronizedWithCurrentItem="True">
           <ComboBoxItem>Exercise 1</ComboBoxItem>
           <ComboBoxItem>Exercise 2</ComboBoxItem>
         </ComboBox>
@@ -64,15 +66,18 @@
           </StackPanel>
         </Button>
 
-        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" DisplayMemberPath="Name" ItemsSource="{Binding SolverTypes}" SelectedIndex="{Binding SelectedSolver, Mode=TwoWay}"/>
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" DisplayMemberPath="Name"
+                  ItemsSource="{Binding SolverTypes}" 
+                  SelectedItem="{Binding SelectedSolver, Mode=TwoWay}"
+                   IsSynchronizedWithCurrentItem="True"/>
 
         <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
       </StackPanel>
 
       <StackPanel>
-        <TextBlock Margin="1, 3, 1, 0">Steps To Run</TextBlock>
+        <TextBlock Foreground="Gray" Margin="1, 3, 1, 0">Steps To Run</TextBlock>
         <TextBox Width="100" Margin="3" Name="StepsToRunInputBox" Text="{Binding Steps}"></TextBox>
-        <TextBlock Margin="1, 3, 1, 0">Update inteval</TextBlock>
+        <TextBlock ToolTip="Interval for Updating the user interface" Foreground="Gray" Margin="1, 3, 1, 0">Update inteval</TextBlock>
         <TextBox Width="100" Margin="3" Text="{Binding UpdatdateInterval}"></TextBox>
       </StackPanel>
 
@@ -85,7 +90,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="FastForwardSolid" />
-            <TextBlock TextAlignment="Center" Margin="5" VerticalAlignment="Center"> RunSteps</TextBlock>
+            <TextBlock TextAlignment="Center" Margin="5" VerticalAlignment="Center">RunSteps</TextBlock>
           </StackPanel>
         </Button>
         <StackPanel Orientation="Horizontal">
@@ -110,53 +115,21 @@
             </StackPanel>
           </Button>
         </StackPanel>
-
       </DockPanel>
-      
 
-      <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding ModelConvergence}" To="1">
+      <lvc:Gauge Margin="35,5,25,5" From="0" Width="150" Value="{Binding ModelConvergence, UpdateSourceTrigger=PropertyChanged}" To="1">
       </lvc:Gauge>
 
 
-      <!--<ListBox Width="80" Margin ="2" VerticalAlignment="Stretch" DataContext="{Binding SolverAdapter.Models}" DisplayMemberPath="Name" />-->
-
-
-      <!--<StackPanel>
-        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowPressure}" Margin="2"> Show Pressure </ToggleButton>
-        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowMach}" Margin="2">Show Mach</ToggleButton>
-        <ToggleButton  IsChecked="{Binding SolverAdapter.ShowVelocity}" Margin="2">Show Velocity</ToggleButton>
-        --><!--<Button Name="AddSeriesButton" Click="AddSeriesButton_Click">
-          <StackPanel>
-            <iconPacks:PackIconFontAwesome Width="18"
-                                       Height="auto"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Kind="PlusSolid" />
-            <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Add</TextBlock>
-          </StackPanel>
-        </Button>
-        <Button Name="RemoveSeries" Click="RemoveSeries_Click">
-          <StackPanel>
-            <iconPacks:PackIconFontAwesome Width="18"
-                                       Height="auto"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Kind="TrashSolid" />
-            <TextBlock TextAlignment="Center" Margin="4" FontSize="12">Delete</TextBlock>
-          </StackPanel>
-        </Button>--><!--
-        
-      </StackPanel>-->
-
       <StackPanel>
-        <Label>Stepcount: </Label>
-        <TextBlock Text="{Binding SolverAdapter.StepCount}" Width="100" Height="30" FontSize="20" Margin="1"></TextBlock>
+        <Label Foreground="Gray">Stepcount: </Label>
+        <TextBlock Text="{Binding StepCount}" Width="100" Height="30" FontSize="20" Margin="1"></TextBlock>
         
       </StackPanel>
-      
-      
-      
-      <Button Name="ExportButton" Height="60" >
+
+
+
+      <Button Name="ExportButton" Height="60" Command="{Binding ExportCommand}">
         <StackPanel>
           <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
@@ -166,58 +139,25 @@
           <TextBlock TextAlignment="Center" Margin="5" FontSize="12"> Export</TextBlock>
         </StackPanel>
       </Button>
-
-
-
-      <!--<Button Name="SettingsButton" Click="SettingsButton_Click" Height="60" Margin="5,2">
-        <StackPanel Orientation="Vertical">
-          <iconPacks:PackIconFontAwesome Width="25"
-                                       Height="auto"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Kind="WrenchSolid" />
-          <TextBlock TextAlignment="Center" Margin="5"> Settings</TextBlock>
-
-        </StackPanel>
-      </Button>-->
-      
-      
     </StackPanel>
-
-    <!-- DATA Display-->
-
-    <!--<TabControl
-            Grid.Row="1"
-            Grid.Column="1"
-            Controls:TabControlHelper.Underlined="TabPanel"
-            TabStripPlacement="Bottom">
-            <Controls:MetroTabItem Header="Graph" MaxHeight="20">
-
-                <TextBox>palcehodler</TextBox>
-            </Controls:MetroTabItem>
-
-            <Controls:MetroTabItem Header="Dimensions" MaxHeight="25">
-
-                <TextBox>palcehodlser</TextBox>
-            </Controls:MetroTabItem>
-
-        </TabControl>-->
 
 
 
     <TabControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TabStripPlacement="Bottom">
       <TabItem Header="Graph" >
 
-        <lvc:CartesianChart Grid.Column="2" AxisY="{Binding SolverAdapter.YAxesCollection}" Grid.Row="1" Series="{Binding SolverAdapter.SimulationData}" LegendLocation="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DisableAnimations="True" Margin="0,0,0.333,-0.333">
+        <lvc:CartesianChart Grid.Column="2" AxisY="{Binding YAxesCollection}" Grid.Row="1" Series="{Binding SimulationData}" LegendLocation="Top" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DisableAnimations="True" Margin="0,0,0.333,-0.333">
           <lvc:CartesianChart.AxisX>
-            <lvc:Axis Title="Length" Labels="{Binding Labels}"></lvc:Axis>
+            <lvc:Axis Title="Length"></lvc:Axis>
           </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
-      
-      </TabItem>
 
+      </TabItem>
       <TabItem Header="Visual">
-        <!--<local:CustomVisual PressureSeries="{Binding SolverAdapter.PressureSeries}" AreaSeries="{Binding SolverAdapter.AreaSeries}" CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>-->
+        <local:CustomVisual PressureSeries="{Binding PressureSeries}" AreaSeries="{Binding AreaSeries}" 
+                            CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" 
+                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>
       </TabItem>
 
 
@@ -229,43 +169,16 @@
         <RowDefinition Height="30"/>
       </Grid.RowDefinitions>
       <DataGrid ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
-      <Button Name="SaveParams" Grid.Row="1" >
+      <Button Name="SaveParams" Grid.Row="1" Command="{Binding SaveParameter}" >
         <StackPanel Orientation="Horizontal">
           <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Kind="SaveSolid" />
-          <TextBlock TextAlignment="Center" Margin="5"> Save Parameter</TextBlock>
+          <TextBlock  TextAlignment="Center" Margin="5"> Save Parameter</TextBlock>
         </StackPanel>
       </Button>
     </Grid>
-    
-
-    <!--<DataGrid
-            Name="SimDatatGrid"
-            Grid.Column="0"
-            Grid.Row="1"
-            AutoGenerateColumns="False"
-            FrozenColumnCount="1"
-            ItemsSource="{Binding Path=SolverAdapter.SimulationData[0].Values, UpdateSourceTrigger=PropertyChanged}">
-      <DataGrid.Columns>
-        <DataGridTextColumn
-                                Width="1*"
-                                Binding="{Binding X}"
-                                Header="Pos"
-                                IsReadOnly="True" />
-
-        <DataGridTextColumn
-                                Width="*"
-                                Binding="{Binding Y}"
-                                Header="Unit"
-                                IsReadOnly="True" />
-      </DataGrid.Columns>
-    </DataGrid>-->
-
-
-
-
   </Grid>
 </Controls:MetroWindow>

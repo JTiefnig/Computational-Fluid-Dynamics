@@ -36,13 +36,6 @@ namespace CFD_A1_OO {
 		T
 	};
 
-
-	public enum class MODEL
-	{
-		A1, 
-		A2
-	};
-
 	public ref class CfdA1Adapter
 	{
 	private:
@@ -60,14 +53,11 @@ namespace CFD_A1_OO {
 	public:
 		
 
-		MODEL selectedModel;
-		
-
-		CfdA1Adapter(MODEL m);
+		CfdA1Adapter(int m);
 		~CfdA1Adapter();
 
 
-		void Reset();
+		void Reset(int m);
 
 		void DoSteps(int i, int solverID);
 

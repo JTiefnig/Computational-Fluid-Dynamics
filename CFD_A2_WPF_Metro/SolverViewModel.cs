@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Threading;
 using System.Collections.ObjectModel;
+using System.IO;
+using Microsoft.Win32;
 
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -21,7 +24,7 @@ using CFD_A1_OO;
 /// /// <author> Johanes Tiefnig</author>
 namespace CFD_A2_WPF_Metro
 {
-    public class SolverViewModel: BaseViewModel
+    public class SolverViewModel : BaseViewModel
     {
 
 
@@ -34,6 +37,7 @@ namespace CFD_A2_WPF_Metro
             new SolverType(){Name= "ROE", Selected=3}
         };
 
+
         public SolverType SelectedSolver { get; set; }
 
         private CfdA1Adapter solver;
@@ -45,32 +49,51 @@ namespace CFD_A2_WPF_Metro
             get => _modConv;
             set
             {
-                _modConv = ModelConvergence;
+                _modConv = value;
                 OnPropertyChanged(nameof(ModelConvergence));
             }
         }
 
-        public int SelectedModel { get; set; } = 1; // todo
 
-
-        public int Seps { set; get; } = 100;
-
-        public int UpdatdateInterval { get; set; } = 10;
-
-        public ObservableCollection<ModelProperty> Properties { get; set; }
-
-        SeriesCollection _simdata;
-        public SeriesCollection SimulationData
+        private int _selMod;
+        public int SelectedModel
         {
-            get { return _simdata; }
+            get => _selMod;
             set
             {
-                _simdata = value;
-                OnPropertyChanged(nameof(SimulationData));
+                _selMod = value;
+
+                ResetModelExecute();
             }
         }
 
+        public int Steps { set; get; } = 100;
 
+        public int UpdatdateInterval { get; set; } = 10;
+
+        public ObservableCollection<ModelProperty> Properties 
+        {
+
+            get
+            {
+                List<String> props = solver.GetParameterList();
+                var ret = new ObservableCollection<ModelProperty>();
+                foreach (var n in props)
+                {
+                    ret.Add(new ModelProperty(solver, n));
+                }
+
+                return ret;
+            }
+
+        }
+
+
+        private bool run4ever;
+        private bool endWorkerFlag;
+
+
+        public int StepCount => solver.StepCount();
 
         // some bridge functionality
         public double[] PressureSeries
@@ -83,6 +106,9 @@ namespace CFD_A2_WPF_Metro
             get { return solver.GetDataArray(DATASET.AREA); }
         }
 
+      
+
+        private Thread worker;
 
         #endregion
 
@@ -92,24 +118,32 @@ namespace CFD_A2_WPF_Metro
             // Create Solver C++ Instance
             try
             {
-                solver = new CfdA1Adapter();
+                solver = new CfdA1Adapter(SelectedModel);
             }catch(Exception e)
             {
                 MessageBox.Show(e.Message);
             }
 
-            Properties = new ObservableCollection<ModelProperty>();
+            // initial solver: ROE
+            SelectedSolver = SolverTypes[3];
 
+            worker = new Thread(() => this.SimulateStepsFunc());
+
+            InitSeries();
 
         }
 
 
         #region Commands
 
-        RelayCommand RunSimulation => new RelayCommand(RunSimulationExecute);
-        RelayCommand RunSteps => new RelayCommand(RunStepsExecute);
-        RelayCommand ResetModel => new RelayCommand(ResetModelExecute);
-        RelayCommand StopSimulation => new RelayCommand(StopSimulationExecute);
+        public RelayCommand RunSimulation => new RelayCommand(RunSimulationExecute);
+        public RelayCommand RunSteps => new RelayCommand(RunStepsExecute);
+        public RelayCommand ResetModel => new RelayCommand(ResetModelExecute);
+        public RelayCommand StopSimulation => new RelayCommand(StopSimulationExecute);
+        public RelayCommand SaveParameter => new RelayCommand(()=> solver.SavePropertiesToXml());
+
+        public RelayCommand ExportCommand => new RelayCommand(ExportRoutine);
+
 
         #endregion
 
@@ -117,43 +151,217 @@ namespace CFD_A2_WPF_Metro
 
         private void RunSimulationExecute()
         {
-
+            if (!worker.IsAlive)
+            {
+                worker = new Thread(() => this.SimulateStepsFunc());
+                worker.IsBackground = true;
+                run4ever = true;
+                worker.Start();
+            }
         }
 
         private void RunStepsExecute()
         {
-
+            if (!worker.IsAlive)
+            {
+                worker = new Thread(() => this.SimulateStepsFunc());
+                worker.IsBackground = true;
+                run4ever = false;
+                worker.Start();
+            }
         }
 
         private void ResetModelExecute()
         {
+            solver.Reset(SelectedModel);
+            InitSeries();
+            UpdateData();
+           
+        }
+
+        private async void StopSimulationExecute()
+        {
+            endWorkerFlag = true;
+
+            await Task.Run(() => { Thread.Sleep(1000); });
+
+            if (worker.IsAlive)
+            {
+                worker.Abort();
+            }
 
         }
 
-        private void StopSimulationExecute()
+
+        protected void SimulateStepsFunc()
+        {
+            endWorkerFlag = false;
+            for (int i = 0; i < Steps || run4ever; i += UpdatdateInterval)
+            {
+
+                solver.DoSteps(UpdatdateInterval, SelectedSolver.Selected);
+
+                UpdateData();
+
+                if (endWorkerFlag)
+                    break;
+            }
+        }
+
+
+        protected void UpdateData()
         {
 
+            lock (SimulationData)
+            {
+                try
+                {
+
+
+                    int i = 0;
+                    foreach (ObservablePoint p in pressurels.Values)
+                    {
+                        p.Y = solver.GetData(i, DATASET.PRESSURE);
+                        i++;
+                    }
+
+
+                    i = 0;
+                    foreach (ObservablePoint p in machls.Values)
+                    {
+                        p.Y = solver.GetData(i, DATASET.MACH);
+                        i++;
+                    }
+
+                    
+                    ModelConvergence = solver.Convergence();
+                }catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    StopSimulationExecute();
+                }
+
+            }
+
+            
+            OnPropertyChanged(nameof(PressureSeries));
+            OnPropertyChanged(nameof(StepCount));
         }
+
+
+
 
 
         #endregion
 
 
+
+        #region DiagramProperties
+
+
+        SeriesCollection _simdata;
+        public SeriesCollection SimulationData
+        {
+            get { return _simdata; }
+            set
+            {
+                _simdata = value;
+                OnPropertyChanged(nameof(SimulationData));
+            }
+        }
+
+        public AxesCollection YAxesCollection
+        {
+            get; set;
+        }
+
+        LineSeries pressurels;
+        LineSeries machls;
+
+        #endregion
+
         #region Utils
 
-        
 
-        private void GenerateParameterlist()
+        void InitSeries()
         {
-            List<String> props = solver.GetParameterList();
 
-            foreach (var n in props)
+            Axis paAxis;
+            Axis maAxis;
+
+
+            YAxesCollection = new AxesCollection();
+            paAxis = new Axis();
+            paAxis.Title = "Pa";
+            paAxis.Visibility = System.Windows.Visibility.Visible;
+
+
+            maAxis = new Axis();
+            maAxis.Title = "Ma";
+            maAxis.Visibility = System.Windows.Visibility.Visible;
+
+
+            pressurels = new LineSeries
             {
-                Properties.Add(new ModelProperty(solver, n));
-            }
+                Title = "Pressure",
+                Values = new ChartValues<ObservablePoint>(),
+                PointGeometry = DefaultGeometries.None,
 
+            };
+            for (int i = 0; i < solver.GetGridSize(); i++)
+                pressurels.Values.Add(new ObservablePoint(solver.GetData(i, CFD_A1_OO.DATASET.X), solver.GetData(i, DATASET.PRESSURE)));
 
+            machls = new LineSeries
+            {
+                Title = "Mach",
+                Values = new ChartValues<ObservablePoint>(),
+                PointGeometry = DefaultGeometries.None,
+
+            };
+            for (int i = 0; i < solver.GetGridSize(); i++)
+                machls.Values.Add(new ObservablePoint(solver.GetData(i, CFD_A1_OO.DATASET.X), solver.GetData(i, DATASET.MACH)));
+
+            
+
+            SimulationData = new SeriesCollection();
+            YAxesCollection = new AxesCollection();
+         
+            YAxesCollection.Add(paAxis);
+            pressurels.ScalesYAt = YAxesCollection.IndexOf(paAxis);
+            SimulationData.Add(pressurels);
+          
+            YAxesCollection.Add(maAxis);
+            machls.ScalesYAt = YAxesCollection.IndexOf(maAxis);
+            SimulationData.Add(machls);
+
+            OnPropertyChanged(nameof(YAxesCollection));
+            OnPropertyChanged(nameof(SimulationData));
         }
+
+
+
+        private void ExportRoutine()
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "CSV file (*.csv)|*.csv"
+            };
+
+            if (sfd.ShowDialog() == true)
+            {
+                try
+                {
+                    var exp = new CsvExporter(sfd.FileName.ToString());
+                    exp.Export(solver);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("A handled exception just occurred: " + exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+
 
 
         #endregion

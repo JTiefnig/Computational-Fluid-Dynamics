@@ -13,8 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
-using System.IO;
-using Microsoft.Win32;
+
 
 namespace CFD_A2_WPF_Metro
 {
@@ -35,28 +34,6 @@ namespace CFD_A2_WPF_Metro
             DataContext = vm;
         }
 
-
-        // need this later
-        //private void ExportButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SaveFileDialog sfd = new SaveFileDialog
-        //    {
-        //        Filter = "CSV file (*.csv)|*.csv"
-        //    };
-
-        //    if (sfd.ShowDialog() == true)
-        //    {
-        //        try
-        //        {
-        //            var exp = new CsvExporter(sfd.FileName.ToString());
-        //            exp.Export(solverAdapt.GetModel());
-        //        }
-        //        catch (Exception exception)
-        //        {
-        //            MessageBox.Show("A handled exception just occurred: " + exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
-        //        }
-        //    }
-        //}
 
     }
 }

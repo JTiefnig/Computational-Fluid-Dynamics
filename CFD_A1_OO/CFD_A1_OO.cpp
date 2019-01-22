@@ -12,9 +12,9 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
+CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(int m)
 {
-	selectedModel = m;
+	
 
 	try
 	{
@@ -29,7 +29,7 @@ CFD_A1_OO::CfdA1Adapter::CfdA1Adapter(MODEL m)
 	grid1 = new A1Grid(mod);
 	grid2 = new A2Grid(mod);
 	
-	Reset();
+	Reset(m);
 
 	
 	
@@ -71,38 +71,47 @@ double CFD_A1_OO::CfdA1Adapter::GetData(int i, DATASET set)
 	if (i >= mod->gridsize)
 		throw gcnew Exception("Index out of range");
 
+	double retval = 0;
 	switch (set)
 	{
 	case CFD_A1_OO::DATASET::X:
-		return mod->u[i].x;
+		retval = mod->u[i].x;
 		break;
 	case CFD_A1_OO::DATASET::AREA:
-		return mod->u[i].area;
+		retval = mod->u[i].area;
 		break;
 	case CFD_A1_OO::DATASET::RHO:
-		return mod->u[i].rho;
+		retval = mod->u[i].rho;
 		break;
 	case CFD_A1_OO::DATASET::RHO_U:
-		return mod->u[i].rho_u;
+		retval = mod->u[i].rho_u;
 		break;
 	case CFD_A1_OO::DATASET::E:
-		return mod->u[i].e;
+		retval = mod->u[i].e;
 		break;
 	case CFD_A1_OO::DATASET::PRESSURE:
-		return mod->GetPressure(i);
+		retval = mod->GetPressure(i);
 		break;
 	case CFD_A1_OO::DATASET::U:
-		return mod->GetVelocity(i);
+		retval = mod->GetVelocity(i);
 		break;
 	case CFD_A1_OO::DATASET::MACH:
-		return mod->GetMach(i);
+		retval = mod->GetMach(i);
 		break;
 	case CFD_A1_OO::DATASET::T:
-		return mod->GetTemperatur(i);
+		retval = mod->GetTemperatur(i);
 		break;
 	default:
 		break;
 	}
+
+
+
+	if (isnan(retval) || isinf(retval))
+		throw gcnew Exception(gcnew String("Not Stable"));
+
+
+	return retval;
 }
 
 
@@ -122,14 +131,14 @@ int CFD_A1_OO::CfdA1Adapter::StepCount()
 }
 
 
-void CFD_A1_OO::CfdA1Adapter::Reset()
+void CFD_A1_OO::CfdA1Adapter::Reset(int m)
 {
-	switch (selectedModel) 
+	switch (m) 
 	{
-	case MODEL::A1:
+	case 0:
 		grid1->Generate();
 		break;
-	case MODEL::A2:
+	case 1:
 		grid2->Generate();
 		break;
 	}
