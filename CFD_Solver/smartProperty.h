@@ -49,12 +49,10 @@ public:
 	}
 
 
-
 	virtual operator double & ()
 	{
 		return this->value;
 	}
-
 
 	static friend double operator +(const smartProperty& a, const smartProperty& b)
 	{
@@ -66,16 +64,15 @@ public:
 		return a.getValue() - b.getValue();
 	}
 
-
-
-	friend double operator /(const smartProperty& a, const smartProperty& b)
+	static friend double operator /(const smartProperty& a, const smartProperty& b)
 	{
 		return a.getValue() / b.getValue();
 	}
 
-
-	
-
+	static friend double operator *(const smartProperty& a, const smartProperty& b)
+	{
+		return a.getValue() * b.getValue();
+	}
 
 	virtual double getValue() const
 	{
@@ -91,7 +88,6 @@ public:
 	{
 		name = n;
 	}
-
 
 	void link(smartProperty& chain)
 	{
@@ -157,10 +153,7 @@ public:
 
 
 
-	friend double operator -(const smartProperty& a, const smartProperty& b)
-	{
-		return a.getValue() - b.getValue();
-	}
+
 
 protected:
 

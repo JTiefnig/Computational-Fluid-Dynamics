@@ -38,30 +38,26 @@ void Solver1D_ROE::calc_f()
 
 void Solver1D_ROE::calc_f_star_roe()
 {
-	
 
-	int ii, jj;
-
-	double  R_av;
-	double  rho_av;
-	double  u_av;
-	double  c_av;
 	double  H_i;
 	double  H_ip1;
 	double  H_av;;
-	double  epsilon;
-
+	double  R_av;
+	double  c_av;
+	double  rho_av;
+	double  u_av;
 
 	vector<GridPoint1D> &u = model->u;
 	double gamma = model->gamma;
 
 	int imax = model->u.size();
 
-	MatrixXd lambdaMat(3, 3);
+	
 	MatrixXd L(3, 3);
 	MatrixXd R(3, 3);
+	MatrixXd lambdaMat(3, 3);
 
-	for (int i = 0; i < imax - 1; i++)
+	for (std::size_t i = 0; i < imax - 1; i++)
 	{
 		
 		R_av = sqrt(u[i + 1].rho / u[i].rho); // Eq 13-75
@@ -110,10 +106,11 @@ void Solver1D_ROE::calc_f_star_roe()
 
 		//Entropy fix
 
-		double c_i;
-		double c_ip1;
 		double lambda_i;
 		double lambda_ip1;
+		double c_i;
+		double c_ip1;
+		
 
 	
 
@@ -147,38 +144,6 @@ void Solver1D_ROE::calc_f_star_roe()
 		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho - c_ip1;
 
 		lambdaMat(2, 2) = local_func(2);
-
-		//for (int k = 0; k < 3; k++) //cycle through all three eigenvalues
-		//{
-
-		//	switch (k)
-		//	{
-		//	case 0:
-		//		lambda_i = u[i].rho_u / u[i].rho;
-		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho;
-		//		break;
-		//	case 1:
-		//	{
-		//		lambda_i = u[i].rho_u / u[i].rho + c_i;
-		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho + c_ip1;
-		//		break;
-		//	}
-		//	case 2:
-		//	{
-		//		lambda_i = u[i].rho_u / u[i].rho - c_i;
-		//		lambda_ip1 = u[i + 1].rho_u / u[i + 1].rho - c_ip1;
-		//		break;
-		//	}
-		//	}
-		//	
-		//	epsilon = fmax(0.,
-		//		fmax(lambdaMat(k, k) - lambda_i,
-		//			lambda_ip1 - lambdaMat(k,k)));//Eq. 13-92
-		//	if (fabs(lambdaMat(k, k)) < epsilon) //Eq. 13-91
-		//	{
-		//		lambdaMat(k, k) = epsilon;
-		//	}
-		//}
 
 
 		MatrixXd lambdaAbs = lambdaMat.Abs();

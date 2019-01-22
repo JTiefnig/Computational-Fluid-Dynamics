@@ -48,12 +48,12 @@
       <StackPanel>
 
         
-        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="ModelSelector" SelectedIndex="{Binding SolverAdapter.SelectedModel}">
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="ModelSelector" SelectedIndex="{Binding SelectedModel, Mode=TwoWay}">
           <ComboBoxItem>Exercise 1</ComboBoxItem>
           <ComboBoxItem>Exercise 2</ComboBoxItem>
         </ComboBox>
 
-        <Button Name="ResetButton" Click="ResetButton_Click" Margin="5,2">
+        <Button Name="ResetButton" Command="{Binding ResetModel}" Margin="5,2">
           <StackPanel Orientation="Horizontal">
             <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
@@ -64,27 +64,21 @@
           </StackPanel>
         </Button>
 
-        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay}">
-          <ComboBoxItem>Central</ComboBoxItem>
-          <ComboBoxItem>LaxWendroff</ComboBoxItem>
-          <ComboBoxItem>Mac Cormack</ComboBoxItem>
-          <ComboBoxItem>ROE Solver</ComboBoxItem>
-        </ComboBox>
-        
-        
+        <ComboBox Width="140" VerticalAlignment="Center" Margin="5,2" Name="SolverSelector_ComboBox" DisplayMemberPath="Name" ItemsSource="{Binding SolverTypes}" SelectedIndex="{Binding SelectedSolver, Mode=TwoWay}"/>
+
         <!--SelectedIndex="{Binding SolverAdapter.SelectedSolverIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
       </StackPanel>
 
       <StackPanel>
         <TextBlock Margin="1, 3, 1, 0">Steps To Run</TextBlock>
-        <TextBox Width="100" Margin="3" Name="StepsToRunInputBox" Text="{Binding SolverAdapter.Steps}"></TextBox>
+        <TextBox Width="100" Margin="3" Name="StepsToRunInputBox" Text="{Binding Steps}"></TextBox>
         <TextBlock Margin="1, 3, 1, 0">Update inteval</TextBlock>
-        <TextBox Width="100" Margin="3" Text="{Binding SolverAdapter.UpdatdateInterval}"></TextBox>
+        <TextBox Width="100" Margin="3" Text="{Binding UpdatdateInterval}"></TextBox>
       </StackPanel>
 
 
       <DockPanel LastChildFill="True">
-        <Button DockPanel.Dock="Bottom" Name="RunStepsButton" Click="RunStepsButton_Click">
+        <Button DockPanel.Dock="Bottom" Name="RunStepsButton" Command="{Binding RunSteps}">
           <StackPanel Orientation="Horizontal">
             <iconPacks:PackIconFontAwesome Width="18"
                                        Height="auto"
@@ -95,7 +89,7 @@
           </StackPanel>
         </Button>
         <StackPanel Orientation="Horizontal">
-          <Button Name="RunButton" Click="RunButton_Click" >
+          <Button Name="RunButton" Command="{Binding RunSimulation}" >
             <StackPanel>
               <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
@@ -105,7 +99,7 @@
               <TextBlock TextAlignment="Center" Margin="5"> RUN</TextBlock>
             </StackPanel>
           </Button>
-          <Button Name="StopButton" Click="StopButton_Click" >
+          <Button Name="StopButton" Command="{Binding StopSimulation}" >
             <StackPanel>
               <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
@@ -120,7 +114,7 @@
       </DockPanel>
       
 
-      <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding SolverAdapter.ModelConvergence}" To="1">
+      <lvc:Gauge Margin="5,5,5,5" From="0" Width="150" Value="{Binding ModelConvergence}" To="1">
       </lvc:Gauge>
 
 
@@ -162,7 +156,7 @@
       
       
       
-      <Button Name="ExportButton" Height="60" Click="ExportButton_Click">
+      <Button Name="ExportButton" Height="60" >
         <StackPanel>
           <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"
@@ -219,12 +213,11 @@
             <lvc:Axis Title="Length" Labels="{Binding Labels}"></lvc:Axis>
           </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
-
-
+      
       </TabItem>
 
       <TabItem Header="Visual">
-        <local:CustomVisual PressureSeries="{Binding SolverAdapter.PressureSeries}" AreaSeries="{Binding SolverAdapter.AreaSeries}" CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>
+        <!--<local:CustomVisual PressureSeries="{Binding SolverAdapter.PressureSeries}" AreaSeries="{Binding SolverAdapter.AreaSeries}" CustomText="{Binding ElementName=StepsToRunInputBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></local:CustomVisual>-->
       </TabItem>
 
 
@@ -235,8 +228,8 @@
         <RowDefinition Height="*"/>
         <RowDefinition Height="30"/>
       </Grid.RowDefinitions>
-      <DataGrid ItemsSource="{Binding Path=SolverAdapter.Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
-      <Button Name="SaveParams" Grid.Row="1" Click="SaveParams_Click">
+      <DataGrid ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
+      <Button Name="SaveParams" Grid.Row="1" >
         <StackPanel Orientation="Horizontal">
           <iconPacks:PackIconFontAwesome Width="30"
                                        Height="auto"

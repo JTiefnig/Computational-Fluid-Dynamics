@@ -7,7 +7,7 @@ namespace CFD_A2_WPF_Metro
     /// Just basic On Property Changed functionality
     /// </summary>
     /// <author>Johannes Tiefnig</author>
-    class BaseViewModel
+    public class BaseViewModel: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 

@@ -27,28 +27,36 @@ namespace CFD_A2_WPF_Metro
     public partial class MainWindow : MetroWindow
     {
 
+        
+        public MainWindow(BaseViewModel vm)
+        {
+            InitializeComponent();
+
+            DataContext = vm;
+        }
+
 
         // need this later
-        private void ExportButton_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                Filter = "CSV file (*.csv)|*.csv"
-            };
+        //private void ExportButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SaveFileDialog sfd = new SaveFileDialog
+        //    {
+        //        Filter = "CSV file (*.csv)|*.csv"
+        //    };
 
-            if (sfd.ShowDialog() == true)
-            {
-                try
-                {
-                    var exp = new CsvExporter(sfd.FileName.ToString());
-                    exp.Export(solverAdapt.GetModel());
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show("A handled exception just occurred: " + exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-        }
+        //    if (sfd.ShowDialog() == true)
+        //    {
+        //        try
+        //        {
+        //            var exp = new CsvExporter(sfd.FileName.ToString());
+        //            exp.Export(solverAdapt.GetModel());
+        //        }
+        //        catch (Exception exception)
+        //        {
+        //            MessageBox.Show("A handled exception just occurred: " + exception.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        }
+        //    }
+        //}
 
     }
 }

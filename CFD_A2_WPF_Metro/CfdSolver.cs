@@ -18,6 +18,10 @@ using LiveCharts.Defaults;
 namespace CFD_A2_WPF_Metro
 {
 
+
+    /// <summary>
+    /// Old implementation 
+    /// </summary>
     public class CfdSolver : INotifyPropertyChanged
     {
         bool showPa = true;
@@ -204,8 +208,6 @@ namespace CFD_A2_WPF_Metro
 
         void InitSeries()
         {
-
-
 
             // Init graph Axis
 
