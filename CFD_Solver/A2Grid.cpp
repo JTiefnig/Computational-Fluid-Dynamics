@@ -29,6 +29,7 @@ void A2Grid::Generate()
 	int imax = u.size();
 
 	double dx = (x_max_gridA2 - x_min_gridA2) / (imax);
+	model->dx = dx;
 
 	for (int i = 0; i < imax; i++)
 	{

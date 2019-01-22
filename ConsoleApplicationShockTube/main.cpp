@@ -29,11 +29,11 @@ int main()
 	mod->properties["p_exit"] = 10000;
 
 
-	// Grid of exercise 1 (Laval)
-	auto girdLaval = new A2Grid(mod);
+	// Grid of exercise 2 (Tube)
+	auto girdShock = new A2Grid(mod);
 
 	// generate grid according to spesifications
-	girdLaval->Generate();
+	girdShock->Generate();
 
 	// just generate solver in Stack // type ROE
 	Solver1D_ROE solver(mod);
@@ -73,7 +73,7 @@ int main()
 
 
 	// Free memory in heap
-	delete girdLaval;
+	delete girdShock;
 	delete mod;
 
 	//
