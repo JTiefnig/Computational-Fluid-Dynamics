@@ -13,7 +13,7 @@ Solver1D_MacCormack::Solver1D_MacCormack(Model1D* mod)
 	u_qq = vector<State1D>(imax);
 
 	dt = 0;
-	time = 0;
+	
 }
 
 
@@ -26,7 +26,7 @@ void Solver1D_MacCormack::DoStep()
 	int imax = model->u.size();
 
 	dt = TimeStep();
-	time += dt;
+	model->time += dt;
 	
 	
 

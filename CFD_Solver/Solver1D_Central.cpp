@@ -15,7 +15,7 @@ Solver1D_Central::Solver1D_Central(Model1D* mod)
 	f = vector<State1D>(imax);
 	dissip = vector<State1D>(imax);
 
-	time = 0;
+	
 
 	eps_s = 10000.0;
 
@@ -34,7 +34,7 @@ void Solver1D_Central::DoStep()
 
 
 	double dt = TimeStep();
-	time += dt;
+	model->time += dt;
 
 	CalcF();
 	CalcDissipSimple();

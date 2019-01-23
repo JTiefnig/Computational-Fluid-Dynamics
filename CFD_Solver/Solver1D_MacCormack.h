@@ -14,7 +14,7 @@ class Solver1D_MacCormack :
 private: 
 	double eps_s;
 
-	double time; // könnte ein Attribut des models sein !!
+	
 
 	void Calc_uq();
 

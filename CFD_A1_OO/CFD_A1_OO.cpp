@@ -130,6 +130,11 @@ int CFD_A1_OO::CfdA1Adapter::StepCount()
 	return mod->stepcount;
 }
 
+double CFD_A1_OO::CfdA1Adapter::ModelTime()
+{
+	return mod->time;
+}
+
 
 void CFD_A1_OO::CfdA1Adapter::Reset(int m)
 {

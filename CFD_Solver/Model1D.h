@@ -36,6 +36,7 @@ public:
 	// parameters 
 
 	int stepcount;
+	double time;
 
 	int gridsize;
 

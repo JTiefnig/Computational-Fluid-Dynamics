@@ -34,6 +34,7 @@ Model1D::Model1D(int gridSize)
 	// Rho tot wird errechnet...
 	rho_tot = p_tot / (R*T_tot);
 
+	time = 0;
 
 }
 

@@ -56,6 +56,7 @@ void A1Grid::Generate()
 
 
 	model->stepcount = 0;
+	model->time = 0;
 
 	model->rho_tot = model->p_tot / (model->R*model->T_tot);
 

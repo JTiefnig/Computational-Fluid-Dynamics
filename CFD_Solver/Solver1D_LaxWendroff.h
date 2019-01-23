@@ -17,7 +17,7 @@ private:
 	double eps_s;
 
 
-	double time; // könnte ein Attribut des modells sein !!
+
 
 	void CalcF();
 

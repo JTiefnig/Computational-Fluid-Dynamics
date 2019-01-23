@@ -95,6 +95,8 @@ namespace CFD_A2_WPF_Metro
 
         public int StepCount => solver.StepCount();
 
+        public double ModelTime => solver.ModelTime();
+
         // some bridge functionality
         public double[] PressureSeries
         {
@@ -246,6 +248,7 @@ namespace CFD_A2_WPF_Metro
             
             OnPropertyChanged(nameof(PressureSeries));
             OnPropertyChanged(nameof(StepCount));
+            OnPropertyChanged(nameof(ModelTime));
         }
 
 

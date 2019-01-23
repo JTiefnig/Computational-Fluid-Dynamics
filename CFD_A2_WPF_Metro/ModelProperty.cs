@@ -8,13 +8,8 @@ using CFD_A1_OO;
 
 namespace CFD_A2_WPF_Metro
 {
-    public class ModelProperty : INotifyPropertyChanged
+    public class ModelProperty : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
 
         public String Name { get; private set; }
 

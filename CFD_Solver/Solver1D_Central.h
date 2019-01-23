@@ -26,8 +26,7 @@ private:
 	double eps_s;
 
 
-	double time;
-
+	
 
 	void CalcF();
 

@@ -79,6 +79,7 @@ namespace CFD_A1_OO {
 		float Convergence();
 
 		int StepCount();
+		double ModelTime();
 
 
 		// Just a test:

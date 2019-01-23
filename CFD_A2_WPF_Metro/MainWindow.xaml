@@ -123,8 +123,9 @@
 
       <StackPanel>
         <Label Foreground="Gray">Stepcount: </Label>
-        <TextBlock Text="{Binding StepCount}" Width="100" Height="30" FontSize="20" Margin="1"></TextBlock>
-        
+        <TextBlock Text="{Binding StepCount}" Width="100" Height="30" FontSize="12" Margin="0"></TextBlock>
+        <Label Foreground="Gray">Time: </Label>
+        <TextBlock Text="{Binding ModelTime}" Width="100" Height="30" FontSize="12" Margin="0"></TextBlock>
       </StackPanel>
 
 
