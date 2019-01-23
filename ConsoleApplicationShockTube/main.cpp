@@ -13,7 +13,7 @@
 
 // CFD Homework
 // author Johannes Tiefnig
-// Very basic implementation of 
+// Simple implementation of "The shock tube problem" solved with the ROE solver
 //
 
 int main()
@@ -70,6 +70,8 @@ int main()
 
 
 	std::cout << "100 Steps Done; Data exported \n\n";
+
+	std::cout << "Time: " << mod->time << std::endl;
 
 
 	// Free memory in heap

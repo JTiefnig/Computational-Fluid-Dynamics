@@ -28,7 +28,7 @@ void Solver1D_LaxWendroff::DoStep()
 	int imax = model->u.size();
 
 	dt = TimeStep();
-	model->time += dt;
+
 
 	vector<GridPoint1D> & u = model->u;
 

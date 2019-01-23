@@ -55,6 +55,6 @@ double Solver1D::TimeStep()
 	}
 
 	double dt = cfl * model->dx / eigenmax;
-
+	model->time += dt;
 	return dt;
 }

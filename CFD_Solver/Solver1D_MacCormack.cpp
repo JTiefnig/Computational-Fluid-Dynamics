@@ -26,9 +26,6 @@ void Solver1D_MacCormack::DoStep()
 	int imax = model->u.size();
 
 	dt = TimeStep();
-	model->time += dt;
-	
-	
 
 	Calc_uq();
 	Boundary_q();
