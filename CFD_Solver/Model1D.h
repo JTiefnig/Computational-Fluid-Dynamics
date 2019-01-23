@@ -40,12 +40,12 @@ public:
 
 	int gridsize;
 
-	double R;
-	double gamma; // kappa
-	double p_tot;
-	double T_tot;
-	double p_exit;
-	double sub_exit;
+	smartProperty R;
+	smartProperty gamma; // kappa
+	smartProperty p_tot;
+	smartProperty T_tot;
+	smartProperty p_exit;
+	smartProperty sub_exit;
 
 	int nPrint = 9; // wir beginnen bei 0
 
