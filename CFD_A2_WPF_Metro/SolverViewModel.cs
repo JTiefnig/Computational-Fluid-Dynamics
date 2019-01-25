@@ -33,12 +33,25 @@ namespace CFD_A2_WPF_Metro
         {
             new SolverType(){Name= "Central", Selected=0},
             new SolverType(){Name= "LaxWendroff", Selected=1},
-            new SolverType(){Name= "MC Cormack", Selected=2},
+            new SolverType(){Name= "MacCormack", Selected=2},
             new SolverType(){Name= "ROE", Selected=3}
         };
 
 
-        public SolverType SelectedSolver { get; set; }
+        private SolverType _solverType;
+        public SolverType SelectedSolver
+        {
+            get => _solverType;
+            set
+            {
+                _solverType = value;
+                OnPropertyChanged(nameof(SelectedSolver));
+            }
+
+        }
+
+                
+
 
         private CfdA1Adapter solver;
 
@@ -126,8 +139,8 @@ namespace CFD_A2_WPF_Metro
                 MessageBox.Show(e.Message);
             }
 
-            // initial solver: ROE
-            SelectedSolver = SolverTypes[3];
+            // initial solver: Central--
+            SelectedSolver = SolverTypes[0];
 
             worker = new Thread(() => this.SimulateStepsFunc());
 
@@ -249,6 +262,7 @@ namespace CFD_A2_WPF_Metro
             OnPropertyChanged(nameof(PressureSeries));
             OnPropertyChanged(nameof(StepCount));
             OnPropertyChanged(nameof(ModelTime));
+            OnPropertyChanged(nameof(AreaSeries));
         }
 
 
