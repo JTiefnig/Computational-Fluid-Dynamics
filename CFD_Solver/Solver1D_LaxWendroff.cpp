@@ -108,7 +108,6 @@ State1D Solver1D_LaxWendroff::CalcF_star_LW(int i)
 
 	double loc_area = ((*model)[i].area + (*model)[i + 1].area)*0.5;
 
-
 	fStarCentral = (f[i + 1] + f[i])*0.5 - (f[i + 1] - f[i]) *0.5*dt / (model->dx)*loc_area + dissip[i];
 
 	return fStarCentral;

@@ -33,7 +33,8 @@ namespace CFD_A1_OO {
 		PRESSURE, 
 		U,
 		MACH,
-		T
+		T,
+		TOTAL_P
 	};
 
 	public ref class CfdA1Adapter

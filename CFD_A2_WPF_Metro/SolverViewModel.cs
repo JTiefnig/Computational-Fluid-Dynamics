@@ -50,9 +50,6 @@ namespace CFD_A2_WPF_Metro
 
         }
 
-                
-
-
         private CfdA1Adapter solver;
 
 
@@ -231,7 +228,6 @@ namespace CFD_A2_WPF_Metro
             {
                 try
                 {
-
 
                     int i = 0;
                     foreach (ObservablePoint p in pressurels.Values)

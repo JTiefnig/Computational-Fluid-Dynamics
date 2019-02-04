@@ -127,8 +127,36 @@ double Model1D::GetVelocity(int i)
 	return vel;
 }
 
+double Model1D::GetTotalPressure(int i)
+{
+	
+	double rho = u[i].rho;
+	double vel = u[i].rho_u / rho;
+	double p = (gamma - 1)*(u[i].e - rho * vel*vel / 2);
+	double mach = vel / pow((gamma*p / rho), 0.5);
+	double temp = 1 + (gamma - 1) / 2 * mach * mach;
+	double p_tot_is = p * pow(temp, (gamma / (gamma - 1)));
+
+	return p_tot_is;
+}
 
 
+double Model1D::GetContinuity(int i)
+{
+	double rho = u[i].rho;
+	double vel = u[i].rho_u / rho;
+	
+	double cont0;
+	if (i == 1)
+	{
+		cont0 = rho * vel*u[i].area;
+		if (cont0 <= 0.) cont0 = 1.e-5;
+	}
+
+	double continutity = rho * vel* u[i].area / cont0;
+
+	return continutity;
+}
 
 double Model1D::CalculateConvergence()
 {

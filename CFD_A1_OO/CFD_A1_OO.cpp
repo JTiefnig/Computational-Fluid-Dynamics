@@ -101,6 +101,9 @@ double CFD_A1_OO::CfdA1Adapter::GetData(int i, DATASET set)
 	case CFD_A1_OO::DATASET::T:
 		retval = mod->GetTemperatur(i);
 		break;
+	case CFD_A1_OO::DATASET::TOTAL_P:
+		retval = mod->GetTotalPressure(i);
+		break;
 	default:
 		break;
 	}

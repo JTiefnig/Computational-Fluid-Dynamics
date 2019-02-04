@@ -67,6 +67,9 @@ public:
 	double GetMach(int i);
 	double GetTemperatur(int i);
 	double GetVelocity(int i);
+	double GetTotalPressure(int i);
+	double GetContinuity(int i);
+
 
 	double CalculateConvergence();
 
