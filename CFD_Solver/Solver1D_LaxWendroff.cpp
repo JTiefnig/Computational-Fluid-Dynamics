@@ -36,6 +36,7 @@ void Solver1D_LaxWendroff::DoStep()
 	vector<GridPoint1D> & u = model->u;
 
 	CalcDissipSimple();
+	//CalcDissipComplex();
 	CalcF();
 
 	State1D prev_f_star = CalcF_star_LW(0);
@@ -162,7 +163,9 @@ void Solver1D_LaxWendroff::CalcDissipComplex()
 
 	function<double (int)> pres = [this](int i)
 	{
-		return model->GetPressure(i);
+		double ret = model->GetPressure(i);
+
+		return ret;
 	};
 
 	function<vector<double> (vector<double>, double)> dDifRW = [](vector<double> in, double h)
@@ -207,9 +210,9 @@ void Solver1D_LaxWendroff::CalcDissipComplex()
 
 
 	// between 1/2 and 1/4
-	double kapp2 = 1 / 3;
+	double kapp2 = 1/3;
 	// 1/64  -  1/32
-	double kapp4 = 1 / 40;
+	double kapp4 =  1/60;
 
 
 	vector<double> ny(imax);
@@ -237,7 +240,8 @@ void Solver1D_LaxWendroff::CalcDissipComplex()
 
 	for (int i = 1; i < imax-1; i++)
 	{
-		ny[i] = abs(pres(i-1)-2*pres(i)+pres(i+1)) / abs(pres(i-1)+2*pres(i)+pres(i+1));
+		double z = abs((pres(i - 1) - 2 * pres(i) + pres(i + 1)) / (pres(i - 1) + 2 * pres(i) + pres(i + 1)));
+		ny[i] = z;
 	}
 
 	vector<double> term1(imax);
@@ -250,7 +254,6 @@ void Solver1D_LaxWendroff::CalcDissipComplex()
 	}
 
 	auto termDif = dDifRW(term1, dx);
-	
 
 
 	auto ud_f = DifFW(model->ToStateVector(), dx);
@@ -279,7 +282,7 @@ void Solver1D_LaxWendroff::CalcDissipComplex()
 	}
 
 
-	// not good extrapolation...
+	// not good extrap...
 	dissip[0] = dissip[1]*2 - dissip[2];
 	
 	dissip[imax - 1] = dissip[imax - 2] * 2 - dissip[imax - 3]; 

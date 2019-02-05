@@ -6,6 +6,9 @@
 #include "Model1D.h"
 #include "A2Grid.h"
 #include "Solver1D_ROE.h"
+#include "Solver1D_Central.h"
+#include "Solver1D_MacCormack.h"
+#include "Solver1D_LaxWendroff.h"
 #include "GridPoint1D.h"
 
 
@@ -37,7 +40,7 @@ int main()
 
 	// just generate solver in Stack // type ROE
 	Solver1D_ROE solver(mod);
-
+	mod->properties["cfl"] = 0.9;
 
 
 	// do 100 Steps
@@ -45,6 +48,10 @@ int main()
 	{
 		// do one timestep
 		solver.DoStep();
+
+		
+		//if (mod->time > 0.008)
+		//	break;
 	}
 		
 

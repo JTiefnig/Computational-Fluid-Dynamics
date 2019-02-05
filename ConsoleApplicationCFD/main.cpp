@@ -8,6 +8,7 @@
 #include "Solver1D_ROE.h"
 #include "Solver1D_Central.h"
 #include "Solver1D_MacCormack.h"
+#include "Solver1D_LaxWendroff.h"
 
 #include "GridPoint1D.h"
 
@@ -30,13 +31,13 @@ int main()
 	auto girdLaval = new A1Grid(mod);
 
 	// set Courant number accordingly
-	mod->properties["cfl"] = 0.9;
+	mod->properties["cfl"] = 0.4;
 	
 	// generate grid according to spesifications
 	girdLaval->Generate();
 
 	// just generate solver in Stack // type ROE 
-	Solver1D_MacCormack solver(mod);
+	Solver1D_LaxWendroff solver(mod);
 
 	// define limit when system is converged
 	double convLimit = 1e-2;
