@@ -8,13 +8,16 @@
 
 // Autor Johannes Tiefnig
 // CFD TU Graz final project 2018
+
+// source 1 : https://www.degruyter.com/downloadpdf/j/heem.2014.60.issue-1-4/heem-2013-0008/heem-2013-0008.pdf
+// soucce 2: https://projects.skill-lync.com/projects/Simulation-of-a-1D-Quasi-Super-sonic-nozzle-flow-simulation-using-Maccormack-Method-76683
+
 class Solver1D_MacCormack :
 	public Solver1D
 {
 private: 
 	double eps_s;
 
-	
 
 	void Calc_uq();
 

@@ -83,6 +83,8 @@ void Solver1D_Central::CalcF()
 		f[i].rho_u = u[i].rho_u * local_u + local_p;
 		f[i].e = (u[i].e + local_p) * local_u;
 
+
+		// calc source
 		double local_k = -(model->u[i].da_dx) / (model->u[i].area);
 
 		source[i].rho = u[i].rho_u * local_k;

@@ -6,6 +6,9 @@
 #include "Model1D.h"
 #include "A1Grid.h"
 #include "Solver1D_ROE.h"
+#include "Solver1D_Central.h"
+#include "Solver1D_MacCormack.h"
+
 #include "GridPoint1D.h"
 
 
@@ -25,17 +28,19 @@ int main()
 	auto mod = new Model1D(100);
 	// Grid of exercise 1 (Laval)
 	auto girdLaval = new A1Grid(mod);
+
+	// set Courant number accordingly
+	mod->properties["cfl"] = 0.9;
 	
 	// generate grid according to spesifications
 	girdLaval->Generate();
 
-	// just generate solver in Stack // type rohesovler
-	Solver1D_ROE solver(mod);
-
+	// just generate solver in Stack // type ROE 
+	Solver1D_MacCormack solver(mod);
 
 	// define limit when system is converged
 	double convLimit = 1e-2;
-
+		
 	while (true)
 	{
 
@@ -61,23 +66,24 @@ int main()
 	fileStream.open("output.csv", std::fstream::out | std::fstream::trunc);
 
 	// first line in file is the legend
-	fileStream << "velocity; pressure; mach; temperatur" << std::endl;
+	fileStream << "velocity; pressure; mach; temperatur; total pressure" << std::endl;
 	
 
 	// loop trough all gridpoints and write data to file 
-	for(std::size_t i =0; i< mod->u.size(); i++)
+	for(std::size_t i =0; i < mod->u.size(); i++)
 	{
 		fileStream << mod->GetVelocity(i) << ";"
 			<< mod->GetPressure(i) << ";"
 			<< mod->GetMach(i) << ";"
 			<< mod->GetTemperatur(i) << ";"
+			<< mod->GetTotalPressure(i) << ";"
 			<< std::endl;
 	}
 
 	fileStream.close();
 
 
-	std::cout << "System converged; Data exported \n\n";
+	std::cout << "\nSystem converged; Data exported \n\n";
 
 
 	// Free memory in heap

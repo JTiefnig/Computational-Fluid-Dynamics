@@ -32,9 +32,11 @@ void Solver1D_MacCormack::DoStep()
 
 	Calc_uqq();
 
-	for (int i = 1; i < imax - 1; i++)
+	for (int i = 1; i < imax-1; i++)
 	{	  
-		(*model)[i] = (u_q[i] + u_qq[i]) * 0.5;	
+		model->delta_u[i] = (u_q[i] + u_qq[i]) * 0.5 - model->u[i];
+
+		model->u[i] = model->u[i] + model->delta_u[i];
 	}
 
 	model->Boundary();
@@ -44,17 +46,17 @@ void Solver1D_MacCormack::DoStep()
 
 
 
-
+//Berechnung des Flussvektors F und des Source - Vektors in allen Punkten fuer U
+//Bestimmung von U_q(forward)
 void Solver1D_MacCormack::Calc_uq()
 {
 	vector<GridPoint1D> & u = model->u;
 	int imax = u.size();
 
 
-	for (int i = 1; i < imax; i++)
+	for (int i = 0; i < imax-1; i++)
 	{
-		u_q[i] = u[i] - (Calc_f(i) - Calc_f(i - 1)) *dt / model->dx + Calc_source(i)*dt;
-
+		u_q[i] = u[i] - (Calc_f(i+1) - Calc_f(i)) * dt / model->dx + Calc_source(i)*dt;
 	}
 }
 
@@ -63,23 +65,29 @@ void Solver1D_MacCormack::Boundary_q()
 	vector<GridPoint1D> & u = model->u;
 	int imax = u.size();
 
-	u_q[0] = u_q[1]*2 - u_q[2];
+	/*u_q[0] = u_q[1]*2 - u_q[2];
+
+	if (model->rho_tot < u_q[0].rho)
+		u_q[0].rho = model->rho_tot;*/
 
 	u_q[imax-1] = u_q[imax-2]*2 - u_q[imax - 3];
 
-
-
+	if (model->rho_tot < u_q[imax-1].rho)
+		u_q[imax-1].rho = model->rho_tot;
 }
 
+
+//Berechnung des des Flussvektors F und des Source - Vektors in allen Punkten fuer U_q
+//Bestimmung von U_qq(backward)
 void Solver1D_MacCormack::Calc_uqq()
 {
 	vector<GridPoint1D> & u = model->u;
 	int imax = u.size();
 
 
-	for (int i = 0; i < imax-1; i++)
+	for (int i = 1; i < imax; i++)
 	{
-		u_qq[i] = u[i] - (Calc_f_q(i + 1) - Calc_f_q(i)) *dt / model->dx + Calc_source_q(i)*dt;
+		u_qq[i] = u[i] - (Calc_f_q(i) - Calc_f_q(i-1)) *dt / model->dx + Calc_source_q(i)*dt;
 	}
 
 
