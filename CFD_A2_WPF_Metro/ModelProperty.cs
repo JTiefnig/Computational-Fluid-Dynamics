@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using CFD_A1_OO;
 
+
 namespace CFD_A2_WPF_Metro
 {
-    public class ModelProperty : BaseViewModel
+    public class ModelProperty : BaseViewModel, INotifyPropertyChanged
     {
 
         public String Name { get; private set; }
@@ -32,6 +33,7 @@ namespace CFD_A2_WPF_Metro
             set
             {
                 cfdModel.SetParameter(Name, value);
+                OnPropertyChanged(nameof(Value));
             }
 
         }

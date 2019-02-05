@@ -31,10 +31,10 @@ namespace CFD_A2_WPF_Metro
         #region Properties
         public List<SolverType> SolverTypes => new List<SolverType>()
         {
-            new SolverType(){Name= "Central", Selected=0},
-            new SolverType(){Name= "LaxWendroff", Selected=1},
-            new SolverType(){Name= "MacCormack", Selected=2},
-            new SolverType(){Name= "ROE", Selected=3}
+            new SolverType(){Name= "Central", Selected=0, PrevCFL=0.1},
+            new SolverType(){Name= "LaxWendroff", Selected=1, PrevCFL=0.4},
+            new SolverType(){Name= "MacCormack", Selected=2, PrevCFL=0.9},
+            new SolverType(){Name= "ROE", Selected=3, PrevCFL=0.9}
         };
 
 
@@ -45,9 +45,47 @@ namespace CFD_A2_WPF_Metro
             set
             {
                 _solverType = value;
+
+                // change to prevered cfl
+
+                this.CFL= _solverType.PrevCFL;
+
                 OnPropertyChanged(nameof(SelectedSolver));
             }
 
+        }
+
+
+        // no on property changed !
+        public double CFL
+        {
+            get
+            {
+                var l = Properties.Where((x) => x.Name == "cfl").ToList();
+                double ret =0;
+                try
+                {
+                    ret = l[0].Value;
+                }catch
+                {
+                    // some error
+                }
+
+                return ret;
+            }
+            set
+            {
+                var l = Properties.Where((x) => x.Name == "cfl").ToList();
+                
+                try
+                {
+                    l[0].Value = value;
+                }
+                catch 
+                {
+                    // some error
+                }
+            }
         }
 
         private CfdA1Adapter solver;
@@ -81,19 +119,30 @@ namespace CFD_A2_WPF_Metro
 
         public int UpdatdateInterval { get; set; } = 10;
 
+
+        private ObservableCollection<ModelProperty> generateProperties()
+        {
+            List<String> props = solver.GetParameterList();
+            var ret = new ObservableCollection<ModelProperty>();
+            foreach (var n in props)
+            {
+                ret.Add(new ModelProperty(solver, n));
+            }
+
+            return ret;
+        }
+
+
+        private ObservableCollection<ModelProperty> _properties;
+
         public ObservableCollection<ModelProperty> Properties 
         {
-
             get
             {
-                List<String> props = solver.GetParameterList();
-                var ret = new ObservableCollection<ModelProperty>();
-                foreach (var n in props)
-                {
-                    ret.Add(new ModelProperty(solver, n));
-                }
+                if (_properties == null)
+                    _properties = generateProperties();
 
-                return ret;
+                return _properties;
             }
 
         }
@@ -117,7 +166,6 @@ namespace CFD_A2_WPF_Metro
         {
             get { return solver.GetDataArray(DATASET.AREA); }
         }
-
       
 
         private Thread worker;
@@ -377,6 +425,8 @@ namespace CFD_A2_WPF_Metro
 
 
 
+
+
         #endregion
 
     }
@@ -388,6 +438,8 @@ namespace CFD_A2_WPF_Metro
         public String Name { get; set; }
 
         public int Selected { get; set; }
+
+        public double PrevCFL { get; set; } = 0.1;
 
         public override string ToString()
         {

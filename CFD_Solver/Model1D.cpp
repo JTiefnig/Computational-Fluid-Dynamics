@@ -176,3 +176,15 @@ double Model1D::CalculateConvergence()
 
 	return resid.e/convCompValue;
 }
+
+std::vector<State1D> Model1D::ToStateVector()
+{
+	std::vector<State1D> ret(this->u.size());
+
+	for(int i=0; i<this->u.size(); i++)
+	{
+		ret[i] = u[i];
+	}
+
+	return ret;
+}

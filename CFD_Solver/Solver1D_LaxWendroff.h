@@ -31,6 +31,8 @@ private:
 
 	void CalcDissipSimple();
 
+	void CalcDissipComplex();
+
 public:
 	Solver1D_LaxWendroff(Model1D* mod);
 	~Solver1D_LaxWendroff();

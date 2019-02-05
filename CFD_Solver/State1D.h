@@ -1,5 +1,6 @@
 #pragma once
 #include "MatrixXd.h"
+#include <vector>
 
 
 // Autor Johannes Tiefnig
@@ -18,6 +19,9 @@ public:
 
 	State1D operator+(const State1D &b);
 	State1D operator-(const State1D &b);
+
+	
+
 	State1D operator*(double c);
 	State1D operator/(double c);
 
@@ -33,4 +37,5 @@ public:
 	virtual void operator=(const State1D &b);
 
 };
+
 

@@ -121,3 +121,4 @@ void State1D::operator=(const State1D & b)
 	this->rho_u = b.rho_u;
 	this -> e = b.e;
 }
+

@@ -169,7 +169,25 @@
         <RowDefinition Height="*"/>
         <RowDefinition Height="30"/>
       </Grid.RowDefinitions>
-      <DataGrid ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="true"/>
+      <DataGrid ItemsSource="{Binding Path=Properties, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="True">
+        <!--<DataGrid.Columns>
+          <DataGridTemplateColumn Header="Name" Width="SizeToCells" IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn Header="Value" Width="SizeToCells" IsReadOnly="True">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>-->
+
+      </DataGrid>
       <Button Name="SaveParams" Grid.Row="1" Command="{Binding SaveParameter}" >
         <StackPanel Orientation="Horizontal">
           <iconPacks:PackIconFontAwesome Width="30"

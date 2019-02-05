@@ -16,17 +16,13 @@ class GridGenerator;
 
 
 
-
-
 // Autor Johannes Tiefnig
 // CFD TU Graz final project 2018
-class Model1D
+class Model1D 
 {
 public:
-
-	std::vector<GridPoint1D> u;
 	std::vector<State1D> delta_u;
-
+	std::vector<GridPoint1D> u;
 
 	PropertyContainer properties;
 
@@ -73,6 +69,8 @@ public:
 
 	double CalculateConvergence();
 
+
+	std::vector<State1D> ToStateVector();
 
 private:
 	double convCompValue = 1;
