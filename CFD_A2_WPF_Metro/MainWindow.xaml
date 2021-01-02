@@ -117,7 +117,7 @@
         </StackPanel>
       </DockPanel>
 
-      <lvc:Gauge Margin="35,5,25,5" From="0" Width="150" Value="{Binding ModelConvergence, UpdateSourceTrigger=PropertyChanged}" To="1">
+      <lvc:Gauge Margin="35,5,25,5" From="0" Width="150" Value="{Binding ModelConvergence, UpdateSourceTrigger=PropertyChanged}"  To="1">
       </lvc:Gauge>
 
 
